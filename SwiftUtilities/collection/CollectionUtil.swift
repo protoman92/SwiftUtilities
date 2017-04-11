@@ -8,13 +8,13 @@
 
 import GameKit
 
-protocol CustomComparisonProtocol {
+public protocol CustomComparisonProtocol {
     associatedtype E
     
     func equals(object: E?) -> Bool
 }
 
-extension Array {
+public extension Array {
     
     /// Check if the current Array contains an element at an index, by checking 
     /// whether the index
@@ -22,7 +22,7 @@ extension Array {
     ///
     /// - Parameter index: The index to be inspected.
     /// - Returns: A Bool value.
-    func containsElement(at index: Int) -> Bool {
+    public func containsElement(at index: Int) -> Bool {
         return index >= 0 && index < count
     }
     
@@ -32,7 +32,7 @@ extension Array {
     ///
     /// - Parameter index: The index to be inspected.
     /// - Returns: An optional element.
-    func element(at index: Int) -> Element? {
+    public func element(at index: Int) -> Element? {
         if containsElement(at: index) {
             return self[index]
         }
@@ -44,7 +44,7 @@ extension Array {
     ///
     /// - Parameter predicate: Predicate closure to check element validity.
     /// - Returns: An optional element.
-    func elementSatisfying(_ predicate: (Element) -> Bool) -> Element? {
+    public func elementSatisfying(_ predicate: (Element) -> Bool) -> Element? {
         guard let index = index(where: predicate) else {
             return nil
         }
@@ -56,7 +56,7 @@ extension Array {
     ///
     /// - Parameter elementCount: The number of random elements to get.
     /// - Returns: An Array of elements.
-    func randomize(_ elementCount: Int) -> [Any] {
+    public func randomize(_ elementCount: Int) -> [Any] {
         let rand = GKRandomSource.sharedRandom()
         let shuffled = rand.arrayByShufflingObjects(in: self)
         let prefixed = shuffled.prefix(Swift.max(0, elementCount))
@@ -67,7 +67,7 @@ extension Array {
     ///
     /// - Parameter type: The Type to check for matching elements.
     /// - Returns: An element whose type is the specified Type.
-    func firstItem<T>(ofType type: T.Type) -> T? {
+    public func firstItem<T>(ofType type: T.Type) -> T? {
         for item in self {
             if item is T {
                 return item as? T
@@ -78,14 +78,16 @@ extension Array {
     }
 }
 
-extension Array where Element: CustomComparisonProtocol, Element == Element.E {
+public extension Array where
+    Element: CustomComparisonProtocol,
+    Element == Element.E {
     
     /// Append an unique element.
     ///
     /// - Parameter element: An element to be appended.
     /// - Returns: A Bool value, true if the element was successfully appended.
     @discardableResult
-    mutating func append(uniqueElement element: Element) -> Bool {
+    public mutating func append(uniqueElement element: Element) -> Bool {
         if !contains(where: {$0.equals(object: element)}) {
             append(element)
             return true
@@ -100,7 +102,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     /// - Parameter element: The element to be appended or replaced.
     /// - Returns: An Int value for the total number of appended elements.
     @discardableResult
-    mutating func appendOrReplace(uniqueElement element: Element) -> Int {
+    public mutating func appendOrReplace(uniqueElement element: Element) -> Int {
         if let index = index(where: {$0.equals(object: element)}) {
             self[index] = element
             return 0
@@ -115,7 +117,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     /// - Parameter data: The Array to be appended.
     /// - Returns: An Int value for the total number of appended elements.
     @discardableResult
-    mutating func append(uniqueContentsOf data: [Element]) -> Int {
+    public mutating func append(uniqueContentsOf data: [Element]) -> Int {
         var added = 0
         
         for item in data where !contains(where: {$0.equals(object: item)}) {
@@ -131,7 +133,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     /// - Parameter data: The Array to be appended.
     /// - Returns: An Int value for the total number of appended elements.
     @discardableResult
-    mutating func appendOrReplace(uniqueContentsOf data: [Element]) -> Int {
+    public mutating func appendOrReplace(uniqueContentsOf data: [Element]) -> Int {
         var added = 0
         
         for item in data {
@@ -145,7 +147,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter element: The element to be inspected for existence.
     /// - Returns: A Bool value.
-    func contains(element: Element) -> Bool {
+    public func contains(element: Element) -> Bool {
         return contains(where: {$0.equals(object: element)})
     }
     
@@ -153,7 +155,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter data: The Array to be checked for equality.
     /// - Returns: A Bool value.
-    func equals(to data: [Element]) -> Bool {
+    public func equals(to data: [Element]) -> Bool {
         guard self.count == data.count else {
             return false
         }
@@ -171,7 +173,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter data: The Array to be checked against.
     /// - Returns: A Bool value.
-    func isSubset(of data: [Element]) -> Bool {
+    public func isSubset(of data: [Element]) -> Bool {
         guard self.count < data.count else {
             return false
         }
@@ -189,7 +191,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter data: The Array to be checked against.
     /// - Returns: A Bool value.
-    func isSuperset(of data: [Element]) -> Bool {
+    public func isSuperset(of data: [Element]) -> Bool {
         return data.isSubset(of: self)
     }
     
@@ -197,7 +199,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter data: The Array to be checked against.
     /// - Returns: A Bool value.
-    func isSubsetOfOrEqualsTo(_ data: [Element]) -> Bool {
+    public func isSubsetOfOrEqualsTo(_ data: [Element]) -> Bool {
         guard self.count <= data.count else {
             return false
         }
@@ -215,7 +217,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter data: The Array to be checked against.
     /// - Returns: A Bool value.
-    func isSupersetOfOrEqualsTo(_ data: [Element]) -> Bool {
+    public func isSupersetOfOrEqualsTo(_ data: [Element]) -> Bool {
         return data.isSubsetOfOrEqualsTo(self)
     }
     
@@ -224,7 +226,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter predicate: The predicate to check for validity.
     /// - Returns: A new Array with unfiltered elements.
-    func filteringOut(where predicate: (Element) -> Bool) -> [Element] {
+    public func filteringOut(where predicate: (Element) -> Bool) -> [Element] {
         let filtered = self.filter(predicate)
         return removingContents(of: filtered)
     }
@@ -234,7 +236,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     /// - Parameter object: The element to be removed.
     /// - Returns: An optional index at which the object to be removed is found.
     @discardableResult
-    mutating func remove(object: Element) -> Int? {
+    public mutating func remove(object: Element) -> Int? {
         guard let index = index(where: {$0.equals(object: object)}) else {
             return nil
         }
@@ -249,7 +251,7 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Returns: The number of elements that was removed.
     @discardableResult
-    mutating func removeContents(of array: [Element]) -> Int {
+    public mutating func removeContents(of array: [Element]) -> Int {
         var removed = 0
         
         for element in array where remove(object: element) != nil {
@@ -264,32 +266,32 @@ extension Array where Element: CustomComparisonProtocol, Element == Element.E {
     ///
     /// - Parameter array: <#array description#>
     /// - Returns: <#return value description#>
-    func removingContents(of array: [Element]) -> [Element] {
+    public func removingContents(of array: [Element]) -> [Element] {
         var copy = self
         copy.removeContents(of: array)
         return copy
     }
 }
 
-extension Collection {
+public extension Collection {
 
     /// Check if the current Collection is not empty.
-    var isNotEmpty: Bool {
+    public var isNotEmpty: Bool {
         return !isEmpty
     }
 }
 
-extension Dictionary {
+public extension Dictionary {
     
     /// Check if the current Dictionary is not empty.
-    var isNotEmpty: Bool {
+    public var isNotEmpty: Bool {
         return !isEmpty
     }
     
     /// Update the current Dictionary with another Dictionary.
     ///
     /// - Parameter dict: The Dictionary to get entries from.
-    mutating func updateValues(from dict: [Key : Value]) {
+    public mutating func updateValues(from dict: [Key : Value]) {
         for (key, value) in dict {
             self.updateValue(value, forKey: key)
         }

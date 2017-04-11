@@ -16,11 +16,11 @@ import Foundation
 ///   - line: The line at which the statement is found.
 ///   - function: The function in which the statement is found.
 ///   - message: A custom message to be printed if the assert fails.
-func assertDebug(_ statement: Bool,
-                 file: String = #file,
-                 line: Int = #line,
-                 function: String = #function,
-                 message: String? = nil) {
+public func assertDebug(_ statement: Bool,
+                        file: String = #file,
+                        line: Int = #line,
+                        function: String = #function,
+                        message: String? = nil) {
     if isInDebugMode() {
         let message = message ?? "none"
         
@@ -42,17 +42,17 @@ func assertDebug(_ statement: Bool,
 ///   - line: The line at which the statement is found.
 ///   - function: The function in which the statement is found.
 ///   - message: A custom message to be printed if the assert fails.
-func assertNotNullDebug(_ object: Any?,
-                        file: String = #file,
-                        line: Int = #line,
-                        function: String = #function) {
+public func assertNotNullDebug(_ object: Any?,
+                               file: String = #file,
+                               line: Int = #line,
+                               function: String = #function) {
     assertDebug(object != nil, file: file, line: line, function: function)
 }
 
 /// Check is debugging is active.
 ///
 /// - Returns: A Bool value.
-func isInDebugMode() -> Bool {
+public func isInDebugMode() -> Bool {
     #if DEBUG
         return true
     #else
@@ -68,10 +68,10 @@ func isInDebugMode() -> Bool {
 ///   - line: The line at which the statement is found.
 ///   - function: The function in which the statement is found.
 ///   - message: A custom message to be printed if the assert fails.
-func debugException(_ message: String? = nil,
-                    file: String = #file,
-                    line: Int = #line,
-                    function: String = #function) {
+public func debugException(_ message: String? = nil,
+                           file: String = #file,
+                           line: Int = #line,
+                           function: String = #function) {
     if isInDebugMode() {
         let message = message ?? ""
         
@@ -85,7 +85,7 @@ func debugException(_ message: String? = nil,
     }
 }
 
-class Exception: Error {
+public struct Exception: Error {
     fileprivate let message: String
     
     init(_ message: String?) {
@@ -94,11 +94,11 @@ class Exception: Error {
 }
 
 extension Exception: LocalizedError {
-    var localizedDescription: String {
+    public var localizedDescription: String {
         return errorDescription ?? ""
     }
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         return message
     }
 }

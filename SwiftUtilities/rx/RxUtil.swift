@@ -8,14 +8,14 @@
 
 import RxSwift
 
-extension Observable {
-    func applyCommonSchedulers() -> Observable<E> {
+public extension Observable {
+    public func applyCommonSchedulers() -> Observable<E> {
         return self
             .subscribeOn(qos: .userInteractive)
             .observeOn(MainScheduler.instance)
     }
     
-    func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
+    public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let type: DispatchQoS
         
         switch qos {
@@ -42,7 +42,7 @@ extension Observable {
         return subscribeOn(scheduler)
     }
     
-    func subscribe<O>(_ o: O, tag: OperationProtocol?) -> Disposable
+    public func subscribe<O>(_ o: O, tag: OperationProtocol?) -> Disposable
         where O: LifecycleObserver, O.E == Element {
         return subscribe(
             onNext: {
@@ -68,7 +68,7 @@ extension Observable {
     }
 }
 
-protocol LifecycleObserver {
+public protocol LifecycleObserver {
     associatedtype E
     
     func canObserve(_ tag: OperationProtocol?) -> Bool

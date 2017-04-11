@@ -9,11 +9,12 @@
 import UIKit
 import Foundation
 
-func readEnvironmentVariable(forKey key: String) -> String? {
+public func readEnvironmentVariable(forKey key: String) -> String? {
     return ProcessInfo.processInfo.environment[key]
 }
 
-func readPropertyList(from fileName: String? = nil, key: String) -> Any? {
+public func readPropertyList(from fileName: String? = nil,
+                             key: String) -> Any? {
     let fileName = fileName ?? "Info"
     
     guard
@@ -26,9 +27,9 @@ func readPropertyList(from fileName: String? = nil, key: String) -> Any? {
     return dict.value(forKey: key)
 }
 
-func readPropertyList(from fileName: String? = nil,
-                      key: String,
-                      action: (Any) -> Void) {
+public  func readPropertyList(from fileName: String? = nil,
+                              key: String,
+                              action: (Any) -> Void) {
     guard let value = readPropertyList(from: fileName, key: key) else {
         return
     }
@@ -36,7 +37,7 @@ func readPropertyList(from fileName: String? = nil,
     action(value)
 }
 
-extension NSObject {
+public extension NSObject {
     
     /// Check if the current NSObject is an instance of a specified Type.
     ///

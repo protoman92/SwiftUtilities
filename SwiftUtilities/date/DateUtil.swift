@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension DateComponents {
+public extension DateComponents {
     
     /// Create a DateComponent from separate components.
     ///
@@ -20,12 +20,12 @@ extension DateComponents {
     ///   - minute: The minute number.
     ///   - second: The second number.
     /// - Returns: A DateComponent struct.
-    static func from(day: Int? = nil,
-                     month: Int? = nil,
-                     year: Int? = nil,
-                     hour: Int? = nil,
-                     minute: Int? = nil,
-                     second: Int? = nil) -> DateComponents {
+    public static func from(day: Int? = nil,
+                            month: Int? = nil,
+                            year: Int? = nil,
+                            hour: Int? = nil,
+                            minute: Int? = nil,
+                            second: Int? = nil) -> DateComponents {
         var component = DateComponents()
         component.day = day ?? 1
         component.month = month ?? 0
@@ -37,14 +37,14 @@ extension DateComponents {
     }
 }
 
-extension Date {
+public extension Date {
     
     /// Check if the current Date is earlier than, or at least the same as, 
     /// another Date.
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    func earlierThanOrSameAs(date: Date) -> Bool {
+    public func earlierThanOrSameAs(date: Date) -> Bool {
         return compare(date) != .orderedDescending
     }
     
@@ -52,7 +52,7 @@ extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    func earlierThan(date: Date) -> Bool {
+    public func earlierThan(date: Date) -> Bool {
         return compare(date) == .orderedAscending
     }
     
@@ -61,7 +61,7 @@ extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    func laterThanOrSameAs(date: Date) -> Bool {
+    public func laterThanOrSameAs(date: Date) -> Bool {
         return compare(date) != .orderedAscending
     }
     
@@ -69,7 +69,7 @@ extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    func laterThan(date: Date) -> Bool {
+    public func laterThan(date: Date) -> Bool {
         return compare(date) == .orderedDescending
     }
     
@@ -77,12 +77,12 @@ extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    func sameAs(date: Date) -> Bool {
+    public func sameAs(date: Date) -> Bool {
         return compare(date) == .orderedSame
     }
 }
 
-extension Calendar {
+public extension Calendar {
     
     /// Check if a Date is earlier than or the same as another Date, based on 
     /// the specified
@@ -93,9 +93,9 @@ extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    func earlierThanOrSameAs(compare date: Date,
-                             to ref: Date,
-                             granularity: Calendar.Component) -> Bool {
+    public func earlierThanOrSameAs(compare date: Date,
+                                    to ref: Date,
+                                    granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result != .orderedDescending
     }
@@ -108,9 +108,9 @@ extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    func earlierThan(compare date: Date,
-                     to ref: Date,
-                     granularity: Calendar.Component) -> Bool {
+    public func earlierThan(compare date: Date,
+                            to ref: Date,
+                            granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result == .orderedAscending
     }
@@ -124,9 +124,9 @@ extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    func laterThanOrSameAs(compare date: Date,
-                           to ref: Date,
-                           granularity: Calendar.Component) -> Bool {
+    public func laterThanOrSameAs(compare date: Date,
+                                  to ref: Date,
+                                  granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result != .orderedAscending
     }
@@ -139,8 +139,9 @@ extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    func laterThan(compare date: Date, to ref: Date,
-                   granularity: Calendar.Component) -> Bool {
+    public func laterThan(compare date: Date,
+                          to ref: Date,
+                          granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result == .orderedDescending
     }
@@ -153,26 +154,27 @@ extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    func sameAs(compare date: Date, to ref: Date,
-                granularity: Calendar.Component) -> Bool {
+    public func sameAs(compare date: Date,
+                       to ref: Date,
+                       granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result == .orderedSame
     }
 }
 
 /// Convenience typealias
-typealias CalendarUnits = Set<Calendar.Component>
+public typealias CalendarUnits = Set<Calendar.Component>
 
-struct DateFormat {
-    static let ddMM = "dd MM"
-    static let ddMMM = "dd MMM"
-    static let ddMMMM = "dd MMMM"
-    static let ddMMMYYYYhhmma = "dd MMM YYYY hh:mm a"
-    static let ddMMMMYYYYhhmma = "dd MMMM YYYY hh:mm a"
-    static let EEddMMYY = "EE, dd-MM-YY"
-    static let EEddMMYYhhmma = "EE, dd-MM-YY hh:mm a"
-    static let EEEEddMMMYYYY = "EEEE, dd MMMM YYYY"
-    static let EEEEddMMMYYYYhhmma = "EEEE, dd MMMM YYYY hh:mm a"
-    static let hhmma = "hh:mm a"
-    static let MMMMYYYY = "MMMM, YYYY"
+public struct DateFormat {
+    public static let ddMM = "dd MM"
+    public static let ddMMM = "dd MMM"
+    public static let ddMMMM = "dd MMMM"
+    public static let ddMMMYYYYhhmma = "dd MMM YYYY hh:mm a"
+    public static let ddMMMMYYYYhhmma = "dd MMMM YYYY hh:mm a"
+    public static let EEddMMYY = "EE, dd-MM-YY"
+    public static let EEddMMYYhhmma = "EE, dd-MM-YY hh:mm a"
+    public static let EEEEddMMMYYYY = "EEEE, dd MMMM YYYY"
+    public static let EEEEddMMMYYYYhhmma = "EEEE, dd MMMM YYYY hh:mm a"
+    public static let hhmma = "hh:mm a"
+    public static let MMMMYYYY = "MMMM, YYYY"
 }

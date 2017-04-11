@@ -8,7 +8,7 @@
 
 /// Implement this protocol to provide a common interface for different 
 /// operations.
-protocol OperationProtocol {
+public protocol OperationProtocol {
     
     /// Call this method when an operation is initiated.
     func onOperationInitiated()

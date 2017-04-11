@@ -10,15 +10,15 @@ import Foundation
 import UIKit
 
 extension String: CustomComparisonProtocol {
-    func equals(object: String?) -> Bool {
+    public func equals(object: String?) -> Bool {
         return object == self
     }
 }
 
-extension String {
+public extension String {
     
     /// Check if the current String is an email.
-    var isEmail: Bool {
+    public var isEmail: Bool {
         return range(
             of: "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]" +
             "+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9" +
@@ -27,12 +27,12 @@ extension String {
     }
     
     /// Check if the current String is not empty.
-    var isNotEmpty: Bool {
+    public var isNotEmpty: Bool {
         return !isEmpty
     }
     
     /// Localize the current String.
-    var localized: String {
+    public var localized: String {
         let value = NSLocalizedString(self,
                                       tableName: "CommonLocalizable",
                                       comment: "")
@@ -41,7 +41,7 @@ extension String {
     }
     
     /// Underline the current String.
-    var underlined: NSAttributedString {
+    public var underlined: NSAttributedString {
         let attributes = [
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleDouble.rawValue
         ]
@@ -53,7 +53,7 @@ extension String {
     ///
     /// - Parameter args: Format parameters.
     /// - Returns: A localized String.
-    func localize(_ args: CVarArg...) -> String {
+    public func localize(_ args: CVarArg...) -> String {
         let localized = NSLocalizedString(self,
                                           tableName: "CommonLocalizable",
                                           comment: "")
@@ -68,37 +68,41 @@ extension String {
     ///   - characters: The character set to be replaced.
     ///   - string: The String to replace.
     /// - Returns: A String value.
-    func replacingOccurrences(of characters: CharacterSet,
-                              with string: String) -> String {
+    public func replacingOccurrences(of characters: CharacterSet,
+                                     with string: String) -> String {
         return components(separatedBy: characters).joined(separator: string)
     }
 }
 
 
-extension String {
-    struct Formatter {
+public extension String {
+    public struct Formatter {
         static let instance = NumberFormatter()
     }
     
-    var doubleValue: Double? {
+    /// Convert the current String into a Double.
+    public var doubleValue: Double? {
         return Formatter.instance.number(from: self)?.doubleValue
     }
     
-    var integerValue: Int? {
+    /// Convert the current String into an Int.
+    public var integerValue: Int? {
         return Formatter.instance.number(from: self)?.intValue
     }
     
-    var isDouble: Bool {
+    /// Check if the current String is convertible to a Double.
+    public var isDouble: Bool {
         return doubleValue != nil
     }
     
-    var isInteger: Bool {
+    /// Check if the current String is convertible to an Int.
+    public var isInteger: Bool {
         return integerValue != nil
     }
 }
 
-extension String {
-    init?(hexadecimalString hex: String) {
+public extension String {
+    public init?(hexadecimalString hex: String) {
         guard let data = NSMutableData(hexadecimalString: hex) else {
             return nil
         }
@@ -106,17 +110,13 @@ extension String {
         self.init(data: data as Data, encoding: .utf8)
     }
     
-    var hexadecimalString: String? {
+    public var hexadecimalString: String? {
         return data(using: .utf8)?.hexadecimalString
-    }
-    
-    func api() -> String? {
-        return String(hexadecimalString: self)
     }
 }
 
-extension NSMutableData {
-    convenience init?(hexadecimalString hex: String) {
+public extension NSMutableData {
+    public convenience init?(hexadecimalString hex: String) {
         let characters = hex.characters
         let count = characters.count
         self.init(capacity: count / 2)
@@ -144,8 +144,8 @@ extension NSMutableData {
     }
 }
 
-extension Data {
-    var hexadecimalString: String {
+public extension Data {
+    public var hexadecimalString: String {
         return map{String(format: "%02x", $0)}.joined()
     }
 }

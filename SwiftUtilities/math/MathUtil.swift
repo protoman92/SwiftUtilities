@@ -9,44 +9,44 @@
 import Foundation
 import UIKit
 
-protocol Summable {
+public protocol Summable {
     static var Zero: Self { get }
     
     static func +(lhs: Self, rhs: Self) -> Self
 }
 
-extension Array where Element: Summable {
-    var sum: Element {
+public extension Array where Element: Summable {
+    public var sum: Element {
         return self.reduce(Element.Zero, +)
     }
 }
 
 extension Int: Summable {
-    static var Zero: Int { return 0 }
+    public static var Zero: Int { return 0 }
 }
 
 extension Double: Summable {
-    static var Zero: Double { return 0.0 }
+    public static var Zero: Double { return 0.0 }
 }
 
 extension Double: CustomComparisonProtocol {
-    func equals(object: Double?) -> Bool {
+    public func equals(object: Double?) -> Bool {
         return object == self
     }
 }
 
-extension Double {
+public extension Double {
     
     /// Convert the current Double value to radians.
-    var radians: Double {
+    public var radians: Double {
         return self * Double.pi / 180
     }
 }
 
-extension CGFloat {
+public extension CGFloat {
     
     /// Convert the current CGFloat value to radians.
-    var radians: CGFloat {
+    public var radians: CGFloat {
         return CGFloat((Double(self).radians))
     }
 }
