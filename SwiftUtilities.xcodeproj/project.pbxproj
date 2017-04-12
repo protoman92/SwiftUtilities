@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2AD5B2F4B8E112C82590DB2E /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */; };
+		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
+		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
 		D38CC4A21E9CA23600A09A5E /* SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38CC4981E9CA23600A09A5E /* SwiftUtilities.framework */; };
 		D38CC4A91E9CA23600A09A5E /* SwiftUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D38CC49B1E9CA23600A09A5E /* SwiftUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D38CC4DE1E9CA33400A09A5E /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4CD1E9CA33400A09A5E /* CollectionUtil.swift */; };
@@ -54,6 +56,8 @@
 		9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6387B60973500599312E56 /* Pods-SwiftUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.release.xcconfig"; sourceTree = "<group>"; };
 		D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
+		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
+		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
 		D38CC4981E9CA23600A09A5E /* SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38CC49B1E9CA23600A09A5E /* SwiftUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftUtilities.h; sourceTree = "<group>"; };
 		D38CC49C1E9CA23600A09A5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +110,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D334C9411E9E8CEC00B88826 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				D334C9421E9E8D8A00B88826 /* FakeDetails.swift */,
+				D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */,
+			);
+			name = mock;
+			sourceTree = "<group>";
+		};
 		D38CC48E1E9CA23600A09A5E = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +161,7 @@
 		D38CC4A51E9CA23600A09A5E /* SwiftUtilitiesTests */ = {
 			isa = PBXGroup;
 			children = (
+				D334C9411E9E8CEC00B88826 /* mock */,
 				D393B1761E9E12AF00DBC683 /* test */,
 				D393B1751E9E12A200DBC683 /* util */,
 				D38CC4A81E9CA23600A09A5E /* Info.plist */,
@@ -498,8 +512,10 @@
 				D393B1861E9E1FB900DBC683 /* CollectionUtil.swift in Sources */,
 				D393B1871E9E1FB900DBC683 /* SwiftUtil.swift in Sources */,
 				D393B1881E9E1FB900DBC683 /* OperationProtocol.swift in Sources */,
+				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
 				D393B1891E9E1FB900DBC683 /* DateUtil.swift in Sources */,
 				D393B18A1E9E1FB900DBC683 /* ExceptionUtil.swift in Sources */,
+				D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */,
 				D393B18B1E9E1FB900DBC683 /* MathUtil.swift in Sources */,
 				D393B18C1E9E1FB900DBC683 /* RxUtil.swift in Sources */,
 				D393B18D1E9E1FB900DBC683 /* StringUtil.swift in Sources */,
