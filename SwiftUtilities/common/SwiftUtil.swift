@@ -9,10 +9,20 @@
 import UIKit
 import Foundation
 
+/// Read an environment variable.
+///
+/// - Parameter key: The variable's key identifier.
+/// - Returns: An optional String value.
 public func readEnvironmentVariable(forKey key: String) -> String? {
     return ProcessInfo.processInfo.environment[key]
 }
 
+/// Read a property from an embedded property list. Defaults to 'Info.plist'.
+///
+/// - Parameters:
+///   - fileName: An optional file name.
+///   - key: The property's key identifier.
+/// - Returns: An optional Any value.
 public func readPropertyList(from fileName: String? = nil,
                              key: String) -> Any? {
     let fileName = fileName ?? "Info"
@@ -25,16 +35,6 @@ public func readPropertyList(from fileName: String? = nil,
     }
     
     return dict.value(forKey: key)
-}
-
-public  func readPropertyList(from fileName: String? = nil,
-                              key: String,
-                              action: (Any) -> Void) {
-    guard let value = readPropertyList(from: fileName, key: key) else {
-        return
-    }
-    
-    action(value)
 }
 
 public extension NSObject {

@@ -9,6 +9,10 @@
 import RxSwift
 
 public extension Observable {
+    
+    /// Apply common schedulers to an Observable stream.
+    ///
+    /// - Returns: An Observable instance.
     public func applyCommonSchedulers() -> Observable<E> {
         return self
             .subscribeOn(qos: .userInteractive)
@@ -68,6 +72,9 @@ public extension Observable {
     }
 }
 
+/// Class instances that make use of rx may implement this protocol to avoid
+/// Observable emission, i.e. when a ViewController is not present on screen
+/// and we want to stop fetching data.
 public protocol LifecycleObserver {
     associatedtype E
     

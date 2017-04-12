@@ -48,7 +48,7 @@ public extension Array {
         guard let index = index(where: predicate) else {
             return nil
         }
-        
+
         return element(at: index)
     }
     

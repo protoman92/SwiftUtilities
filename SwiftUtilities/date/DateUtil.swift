@@ -8,35 +8,6 @@
 
 import UIKit
 
-public extension DateComponents {
-    
-    /// Create a DateComponent from separate components.
-    ///
-    /// - Parameters:
-    ///   - day: The day number.
-    ///   - month: The month number.
-    ///   - year: The year number.
-    ///   - hour: The hour number.
-    ///   - minute: The minute number.
-    ///   - second: The second number.
-    /// - Returns: A DateComponent struct.
-    public static func from(day: Int? = nil,
-                            month: Int? = nil,
-                            year: Int? = nil,
-                            hour: Int? = nil,
-                            minute: Int? = nil,
-                            second: Int? = nil) -> DateComponents {
-        var component = DateComponents()
-        component.day = day ?? 1
-        component.month = month ?? 0
-        component.year = year ?? 0
-        component.hour = hour ?? 0
-        component.minute = minute ?? 0
-        component.second = second ?? 0
-        return component
-    }
-}
-
 public extension Date {
     
     /// Check if the current Date is earlier than, or at least the same as, 
@@ -44,7 +15,7 @@ public extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    public func earlierThanOrSameAs(date: Date) -> Bool {
+    public func notLaterThan(date: Date) -> Bool {
         return compare(date) != .orderedDescending
     }
     
@@ -61,7 +32,7 @@ public extension Date {
     ///
     /// - Parameter date: The Date to be compared to.
     /// - Returns: A Bool value.
-    public func laterThanOrSameAs(date: Date) -> Bool {
+    public func notEarlierThan(date: Date) -> Bool {
         return compare(date) != .orderedAscending
     }
     
@@ -93,9 +64,9 @@ public extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    public func earlierThanOrSameAs(compare date: Date,
-                                    to ref: Date,
-                                    granularity: Calendar.Component) -> Bool {
+    public func notLaterThan(compare date: Date,
+                             to ref: Date,
+                             granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result != .orderedDescending
     }
@@ -124,9 +95,9 @@ public extension Calendar {
     ///   - ref: The Date to be compared to.
     ///   - granularity: The level of comparison.
     /// - Returns: A Bool value.
-    public func laterThanOrSameAs(compare date: Date,
-                                  to ref: Date,
-                                  granularity: Calendar.Component) -> Bool {
+    public func notEarlierThan(compare date: Date,
+                               to ref: Date,
+                               granularity: Calendar.Component) -> Bool {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result != .orderedAscending
     }
