@@ -33,6 +33,7 @@
 		D393B18C1E9E1FB900DBC683 /* RxUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4D91E9CA33400A09A5E /* RxUtil.swift */; };
 		D393B18D1E9E1FB900DBC683 /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DB1E9CA33400A09A5E /* StringUtil.swift */; };
 		D393B18E1E9E1FB900DBC683 /* ThreadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DD1E9CA33400A09A5E /* ThreadUtil.swift */; };
+		D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */; };
 		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		D393B17B1E9E15F000DBC683 /* DateUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateUtilTest.swift; path = test/date/DateUtilTest.swift; sourceTree = "<group>"; };
 		D393B17D1E9E167F00DBC683 /* MathTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathTestUtil.swift; path = util/math/MathTestUtil.swift; sourceTree = "<group>"; };
 		D393B1841E9E1D2900DBC683 /* StringTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTestUtil.swift; path = util/string/StringTestUtil.swift; sourceTree = "<group>"; };
+		D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		D38CC48E1E9CA23600A09A5E = {
 			isa = PBXGroup;
 			children = (
+				D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */,
 				D38CC4EB1E9CBAD200A09A5E /* SwiftUtilities.podspec */,
 				D38CC49A1E9CA23600A09A5E /* SwiftUtilities */,
 				D38CC4A51E9CA23600A09A5E /* SwiftUtilitiesTests */,
@@ -380,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D38CC4EC1E9CBAD200A09A5E /* SwiftUtilities.podspec in Resources */,
+				D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
