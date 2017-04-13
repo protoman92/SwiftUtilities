@@ -55,12 +55,12 @@ public extension Calendar.Component {
     ///
     /// - Returns: A Calendar.Component instance.
     public static func random() -> Calendar.Component {
-        let components: CalendarUnits = [.minute,
-                                         .hour,
-                                         .day,
-                                         .month,
-                                         .year,
-                                         .weekday]
+        let components: Set<Calendar.Component> = [.minute,
+                                                   .hour,
+                                                   .day,
+                                                   .month,
+                                                   .year,
+                                                   .weekday]
         
         let index = Int.randomBetween(0, components.count - 1)
         return components.map({$0})[index]
