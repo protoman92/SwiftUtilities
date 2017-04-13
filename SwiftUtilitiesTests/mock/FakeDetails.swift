@@ -49,6 +49,12 @@ public class FakeDetails {
     }
 }
 
+extension FakeDetails {
+    public static func builder() -> Builder {
+        return Builder()
+    }
+}
+
 extension FakeDetails: FakeProtocol {
     public func reset() {
         methodCount = 0
