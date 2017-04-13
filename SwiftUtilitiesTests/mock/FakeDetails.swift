@@ -49,7 +49,7 @@ public class FakeDetails {
     }
 }
 
-extension FakeDetails {
+public extension FakeDetails {
     public static func builder() -> Builder {
         return Builder()
     }
