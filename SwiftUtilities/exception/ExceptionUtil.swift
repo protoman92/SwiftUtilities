@@ -88,8 +88,12 @@ public func debugException(_ message: String? = nil,
 public struct Exception: Error {
     fileprivate let message: String
     
-    init(_ message: String?) {
+    public init(_ message: String?) {
         self.message = message ?? ""
+    }
+    
+    public init() {
+        self.init(nil)
     }
 }
 

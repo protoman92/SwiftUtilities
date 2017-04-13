@@ -11,6 +11,7 @@
 		D31285DD1E9F2BF400F2AB64 /* pod-publish.txt in Resources */ = {isa = PBXBuildFile; fileRef = D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
+		D37905911E9F61810028E2B2 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37905901E9F61810028E2B2 /* RxTest.swift */; };
 		D38CC4A91E9CA23600A09A5E /* SwiftUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D38CC49B1E9CA23600A09A5E /* SwiftUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D38CC4DE1E9CA33400A09A5E /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4CD1E9CA33400A09A5E /* CollectionUtil.swift */; };
 		D38CC4DF1E9CA33400A09A5E /* SwiftUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4CF1E9CA33400A09A5E /* SwiftUtil.swift */; };
@@ -36,6 +37,7 @@
 		D393B18D1E9E1FB900DBC683 /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DB1E9CA33400A09A5E /* StringUtil.swift */; };
 		D393B18E1E9E1FB900DBC683 /* ThreadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DD1E9CA33400A09A5E /* ThreadUtil.swift */; };
 		D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */; };
+		D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C87B971E9FC8DE000BAB62 /* MockTest.swift */; };
 		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,7 @@
 		D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pod-publish.txt"; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
+		D37905901E9F61810028E2B2 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTest.swift; path = test/rx/RxTest.swift; sourceTree = "<group>"; };
 		D38CC4981E9CA23600A09A5E /* SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38CC49B1E9CA23600A09A5E /* SwiftUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftUtilities.h; sourceTree = "<group>"; };
 		D38CC49C1E9CA23600A09A5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		D393B17D1E9E167F00DBC683 /* MathTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathTestUtil.swift; path = util/math/MathTestUtil.swift; sourceTree = "<group>"; };
 		D393B1841E9E1D2900DBC683 /* StringTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTestUtil.swift; path = util/string/StringTestUtil.swift; sourceTree = "<group>"; };
 		D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
+		D3C87B971E9FC8DE000BAB62 /* MockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTest.swift; path = test/mock/MockTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,14 @@
 				D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */,
 			);
 			name = mock;
+			sourceTree = "<group>";
+		};
+		D379058F1E9F61690028E2B2 /* rx */ = {
+			isa = PBXGroup;
+			children = (
+				D37905901E9F61810028E2B2 /* RxTest.swift */,
+			);
+			name = rx;
 			sourceTree = "<group>";
 		};
 		D38CC48E1E9CA23600A09A5E = {
@@ -248,6 +260,8 @@
 		D393B1761E9E12AF00DBC683 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D3C87B961E9FC8C2000BAB62 /* mock */,
+				D379058F1E9F61690028E2B2 /* rx */,
 				D393B1811E9E180700DBC683 /* date */,
 			);
 			name = test;
@@ -283,6 +297,14 @@
 				D393B1841E9E1D2900DBC683 /* StringTestUtil.swift */,
 			);
 			name = string;
+			sourceTree = "<group>";
+		};
+		D3C87B961E9FC8C2000BAB62 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				D3C87B971E9FC8DE000BAB62 /* MockTest.swift */,
+			);
+			name = mock;
 			sourceTree = "<group>";
 		};
 		F4B487F884AE5A13E7B465D1 /* Pods */ = {
@@ -512,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D393B1861E9E1FB900DBC683 /* CollectionUtil.swift in Sources */,
+				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
 				D393B1871E9E1FB900DBC683 /* SwiftUtil.swift in Sources */,
 				D393B1881E9E1FB900DBC683 /* OperationProtocol.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
@@ -519,6 +542,7 @@
 				D393B18A1E9E1FB900DBC683 /* ExceptionUtil.swift in Sources */,
 				D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */,
 				D393B18B1E9E1FB900DBC683 /* MathUtil.swift in Sources */,
+				D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */,
 				D393B18C1E9E1FB900DBC683 /* RxUtil.swift in Sources */,
 				D393B18D1E9E1FB900DBC683 /* StringUtil.swift in Sources */,
 				D393B18E1E9E1FB900DBC683 /* ThreadUtil.swift in Sources */,
