@@ -70,4 +70,35 @@ class RxTest: XCTestCase {
         let next = events[0..<events.count - 1].flatMap({$0.value.element as? Int})
         XCTAssertEqual(next, array)
     }
+    
+    func test_doOnMethods_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable.just(1)
+            .flatMap({_ in Observable.error(Exception())})
+            .doOnNext {_ in
+                print("OnNext")
+            }
+            .doOnError {_ in
+                print("OnError")
+            }
+            .doOnCompleted {
+                print("OnCompleted")
+            }
+            .doOnSubscribe {
+                print("OnSubscribe")
+            }
+            .doOnSubscribed {
+                print("OnSubscribed")
+            }
+            .doOnDispose {
+                print("OnDisposed")
+            }
+            .subscribe(observer)
+        
+        // Then
+    }
 }

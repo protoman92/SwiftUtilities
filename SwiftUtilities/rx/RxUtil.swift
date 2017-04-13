@@ -19,6 +19,84 @@ public extension Observable {
             .observeOn(MainScheduler.instance)
     }
     
+    /// Convenience method for do(onNext).
+    ///
+    /// - Parameter callback: onNext closure.
+    /// - Returns: An Observable instance.
+    public func doOnNext(_ callback: @escaping (E) -> Void) -> Observable<E> {
+        return `do`(onNext: callback,
+                    onError: nil,
+                    onCompleted: nil,
+                    onSubscribe: nil,
+                    onSubscribed: nil,
+                    onDispose: nil)
+    }
+    
+    /// Convenience method for do(onError).
+    ///
+    /// - Parameter callback: onError closure.
+    /// - Returns: An Observable instance.
+    public func doOnError(_ callback: @escaping (Error) -> Void) -> Observable<E> {
+        return `do`(onNext: nil,
+                    onError: callback,
+                    onCompleted: nil,
+                    onSubscribe: nil,
+                    onSubscribed: nil,
+                    onDispose: nil)
+    }
+    
+    /// Convenience method for do(onCompleted).
+    ///
+    /// - Parameter callback: onCompleted closure.
+    /// - Returns: An Observable instance.
+    public func doOnCompleted(_ callback: @escaping () -> Void) -> Observable<E> {
+        return `do`(onNext: nil,
+                    onError: nil,
+                    onCompleted: callback,
+                    onSubscribe: nil,
+                    onSubscribed: nil,
+                    onDispose: nil)
+    }
+    
+    /// Convenience method for do(onSubscribe).
+    ///
+    /// - Parameter callback: onSubscribe closure.
+    /// - Returns: An Observable instance.
+    public func doOnSubscribe(_ callback: @escaping () -> Void) -> Observable<E> {
+        return `do`(onNext: nil,
+                    onError: nil,
+                    onCompleted: nil,
+                    onSubscribe: callback,
+                    onSubscribed: nil,
+                    onDispose: nil)
+    }
+    
+    /// Convenience method for do(onSubscribed).
+    ///
+    /// - Parameter callback: onSubscribed closure.
+    /// - Returns: An Observable instance.
+    public func doOnSubscribed(_ callback: @escaping () -> Void) -> Observable<E> {
+        return `do`(onNext: nil,
+                    onError: nil,
+                    onCompleted: nil,
+                    onSubscribe: nil,
+                    onSubscribed: callback,
+                    onDispose: nil)
+    }
+    
+    /// Convenience method for do(onDispose).
+    ///
+    /// - Parameter callback: onDispose closure.
+    /// - Returns: An Observable instance.
+    public func doOnDispose(_ callback: @escaping () -> Void) -> Observable<E> {
+        return `do`(onNext: nil,
+                    onError: nil,
+                    onCompleted: nil,
+                    onSubscribe: nil,
+                    onSubscribed: nil,
+                    onDispose: callback)
+    }
+    
     public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let type: DispatchQoS
         
