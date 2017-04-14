@@ -47,18 +47,15 @@ class RxTest: XCTestCase {
     func test_subjectOnError_shouldTerminateImmediately() {
         // Setup
         let subject = PublishSubject<Int>()
-
+        
         let observable = subject
             .asObservable()
-            .flatMap({val in Observable.deferred({Observable
-                .just(val)
+            // Must flatMap into another Observable, or else throwIfEmpty will
+            // not be called.
+            .flatMap({val in Observable.just(val)
                 .filter(Int.isEven)
                 .throwIfEmpty("Error")
-                .ifEmpty(default: 10)})})
-//            .flatMap({val in Observable.deferred({Observable.just(val)})})
-//            .filter(Int.isEven)
-//            .throwIfEmpty("Error")
-//            .ifEmpty(default: 10)
+                .ifEmpty(default: 10)})
         
         let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Int.self)
