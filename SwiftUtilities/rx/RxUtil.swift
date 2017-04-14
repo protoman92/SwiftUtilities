@@ -10,6 +10,18 @@ import RxSwift
 
 public extension Observable {
     
+    /// Convenience method to throw an error.
+    ///
+    /// - Parameter error: A String value.
+    /// - Returns: An Observable instance.
+    public static func error(_ error: String) -> Observable<Element> {
+        let exc = Exception(error)
+        return Observable.error(exc)
+    }
+}
+
+public extension Observable {
+    
     /// Apply common schedulers to an Observable stream.
     ///
     /// - Returns: An Observable instance.
@@ -17,6 +29,29 @@ public extension Observable {
         return self
             .subscribeOn(qos: .userInteractive)
             .observeOn(MainScheduler.instance)
+    }
+    
+    /// Switch to an empty Observable if an Error is caught.
+    ///
+    /// - Returns: An Observable instance.
+    public func catchSwitchToEmpty() -> Observable<E> {
+        return catchError({_ in Observable.empty()})
+    }
+    
+    /// If the Observable is empty, throw an Error.
+    ///
+    /// - Parameter error: A String value.
+    /// - Returns: An Observable instance.
+    public func throwIfEmpty(_ error: Error) -> Observable<E> {
+        return ifEmpty(switchTo: Observable.error(error))
+    }
+    
+    /// If the Observable is empty, throw an Error.
+    ///
+    /// - Parameter error: A String value.
+    /// - Returns: An Observable instance.
+    public func throwIfEmpty(_ error: String) -> Observable<E> {
+        return ifEmpty(switchTo: Observable.error(error))
     }
     
     /// Convenience method for do(onNext).

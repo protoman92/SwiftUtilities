@@ -101,4 +101,34 @@ class RxTest: XCTestCase {
         
         // Then
     }
+    
+    func test_throwIfEmpty_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable.empty()
+            .throwIfEmpty("Empty error")
+            .subscribe(observer)
+        
+        // Then
+        XCTAssertNotNil(observer.events[0].value.error)
+    }
+    
+    func test_catchSwitchToEmpty_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable.error("Error")
+            .catchSwitchToEmpty()
+            .subscribe(observer)
+        
+        // Then
+        let event = observer.events[0].value
+        XCTAssertNil(event.element)
+        XCTAssertNil(event.error)
+    }
 }
