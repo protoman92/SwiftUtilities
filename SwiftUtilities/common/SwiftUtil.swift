@@ -37,6 +37,24 @@ public func readPropertyList(from fileName: String? = nil,
     return dict.value(forKey: key)
 }
 
+/// Print only in debug mode.
+///
+/// - Parameter args: Items to be printed.
+public func debugPrint(_ args: Any...) {
+    if isInDebugMode() {
+        print(args)
+    }
+}
+
+/// Print one item only in debug mode.
+///
+/// - Parameter item: The item to be printed.
+public func debugPrint(_ item: Any) {
+    if isInDebugMode() {
+        print(item)
+    }
+}
+
 public extension NSObject {
     
     /// Check if the current NSObject is an instance of a specified Type.

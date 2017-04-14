@@ -50,3 +50,32 @@ public extension CGFloat {
         return CGFloat((Double(self).radians))
     }
 }
+
+public extension Int {
+    
+    /// Check if an Int is even. This is convenient for closure checks.
+    ///
+    /// - Parameter value: The Int value to be checked.
+    /// - Returns: A Bool value.
+    public static func isEven(_ value: Int) -> Bool {
+        return value.isEven
+    }
+    
+    /// Check if an Int is odd. This is convenient for closure checks.
+    ///
+    /// - Parameter value: The Int value to be checked.
+    /// - Returns: A Bool value.
+    public static func isOdd(_ value: Int) -> Bool {
+        return value.isOdd
+    }
+    
+    /// Check if the current Int is even.
+    public var isEven: Bool {
+        return self % 2 == 0
+    }
+    
+    /// Check if the current Int is odd.
+    public var isOdd: Bool {
+        return !isEven
+    }
+}

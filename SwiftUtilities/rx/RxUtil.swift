@@ -54,6 +54,20 @@ public extension Observable {
         return ifEmpty(switchTo: Observable.error(error))
     }
     
+    /// Print onNext emission.
+    ///
+    /// - Returns: An Observable instance.
+    public func logNext() -> Observable<E> {
+        return doOnNext(debugPrint)
+    }
+    
+    /// Print onError emission.
+    ///
+    /// - Returns: An Observable instance.
+    public func logError() -> Observable<E> {
+        return doOnError(debugPrint)
+    }
+    
     /// Convenience method for do(onNext).
     ///
     /// - Parameter callback: onNext closure.

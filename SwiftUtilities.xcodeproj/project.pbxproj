@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2AD5B2F4B8E112C82590DB2E /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */; };
 		D31285DD1E9F2BF400F2AB64 /* pod-publish.txt in Resources */ = {isa = PBXBuildFile; fileRef = D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */; };
+		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
+		D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
 		D37905911E9F61810028E2B2 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37905901E9F61810028E2B2 /* RxTest.swift */; };
@@ -59,6 +61,7 @@
 		BD6387B60973500599312E56 /* Pods-SwiftUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.release.xcconfig"; sourceTree = "<group>"; };
 		D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pod-publish.txt"; sourceTree = "<group>"; };
+		D313E5C71EA08AD00063F91F /* BooleanUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanUtil.swift; path = boolean/BooleanUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
 		D37905901E9F61810028E2B2 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTest.swift; path = test/rx/RxTest.swift; sourceTree = "<group>"; };
@@ -114,6 +117,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D313E5C61EA08AAF0063F91F /* boolean */ = {
+			isa = PBXGroup;
+			children = (
+				D313E5C71EA08AD00063F91F /* BooleanUtil.swift */,
+			);
+			name = boolean;
+			sourceTree = "<group>";
+		};
 		D334C9411E9E8CEC00B88826 /* mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +168,7 @@
 		D38CC49A1E9CA23600A09A5E /* SwiftUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				D313E5C61EA08AAF0063F91F /* boolean */,
 				D38CC4CC1E9CA33400A09A5E /* collection */,
 				D38CC4CE1E9CA33400A09A5E /* common */,
 				D38CC4D01E9CA33400A09A5E /* date */,
@@ -517,6 +529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */,
 				D38CC4E01E9CA33400A09A5E /* DateUtil.swift in Sources */,
 				D38CC4E31E9CA33400A09A5E /* MathUtil.swift in Sources */,
 				D38CC4DE1E9CA33400A09A5E /* CollectionUtil.swift in Sources */,
@@ -533,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */,
 				D393B1861E9E1FB900DBC683 /* CollectionUtil.swift in Sources */,
 				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
 				D393B1871E9E1FB900DBC683 /* SwiftUtil.swift in Sources */,
@@ -609,7 +623,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "-D DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

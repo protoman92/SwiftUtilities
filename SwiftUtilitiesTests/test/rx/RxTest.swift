@@ -44,6 +44,41 @@ class RxTest: XCTestCase {
         })
     }
     
+    func test_subjectOnError_shouldTerminateImmediately() {
+        // Setup
+        let subject = PublishSubject<Int>()
+
+        let observable = subject
+            .asObservable()
+            .flatMap({val in Observable.deferred({Observable
+                .just(val)
+                .filter(Int.isEven)
+                .throwIfEmpty("Error")
+                .ifEmpty(default: 10)})})
+//            .flatMap({val in Observable.deferred({Observable.just(val)})})
+//            .filter(Int.isEven)
+//            .throwIfEmpty("Error")
+//            .ifEmpty(default: 10)
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Int.self)
+        let array = [2, 4, 6, 8, 10, 7, 120]
+        let firstOddIndex = array.index(where: Int.isOdd)!
+        
+        // When
+        _ = observable.subscribe(observer)
+        array.forEach(subject.onNext)
+        
+        // Then
+        let events = observer.events
+        print(events)
+        let nexts = events[0..<firstOddIndex]
+        let errors = events[firstOddIndex]
+        XCTAssertEqual(events.count, firstOddIndex + 1)
+        XCTAssertEqual(nexts.flatMap({$0.value.element}).count, nexts.count)
+        XCTAssertNotNil(errors.value.error)
+    }
+    
     func test_createWithForEach_shouldCreateMultipleStreams() {
         // Setup
         let array = [1, 2, 3, 4, 5]
@@ -67,7 +102,11 @@ class RxTest: XCTestCase {
         
         // Then
         let events = observer.events
-        let next = events[0..<events.count - 1].flatMap({$0.value.element as? Int})
+        
+        let next = events[0..<events.count - 1].flatMap({
+            $0.value.element as? Int
+        })
+        
         XCTAssertEqual(next, array)
     }
     
