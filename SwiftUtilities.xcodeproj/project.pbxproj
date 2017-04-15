@@ -581,6 +581,7 @@
 		D38CC4AA1E9CA23600A09A5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -634,6 +635,7 @@
 		D38CC4AB1E9CA23600A09A5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -681,6 +683,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 990954EAB6097B6EC5EA5498 /* Pods-SwiftUtilities.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -703,6 +706,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BD6387B60973500599312E56 /* Pods-SwiftUtilities.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -724,7 +728,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 18D2A2680E02FF607FA7ED80 /* Pods-SwiftUtilitiesTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEVELOPMENT_TEAM = S3V9CCW695;
 				INFOPLIST_FILE = SwiftUtilitiesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -738,7 +742,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEVELOPMENT_TEAM = S3V9CCW695;
 				INFOPLIST_FILE = SwiftUtilitiesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

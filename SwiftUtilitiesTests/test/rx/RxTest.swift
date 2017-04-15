@@ -32,6 +32,8 @@ class RxTest: XCTestCase {
         subject2.onNext(5)
         subject2.onNext(6)
         
+        scheduler.start()
+        
         // Then
         [observer1, observer2].forEach({
             let events = $0.events
@@ -65,6 +67,7 @@ class RxTest: XCTestCase {
         // When
         _ = observable.subscribe(observer)
         array.forEach(subject.onNext)
+        scheduler.start()
         
         // Then
         let events = observer.events
@@ -96,6 +99,8 @@ class RxTest: XCTestCase {
                 return Disposables.create()
             })
             .subscribe(observer)
+        
+        scheduler.start()
         
         // Then
         let events = observer.events
@@ -135,6 +140,8 @@ class RxTest: XCTestCase {
             }
             .subscribe(observer)
         
+        scheduler.start()
+        
         // Then
     }
     
@@ -147,6 +154,8 @@ class RxTest: XCTestCase {
         _ = Observable.empty()
             .throwIfEmpty("Empty error")
             .subscribe(observer)
+        
+        scheduler.start()
         
         // Then
         XCTAssertNotNil(observer.events[0].value.error)
@@ -162,9 +171,106 @@ class RxTest: XCTestCase {
             .catchSwitchToEmpty()
             .subscribe(observer)
         
+        scheduler.start()
+        
         // Then
         let event = observer.events[0].value
         XCTAssertNil(event.element)
         XCTAssertNil(event.error)
+    }
+    
+    func test_mapIfToOtherType_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(String.self)
+        let array: [Int] = [1, 2, 3, 4]
+        
+        // When
+        _ = Observable.from(array)
+            .mapIf(Int.isEven,
+                   thenReturn: {_ in "Even"},
+                   elseReturn: {_ in "Odd"})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let values = events.flatMap({$0.value.element})
+        
+        XCTAssertEqual(
+            values.filter({$0 == "Even"}).count,
+            array.filter(Int.isEven).count
+        )
+        
+        XCTAssertEqual(
+            values.filter({$0 == "Odd"}).count,
+            array.filter(Int.isOdd).count
+        )
+    }
+    
+    func test_mapIfToSameType_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Int.self)
+        let array: [Int] = [1, 2, 3, 4]
+        
+        // When
+        _ = Observable.from(array)
+            .if(Int.isEven, thenReturn: {$0 + 1})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let values = events.flatMap({$0.value.element})
+        
+        XCTAssertEqual(values.filter(Int.isOdd).count, array.count)
+    }
+    
+    func test_flatMapToSameType_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Int.self)
+        let array: [Int] = [1, 2, 3, 4]
+        
+        // When
+        _ = Observable<Int>.from(array)
+            .if(Int.isEven,
+                then: Observable.just,
+                else: {_ in Observable.empty()})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let values = events.flatMap({$0.value.element})
+        XCTAssertEqual(values.count, array.filter(Int.isEven).count)
+    }
+    
+    func test_flatMapToOtherType_shouldSucceed() {
+        // Setup
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(String.self)
+        let array: [Int] = [1, 2, 3, 4]
+        
+        // When
+        _ = Observable.from(array)
+            .flatMapIf(Int.isEven,
+                       then: {_ in Observable.just("Even")},
+                       else: {_ in Observable.just("Odd")})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let values = events.flatMap({$0.value.element})
+        let evens = array.filter(Int.isEven)
+        let odds = array.filter(Int.isOdd)
+        XCTAssertEqual(values.filter({$0 == "Even"}).count, evens.count)
+        XCTAssertEqual(values.filter({$0 == "Odd"}).count, odds.count)
     }
 }
