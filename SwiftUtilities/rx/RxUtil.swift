@@ -53,6 +53,17 @@ public extension Observable {
     public func throwIfEmpty(_ error: String) -> Observable<E> {
         return ifEmpty(switchTo: Observable.error(error))
     }
+}
+
+public extension Observable {
+    
+    /// Print onNext emission.
+    ///
+    /// - Parameter selector: Closure to convert the item into another object.
+    /// - Returns: An Observable instance.
+    public func logNext(_ selector: @escaping (E) -> Any) -> Observable<E> {
+        return doOnNext({debugPrint(selector($0))})
+    }
     
     /// Print onNext emission.
     ///
@@ -63,11 +74,22 @@ public extension Observable {
     
     /// Print onError emission.
     ///
+    /// - Parameter selector: Closure to convert the error into another object.
+    /// - Returns: An Observable instance.
+    public func logNext(_ selector: @escaping (Error) -> Any) -> Observable<E> {
+        return doOnError({debugPrint(selector($0))})
+    }
+    
+    /// Print onError emission.
+    ///
     /// - Returns: An Observable instance.
     public func logError() -> Observable<E> {
         return doOnError(debugPrint)
     }
-    
+}
+
+public extension Observable {
+
     /// Convenience method for do(onNext).
     ///
     /// - Parameter callback: onNext closure.
@@ -153,7 +175,14 @@ public extension Observable {
                     onSubscribed: nil,
                     onDispose: callback)
     }
+}
+
+public extension Observable {
     
+    /// Convenient for subscribeOn with a QoS.
+    ///
+    /// - Parameter qos: A Quality of Service instance.
+    /// - Returns: An Observable instance.
     public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let type: DispatchQoS
         
@@ -181,8 +210,14 @@ public extension Observable {
         return subscribeOn(scheduler)
     }
     
+    /// Subscribe to a LifeCycleObserverType.
+    ///
+    /// - Parameters:
+    ///   - o: A LifecycleObserverType instance.
+    ///   - tag: An optional OperationProtocol instance.
+    /// - Returns: A Disposable instance.
     public func subscribe<O>(_ o: O, tag: OperationProtocol?) -> Disposable
-        where O: LifecycleObserver, O.E == Element {
+        where O: LifecycleObserverType, O.E == Element {
         return subscribe(
             onNext: {
                 if o.canObserve(tag) {
@@ -341,7 +376,7 @@ public extension ObservableType {
 /// Class instances that make use of rx may implement this protocol to avoid
 /// Observable emission, i.e. when a ViewController is not present on screen
 /// and we want to stop fetching data.
-public protocol LifecycleObserver {
+public protocol LifecycleObserverType {
     associatedtype E
     
     func canObserve(_ tag: OperationProtocol?) -> Bool

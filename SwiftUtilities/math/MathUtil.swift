@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+extension Int: CustomComparisonProtocol {
+    public func equals(object: Int?) -> Bool {
+        return self == object
+    }
+}
+
 public protocol Summable {
     static var Zero: Self { get }
     

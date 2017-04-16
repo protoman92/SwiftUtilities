@@ -14,6 +14,22 @@ public protocol CustomComparisonProtocol {
     func equals(object: E?) -> Bool
 }
 
+public extension Sequence {
+    /// Get the first item that is an instance of a specified Type.
+    ///
+    /// - Parameter type: The Type to check for matching elements.
+    /// - Returns: An element whose type is the specified Type.
+    public func firstItem<T>(ofType type: T.Type) -> T? {
+        for item in self {
+            if item is T {
+                return item as? T
+            }
+        }
+        
+        return nil
+    }
+}
+
 public extension Array {
     
     /// Check if the current Array contains an element at an index, by checking 
@@ -62,19 +78,18 @@ public extension Array {
         let prefixed = shuffled.prefix(Swift.max(0, elementCount))
         return prefixed.map({$0})
     }
+}
+
+public extension Sequence where
+    Iterator.Element: CustomComparisonProtocol,
+    Iterator.Element == Iterator.Element.E {
     
-    /// Get the first item that is an instance of a specified Type.
+    /// Check if an element is found in the current Sequence.
     ///
-    /// - Parameter type: The Type to check for matching elements.
-    /// - Returns: An element whose type is the specified Type.
-    public func firstItem<T>(ofType type: T.Type) -> T? {
-        for item in self {
-            if item is T {
-                return item as? T
-            }
-        }
-        
-        return nil
+    /// - Parameter element: The element to be inspected for existence.
+    /// - Returns: A Bool value.
+    public func contains(element: Iterator.Element) -> Bool {
+        return contains(where: {$0.equals(object: element)})
     }
 }
 
@@ -112,14 +127,16 @@ public extension Array where
         }
     }
     
-    /// Append an Array uniquely, i.e. only unique elements.
+    /// Append an Sequence uniquely, i.e. only unique elements.
     ///
-    /// - Parameter data: The Array to be appended.
+    /// - Parameter data: The Sequence to be appended.
     /// - Returns: An Int value for the total number of appended elements.
     @discardableResult
-    public mutating func append(uniqueContentsOf data: [Element]) -> Int {
+    public mutating func append<S: Sequence>(uniqueContentsOf data: S)
+        -> Int where S.Iterator.Element == Element
+    {
         var added = 0
-        
+    
         for item in data where !contains(where: {$0.equals(object: item)}) {
             append(item)
             added += 1
@@ -128,12 +145,14 @@ public extension Array where
         return added
     }
     
-    /// Append an Array uniquely, or replace existing elements if applicable.
+    /// Append an Sequence uniquely, or replace existing elements if applicable.
     ///
-    /// - Parameter data: The Array to be appended.
+    /// - Parameter data: The Sequence to be appended.
     /// - Returns: An Int value for the total number of appended elements.
     @discardableResult
-    public mutating func appendOrReplace(uniqueContentsOf data: [Element]) -> Int {
+    public mutating func appendOrReplace<S: Sequence>(uniqueContentsOf data: S)
+        -> Int where S.Iterator.Element == Element
+    {
         var added = 0
         
         for item in data {
@@ -141,14 +160,6 @@ public extension Array where
         }
         
         return added
-    }
-    
-    /// Check if an element is found in the current Array.
-    ///
-    /// - Parameter element: The element to be inspected for existence.
-    /// - Returns: A Bool value.
-    public func contains(element: Element) -> Bool {
-        return contains(where: {$0.equals(object: element)})
     }
     
     /// Check if the current Array is deeply equal to another Array.
@@ -264,8 +275,8 @@ public extension Array where
     /// Remove contents of another Array, and return a modified Array with
     /// the rest of the elements.
     ///
-    /// - Parameter array: <#array description#>
-    /// - Returns: <#return value description#>
+    /// - Parameter array: An Array of Element.
+    /// - Returns: An Array of Element.
     public func removingContents(of array: [Element]) -> [Element] {
         var copy = self
         copy.removeContents(of: array)
