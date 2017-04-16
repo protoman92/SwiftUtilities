@@ -15,6 +15,10 @@ extension Int: CustomComparisonProtocol {
     }
 }
 
+extension Int: IsInstanceProtocol {}
+extension Float: IsInstanceProtocol {}
+extension Double: IsInstanceProtocol {}
+
 public protocol Summable {
     static var Zero: Self { get }
     

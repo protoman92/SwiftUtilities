@@ -11,11 +11,16 @@ import RxTest
 import XCTest
 
 class RxTest: XCTestCase {
+    fileprivate var scheduler = TestScheduler(initialClock: 0)
+    
+    override func setUp() {
+        scheduler = TestScheduler(initialClock: 0)
+    }
+    
     func test_subjectOnNext_shouldEmitCorrectValues() {
         // Setup
         let subject1 = PublishSubject<Any>()
         let subject2 = PublishSubject<Any>()
-        let scheduler = TestScheduler(initialClock: 0)
         let observer1 = scheduler.createObserver(Any.self)
         let observer2 = scheduler.createObserver(Any.self)
         
@@ -59,7 +64,6 @@ class RxTest: XCTestCase {
                 .throwIfEmpty("Error")
                 .ifEmpty(default: 10)})
         
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Int.self)
         let array = [2, 4, 6, 8, 10, 7, 120]
         let firstOddIndex = array.index(where: Int.isOdd)!
@@ -71,7 +75,6 @@ class RxTest: XCTestCase {
         
         // Then
         let events = observer.events
-        print(events)
         let nexts = events[0..<firstOddIndex]
         let errors = events[firstOddIndex]
         XCTAssertEqual(events.count, firstOddIndex + 1)
@@ -82,7 +85,6 @@ class RxTest: XCTestCase {
     func test_createWithForEach_shouldCreateMultipleStreams() {
         // Setup
         let array = [1, 2, 3, 4, 5]
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Any.self)
         
         // When
@@ -114,7 +116,6 @@ class RxTest: XCTestCase {
     
     func test_doOnMethods_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Any.self)
         
         // When
@@ -147,7 +148,6 @@ class RxTest: XCTestCase {
     
     func test_throwIfEmpty_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Any.self)
         
         // When
@@ -163,7 +163,6 @@ class RxTest: XCTestCase {
     
     func test_catchSwitchToEmpty_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Any.self)
         
         // When
@@ -181,7 +180,6 @@ class RxTest: XCTestCase {
     
     func test_mapIfToOtherType_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(String.self)
         let array: [Int] = [1, 2, 3, 4]
         
@@ -211,7 +209,6 @@ class RxTest: XCTestCase {
     
     func test_mapIfToSameType_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Int.self)
         let array: [Int] = [1, 2, 3, 4]
         
@@ -231,7 +228,6 @@ class RxTest: XCTestCase {
     
     func test_flatMapToSameType_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Int.self)
         let array: [Int] = [1, 2, 3, 4]
         
@@ -252,7 +248,6 @@ class RxTest: XCTestCase {
     
     func test_flatMapToOtherType_shouldSucceed() {
         // Setup
-        let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(String.self)
         let array: [Int] = [1, 2, 3, 4]
         
@@ -272,5 +267,75 @@ class RxTest: XCTestCase {
         let odds = array.filter(Int.isOdd)
         XCTAssertEqual(values.filter({$0 == "Even"}).count, evens.count)
         XCTAssertEqual(values.filter({$0 == "Odd"}).count, odds.count)
+    }
+    
+    func test_castToWrongType_shouldThrow() {
+        // Setup
+        let observer = scheduler.createObserver(String.self)
+        
+        // When
+        _ = Observable.just(1)
+            .cast(to: String.self)
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let error = events.first!.value.error
+        XCTAssertNotNil(error)
+    }
+    
+    func test_castToCorrectType_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable.just("Test")
+            .cast(to: Any.self)
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let next = events.first!.value.element
+        XCTAssertNotNil(next)
+        XCTAssertEqual(next as! String, "Test")
+    }
+    
+    func test_ofTypeWrongType_shouldDoNothing() {
+        // Setup
+        let observer = scheduler.createObserver(String.self)
+        
+        // When
+        _ = Observable.just(1)
+            .ofType(String.self)
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let completed = events.first!.value.event
+        XCTAssertTrue(completed == Event<String>.completed)
+    }
+    
+    func test_ofTypeCorrectType_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable.just("Test")
+            .cast(to: Any.self)
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let next = events.first!.value.element
+        XCTAssertNotNil(next)
+        XCTAssertEqual(next as! String, "Test")
     }
 }

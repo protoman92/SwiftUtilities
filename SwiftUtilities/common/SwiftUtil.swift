@@ -54,14 +54,3 @@ public func debugPrint(_ item: Any) {
         print(item)
     }
 }
-
-public extension NSObject {
-    
-    /// Check if the current NSObject is an instance of a specified Type.
-    ///
-    /// - Parameter type: The Type to be checked.
-    /// - Returns: A Bool value.
-    func isInstance<T>(of type: T.Type) -> Bool {
-        return Mirror(reflecting: self).subjectType == type
-    }
-}

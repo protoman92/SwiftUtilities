@@ -15,6 +15,8 @@ extension String: CustomComparisonProtocol {
     }
 }
 
+extension String: IsInstanceProtocol {}
+
 public extension String {
     
     /// Check if the current String is an email.

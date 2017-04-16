@@ -294,11 +294,6 @@ public extension Collection {
 
 public extension Dictionary {
     
-    /// Check if the current Dictionary is not empty.
-    public var isNotEmpty: Bool {
-        return !isEmpty
-    }
-    
     /// Update the current Dictionary with another Dictionary.
     ///
     /// - Parameter dict: The Dictionary to get entries from.

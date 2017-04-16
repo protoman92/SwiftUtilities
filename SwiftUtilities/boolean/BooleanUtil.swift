@@ -6,6 +6,8 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+extension Bool: IsInstanceProtocol {}
+
 public extension Bool {
     
     /// Check if a Bool value is true. This is convenient for closure checks.

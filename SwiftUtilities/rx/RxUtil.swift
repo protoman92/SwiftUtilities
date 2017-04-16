@@ -179,6 +179,39 @@ public extension Observable {
 
 public extension Observable {
     
+    /// Cast the emission to another type, and throw an Error if the cast
+    /// fails.
+    ///
+    /// - Parameter type: The type to be cast to.
+    /// - Returns: An Observable instance.
+    public func cast<T>(to type: T.Type) -> Observable<T> {
+        return flatMap({(item) -> Observable<T> in
+            guard let cast = item as? T else {
+                return Observable<T>.error("Cast to \(type) failed")
+            }
+            
+            return Observable<T>.just(cast)
+        })
+    }
+    
+    /// Cast the emission to another type, and switch to an empty Observable
+    /// if the cast fails.
+    ///
+    /// - Parameter type: The type to be cast to.
+    /// - Returns: An Observable instance.
+    public func ofType<T>(_ type: T.Type) -> Observable<T> {
+        return flatMap({(item) -> Observable<T> in
+            guard let cast = item as? T else {
+                return Observable<T>.empty()
+            }
+            
+            return Observable<T>.just(cast)
+        })
+    }
+}
+
+public extension Observable {
+    
     /// Convenient for subscribeOn with a QoS.
     ///
     /// - Parameter qos: A Quality of Service instance.
