@@ -277,6 +277,32 @@ public extension Observable {
 
 public extension Observable {
     
+    /// Static if method that accepts a condition selector, and return the
+    /// appropriate Observable based on whether the condition is satisfied.
+    ///
+    /// - Parameters:
+    ///   - condition: Conditional closure check.
+    ///   - firstSelector: Closure selector.
+    ///   - secondSelector: Closure selector.
+    /// - Returns: An Observable instance.
+    public static func `if`<T>(
+        _ condition: () throws -> Bool,
+        then firstSelector: () throws -> Observable<T>,
+        else secondSelector: (() throws -> Observable<T>)? = nil
+    ) -> Observable<T> {
+        do {
+            if try condition() {
+                return try firstSelector()
+            } else if let secondSelector = secondSelector {
+                return try secondSelector()
+            } else {
+                return Observable<T>.empty()
+            }
+        } catch let e {
+            return Observable<T>.error(e)
+        }
+    }
+    
     /// flatMap into an Observable if the emitted element passes a condition,
     /// else into another Observable.
     ///
@@ -346,6 +372,34 @@ public extension Observable {
 }
 
 public extension ObservableType {
+    
+    /// Static if method that accepts a condition selector, and return the
+    /// appropriate value based on whether the condition is satisfied.
+    ///
+    /// - Parameters:
+    ///   - condition: Conditional closure check.
+    ///   - firstSelector: Closure selector.
+    ///   - secondSelector: Closure selector.
+    /// - Returns: An Observable instance.
+    public static func `if`<T>(
+        _ condition: () throws -> Bool,
+        thenReturn firstSelector: () throws -> T,
+        elseReturn secondSelector: () throws -> T
+    ) -> Observable<T> {
+        do {
+            let value: T
+            
+            if try condition() {
+                value = try firstSelector()
+            } else {
+                value = try secondSelector()
+            }
+            
+            return Observable.just(value)
+        } catch let e {
+            return Observable<T>.error(e)
+        }
+    }
     
     /// map into a value of a different type if the emitted element passes a
     /// condition.

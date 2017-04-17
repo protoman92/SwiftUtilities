@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension Date: IsInstanceProtocol {}
+
+extension Calendar: IsInstanceProtocol {}
+
 public extension Date {
     
     /// Check if the current Date is earlier than, or at least the same as, 
@@ -136,16 +140,16 @@ public extension Calendar {
 /// Convenience typealias
 public typealias CalendarUnits = Set<Calendar.Component>
 
-public struct DateFormat {
-    public static let ddMM = "dd MM"
-    public static let ddMMM = "dd MMM"
-    public static let ddMMMM = "dd MMMM"
-    public static let ddMMMYYYYhhmma = "dd MMM YYYY hh:mm a"
-    public static let ddMMMMYYYYhhmma = "dd MMMM YYYY hh:mm a"
-    public static let EEddMMYY = "EE, dd-MM-YY"
-    public static let EEddMMYYhhmma = "EE, dd-MM-YY hh:mm a"
-    public static let EEEEddMMMYYYY = "EEEE, dd MMMM YYYY"
-    public static let EEEEddMMMYYYYhhmma = "EEEE, dd MMMM YYYY hh:mm a"
-    public static let hhmma = "hh:mm a"
-    public static let MMMMYYYY = "MMMM, YYYY"
+public enum DateFormat: String {
+    case ddMM = "dd MM"
+    case ddMMM = "dd MMM"
+    case ddMMMM = "dd MMMM"
+    case ddMMMYYYYhhmma = "dd MMM YYYY hh:mm a"
+    case ddMMMMYYYYhhmma = "dd MMMM YYYY hh:mm a"
+    case EEddMMYY = "EE, dd-MM-YY"
+    case EEddMMYYhhmma = "EE, dd-MM-YY hh:mm a"
+    case EEEEddMMMYYYY = "EEEE, dd MMMM YYYY"
+    case EEEEddMMMYYYYhhmma = "EEEE, dd MMMM YYYY hh:mm a"
+    case hhmma = "hh:mm a"
+    case MMMMYYYY = "MMMM, YYYY"
 }

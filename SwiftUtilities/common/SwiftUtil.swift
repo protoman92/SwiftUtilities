@@ -54,3 +54,13 @@ public func debugPrint(_ item: Any) {
         print(item)
     }
 }
+
+/// Return the same value as passed in via arguments. This can be used for
+/// map operations that wish to return the same value (e.g. when mapping
+/// different Sequence types to Array).
+///
+/// - Parameter object: An object of any type.
+/// - Returns: The same object as the parameter object.
+public func eq<T>(_ object: T) -> T {
+    return object
+}

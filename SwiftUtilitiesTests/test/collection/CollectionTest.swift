@@ -32,4 +32,19 @@ class CustomComparisonCollectionTest: XCTestCase {
         // Then
         XCTAssertTrue(contains)
     }
+    
+    func test_arrayRepeat_shouldSucceed() {
+        // Setup
+        let times = 10
+        let selector: (Int) -> String = {String(describing: $0)}
+        
+        // When
+        let array = Array(repeating: selector, for: times)
+        let reconverted: [Int] = array.flatMap({Int($0)})
+        
+        // Then
+        print(array, reconverted)
+        XCTAssertEqual(array.count, times)
+        XCTAssertEqual(reconverted, (0..<10).map(eq))
+    }
 }

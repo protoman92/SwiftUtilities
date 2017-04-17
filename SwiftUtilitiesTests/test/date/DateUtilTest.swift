@@ -79,7 +79,7 @@ class DateUtilTest: XCTestCase {
     func test_dateConversion_shouldSucceed() {
         let millis: Double = 1478372157
         let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.EEEEddMMMYYYYhhmma
+        formatter.dateFormat = DateFormat.EEEEddMMMYYYYhhmma.rawValue
         print(formatter.string(from: Date(timeIntervalSince1970: millis)))
     }
 }

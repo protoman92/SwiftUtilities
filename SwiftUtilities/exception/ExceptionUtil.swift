@@ -8,6 +8,8 @@
 
 import Foundation
 
+extension Exception: IsInstanceProtocol {}
+
 /// Assert the validity of a statement, if debugging is active.
 ///
 /// - Parameters:

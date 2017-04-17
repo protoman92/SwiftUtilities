@@ -338,4 +338,36 @@ class RxTest: XCTestCase {
         XCTAssertNotNil(next)
         XCTAssertEqual(next as! String, "Test")
     }
+    
+    func test_staticIfSwitch_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable<Int>
+            .if({true},
+                then: {Observable.just(1)},
+                else: {Observable.just(2)})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
+    }
+    
+    func test_staticIfReturn_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Any.self)
+        
+        // When
+        _ = Observable<Int>
+            .if({true}, thenReturn: {1}, elseReturn: {2})
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
+    }
 }

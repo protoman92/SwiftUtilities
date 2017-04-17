@@ -14,6 +14,10 @@ public protocol CustomComparisonProtocol {
     func equals(object: E?) -> Bool
 }
 
+extension Array: IsInstanceProtocol {}
+
+extension Dictionary: IsInstanceProtocol {}
+
 public extension Sequence {
     /// Get the first item that is an instance of a specified Type.
     ///
@@ -292,12 +296,32 @@ public extension Collection {
     }
 }
 
+public extension Array {
+    
+    /// Create an Array of elements repeated for a certain number of times.
+    /// However, instead of containing the same elements, this Array contains
+    /// elements as created by a selector.
+    ///
+    /// - Parameters:
+    ///   - selector: Closure selector to create an Element instance.
+    ///   - times: The number of times to repeat the element creation.
+    public init(repeating selector: (Int) throws -> Element, for times: Int) {
+        self.init()
+        let count = Swift.max(0, times)
+        
+        for i in 0..<count {
+            do {try append(selector(i))}
+            catch {}
+        }
+    }
+}
+
 public extension Dictionary {
     
     /// Update the current Dictionary with another Dictionary.
     ///
     /// - Parameter dict: The Dictionary to get entries from.
-    public mutating func updateValues(from dict: [Key : Value]) {
+    public mutating func updateValues(from dict: [Key: Value]) {
         for (key, value) in dict {
             self.updateValue(value, forKey: key)
         }
