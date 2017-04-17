@@ -17,8 +17,7 @@ public extension Int {
     ///   - from: Inclusive lower bound Int value.
     ///   - upTo: Exclusive upper bound Int value.
     /// - Returns: An Int value.
-    public static func random(_ from: Int? = nil,
-                              _ upTo: Int) -> Int {
+    public static func random(_ from: Int? = nil, _ upTo: Int) -> Int {
         let from = UInt32(from ?? 0)
         return Int(arc4random_uniform(UInt32(upTo) - from) + from)
     }
@@ -30,8 +29,7 @@ public extension Int {
     ///   - from: Inclusive lower bound Int value.
     ///   - endValue: Inclusive upper bound Int value.
     /// - Returns: An Int value.
-    public static func randomBetween(_ from: Int? = nil,
-                                     _ endValue: Int) -> Int {
-        return random(from, endValue + 1)
+    public static func randomBetween(_ from: Int? = nil, _ end: Int) -> Int {
+        return random(from, end + 1)
     }
 }
