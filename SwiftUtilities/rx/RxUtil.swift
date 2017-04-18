@@ -476,3 +476,61 @@ public protocol LifecycleObserverType {
     
     func onDisposed(_ tag: OperationProtocol?)
 }
+
+public extension Sequence where Iterator.Element: ObservableConvertibleType {
+    
+    /// Concat all ObservableConvertibleType in the Sequence into one
+    /// Observable.
+    ///
+    /// - Returns: An Observable instance.
+    public func concatAsObservable() -> Observable<Iterator.Element.E> {
+        return Observable.concat(self.map({$0.asObservable()}))
+    }
+    
+    /// Merge all ObservableConvertibleType in the Sequence into one
+    /// Observable.
+    ///
+    /// - Returns: An Observable instance.
+    public func mergeAsObservable() -> Observable<Iterator.Element.E> {
+        return Observable.merge(self.map({$0.asObservable()}))
+    }
+    
+    /// Amb all ObservableConvertibleType in the Sequence into one Observable.
+    /// The ObservableConvertibleType that emits value first will be chosen
+    /// as the main sequence, all others discarded.
+    ///
+    /// - Returns: An Observable instance.
+    public func ambAsObservable() -> Observable<Iterator.Element.E> {
+        return Observable.amb(self.map({$0.asObservable()}))
+    }
+}
+
+public extension Sequence where Iterator.Element: ObserverType {
+    
+    /// Call on(event:) on each ObserverType in the current Sequence.
+    ///
+    /// - Parameter event: An Event instance.
+    public func on(_ event: Event<Iterator.Element.E>) {
+        self.forEach({$0.on(event)})
+    }
+    
+    
+    /// Call onNext on each ObserverType in the current Sequence.
+    ///
+    /// - Parameter element: An element that matches ObserverType.E.
+    public func onNext(_ element: Iterator.Element.E) {
+        self.forEach({$0.onNext(element)})
+    }
+    
+    /// Call onError on each ObserverType in the current Sequence.
+    ///
+    /// - Parameter error: An Error instance.
+    public func onError(_ error: Error) {
+        self.forEach({$0.onError(error)})
+    }
+    
+    /// Call onCompleted on each ObserverType in the current Sequence.
+    public func onCompleted() {
+        self.forEach({$0.onCompleted()})
+    }
+}

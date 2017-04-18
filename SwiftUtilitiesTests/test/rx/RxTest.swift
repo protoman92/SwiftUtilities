@@ -370,4 +370,86 @@ class RxTest: XCTestCase {
         // Then
         XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
     }
+    
+    func test_concatAsObservable_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Int.self)
+        
+        // When
+        _ = [
+            Observable.just(1),
+            Observable.just(2),
+            Observable.just(3),
+            Observable.just(4)
+            ]
+            .concatAsObservable()
+            .subscribe(observer)
+        
+        scheduler.start()
+        
+        // Then
+        let events = observer.events
+        let nextValues = events[0..<4].flatMap({$0.value.element})
+        XCTAssertEqual(nextValues, [1, 2, 3, 4])
+    }
+    
+    func test_sequenceOnNext_shouldSucceed() {
+        // Setup
+        let observers = [
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self)
+        ]
+        
+        // When
+        observers.onNext(1)
+        scheduler.start()
+        
+        // Then
+        observers.forEach({
+            let events = $0.events
+            let nextValues = events.flatMap({$0.value.element})
+            XCTAssertEqual(nextValues, [1])
+        })
+    }
+    
+    func test_sequenceOnError_shouldSucceed() {
+        // Setup
+        let observers = [
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self)
+        ]
+        
+        // When
+        observers.onError(Exception())
+        scheduler.start()
+        
+        // Then
+        observers.forEach({
+            let events = $0.events
+            let errorValues = events.flatMap({$0.value.error})
+            XCTAssertEqual(errorValues.count, 1)
+        })
+    }
+    
+    func test_sequenceOnCompleted_shouldSucceed() {
+        // Setup
+        let observers = [
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self),
+            scheduler.createObserver(Int.self)
+        ]
+        
+        // When
+        observers.onCompleted()
+        scheduler.start()
+        
+        // Then
+        observers.forEach({
+            let events = $0.events
+            let completeEvents = events.filter({$0.value == .completed})
+            XCTAssertEqual(completeEvents.count, 1)
+        })
+    }
 }
