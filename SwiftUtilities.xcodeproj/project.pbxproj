@@ -43,6 +43,7 @@
 		D393B18E1E9E1FB900DBC683 /* ThreadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DD1E9CA33400A09A5E /* ThreadUtil.swift */; };
 		D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */; };
 		D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C87B971E9FC8DE000BAB62 /* MockTest.swift */; };
+		D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBC9941EA67769008C90FB /* ThreadTest.swift */; };
 		D3F7CD961EA4D5AD00479B7A /* BooleanTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F7CD951EA4D5AD00479B7A /* BooleanTestUtil.swift */; };
 		D3FE35F51EA3704400C44052 /* CollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE35F41EA3704400C44052 /* CollectionTest.swift */; };
 		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
@@ -93,6 +94,7 @@
 		D393B1841E9E1D2900DBC683 /* StringTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringTestUtil.swift; path = util/string/StringTestUtil.swift; sourceTree = "<group>"; };
 		D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D3C87B971E9FC8DE000BAB62 /* MockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTest.swift; path = test/mock/MockTest.swift; sourceTree = "<group>"; };
+		D3EBC9941EA67769008C90FB /* ThreadTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThreadTest.swift; path = test/thread/ThreadTest.swift; sourceTree = "<group>"; };
 		D3F7CD951EA4D5AD00479B7A /* BooleanTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanTestUtil.swift; path = util/boolean/BooleanTestUtil.swift; sourceTree = "<group>"; };
 		D3FE35F41EA3704400C44052 /* CollectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionTest.swift; path = test/collection/CollectionTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -299,6 +301,7 @@
 		D393B1761E9E12AF00DBC683 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D3EBC9931EA67753008C90FB /* thread */,
 				D38316931EA3DA95009706FF /* type */,
 				D3FE35F31EA3702A00C44052 /* collection */,
 				D3C87B961E9FC8C2000BAB62 /* mock */,
@@ -346,6 +349,14 @@
 				D3C87B971E9FC8DE000BAB62 /* MockTest.swift */,
 			);
 			name = mock;
+			sourceTree = "<group>";
+		};
+		D3EBC9931EA67753008C90FB /* thread */ = {
+			isa = PBXGroup;
+			children = (
+				D3EBC9941EA67769008C90FB /* ThreadTest.swift */,
+			);
+			name = thread;
 			sourceTree = "<group>";
 		};
 		D3F7CD941EA4D57700479B7A /* boolean */ = {
@@ -612,6 +623,7 @@
 				D393B17E1E9E167F00DBC683 /* MathTestUtil.swift in Sources */,
 				D393B1851E9E1D2900DBC683 /* StringTestUtil.swift in Sources */,
 				D393B17C1E9E15F000DBC683 /* DateUtilTest.swift in Sources */,
+				D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */,
 				D393B1741E9E128E00DBC683 /* DateTestUtil.swift in Sources */,
 				D3FE35F51EA3704400C44052 /* CollectionTest.swift in Sources */,
 			);

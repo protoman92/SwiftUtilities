@@ -38,3 +38,18 @@ public func background(_ qos: DispatchQoS.QoSClass? = nil,
     let qos = qos ?? .userInteractive
     DispatchQueue.global(qos: qos).async(execute: closure)
 }
+
+
+/// Synchronize access to a lock, and perform an operation.
+///
+/// - Parameters:
+///   - lock: The object to be locked.
+///   - body: Action closure.
+/// - Returns: An arbitrary object.
+/// - Throws: An Error that could be thrown by body.
+public func synchronized<T>(_ lock: AnyObject,
+                         then body: () throws -> T) rethrows -> T {
+    objc_sync_enter(lock)
+    defer { objc_sync_exit(lock) }
+    return try body()
+}

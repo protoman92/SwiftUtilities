@@ -37,8 +37,6 @@ class RxTest: XCTestCase {
         subject2.onNext(5)
         subject2.onNext(6)
         
-        scheduler.start()
-        
         // Then
         [observer1, observer2].forEach({
             let events = $0.events
@@ -71,7 +69,6 @@ class RxTest: XCTestCase {
         // When
         _ = observable.subscribe(observer)
         array.forEach(subject.onNext)
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -101,8 +98,6 @@ class RxTest: XCTestCase {
                 return Disposables.create()
             })
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -141,8 +136,6 @@ class RxTest: XCTestCase {
             }
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
     }
     
@@ -154,8 +147,6 @@ class RxTest: XCTestCase {
         _ = Observable.empty()
             .throwIfEmpty("Empty error")
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         XCTAssertNotNil(observer.events[0].value.error)
@@ -169,8 +160,6 @@ class RxTest: XCTestCase {
         _ = Observable.error("Error")
             .catchSwitchToEmpty()
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let event = observer.events[0].value
@@ -189,8 +178,6 @@ class RxTest: XCTestCase {
                    thenReturn: {_ in "Even"},
                    elseReturn: {_ in "Odd"})
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -217,8 +204,6 @@ class RxTest: XCTestCase {
             .if(Int.isEven, thenReturn: {$0 + 1})
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         let events = observer.events
         let values = events.flatMap({$0.value.element})
@@ -238,8 +223,6 @@ class RxTest: XCTestCase {
                 else: {_ in Observable.empty()})
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         let events = observer.events
         let values = events.flatMap({$0.value.element})
@@ -257,8 +240,6 @@ class RxTest: XCTestCase {
                        then: {_ in Observable.just("Even")},
                        else: {_ in Observable.just("Odd")})
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -278,8 +259,6 @@ class RxTest: XCTestCase {
             .cast(to: String.self)
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         let events = observer.events
         let error = events.first!.value.error
@@ -294,8 +273,6 @@ class RxTest: XCTestCase {
         _ = Observable.just("Test")
             .cast(to: Any.self)
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -313,8 +290,6 @@ class RxTest: XCTestCase {
             .ofType(String.self)
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         let events = observer.events
         let completed = events.first!.value.event
@@ -329,8 +304,6 @@ class RxTest: XCTestCase {
         _ = Observable.just("Test")
             .cast(to: Any.self)
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         let events = observer.events
@@ -350,8 +323,6 @@ class RxTest: XCTestCase {
                 else: {Observable.just(2)})
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
     }
@@ -364,8 +335,6 @@ class RxTest: XCTestCase {
         _ = Observable<Int>
             .if({true}, thenReturn: {1}, elseReturn: {2})
             .subscribe(observer)
-        
-        scheduler.start()
         
         // Then
         XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
@@ -385,8 +354,6 @@ class RxTest: XCTestCase {
             .concatAsObservable()
             .subscribe(observer)
         
-        scheduler.start()
-        
         // Then
         let events = observer.events
         let nextValues = events[0..<4].flatMap({$0.value.element})
@@ -403,7 +370,6 @@ class RxTest: XCTestCase {
         
         // When
         observers.onNext(1)
-        scheduler.start()
         
         // Then
         observers.forEach({
@@ -423,7 +389,6 @@ class RxTest: XCTestCase {
         
         // When
         observers.onError(Exception())
-        scheduler.start()
         
         // Then
         observers.forEach({
@@ -443,7 +408,6 @@ class RxTest: XCTestCase {
         
         // When
         observers.onCompleted()
-        scheduler.start()
         
         // Then
         observers.forEach({
