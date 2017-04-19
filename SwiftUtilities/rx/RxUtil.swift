@@ -55,40 +55,7 @@ public extension Observable {
     }
 }
 
-public extension Observable {
-    
-    /// Print onNext emission.
-    ///
-    /// - Parameter selector: Closure to convert the item into another object.
-    /// - Returns: An Observable instance.
-    public func logNext(_ selector: @escaping (E) -> Any) -> Observable<E> {
-        return doOnNext({debugPrint(selector($0))})
-    }
-    
-    /// Print onNext emission.
-    ///
-    /// - Returns: An Observable instance.
-    public func logNext() -> Observable<E> {
-        return doOnNext(debugPrint)
-    }
-    
-    /// Print onError emission.
-    ///
-    /// - Parameter selector: Closure to convert the error into another object.
-    /// - Returns: An Observable instance.
-    public func logNext(_ selector: @escaping (Error) -> Any) -> Observable<E> {
-        return doOnError({debugPrint(selector($0))})
-    }
-    
-    /// Print onError emission.
-    ///
-    /// - Returns: An Observable instance.
-    public func logError() -> Observable<E> {
-        return doOnError(debugPrint)
-    }
-}
-
-public extension Observable {
+public extension ObservableType {
 
     /// Convenience method for do(onNext).
     ///
@@ -174,6 +141,36 @@ public extension Observable {
                     onSubscribe: nil,
                     onSubscribed: nil,
                     onDispose: callback)
+    }
+    
+    /// Print onNext emission.
+    ///
+    /// - Parameter selector: Closure to convert the item into another object.
+    /// - Returns: An Observable instance.
+    public func logNext(_ selector: @escaping (E) -> Any) -> Observable<E> {
+        return doOnNext({debugPrint(selector($0))})
+    }
+    
+    /// Print onNext emission.
+    ///
+    /// - Returns: An Observable instance.
+    public func logNext() -> Observable<E> {
+        return doOnNext(debugPrint)
+    }
+    
+    /// Print onError emission.
+    ///
+    /// - Parameter selector: Closure to convert the error into another object.
+    /// - Returns: An Observable instance.
+    public func logNext(_ selector: @escaping (Error) -> Any) -> Observable<E> {
+        return doOnError({debugPrint(selector($0))})
+    }
+    
+    /// Print onError emission.
+    ///
+    /// - Returns: An Observable instance.
+    public func logError() -> Observable<E> {
+        return doOnError(debugPrint)
     }
 }
 

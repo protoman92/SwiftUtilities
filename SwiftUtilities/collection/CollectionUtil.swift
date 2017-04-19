@@ -9,9 +9,9 @@
 import GameKit
 
 public protocol CustomComparisonProtocol {
-    associatedtype E
+    associatedtype ComparisonType
     
-    func equals(object: E?) -> Bool
+    func equals(object: ComparisonType?) -> Bool
 }
 
 extension Array: IsInstanceProtocol {}
@@ -86,7 +86,7 @@ public extension Array {
 
 public extension Sequence where
     Iterator.Element: CustomComparisonProtocol,
-    Iterator.Element == Iterator.Element.E {
+    Iterator.Element == Iterator.Element.ComparisonType {
     
     /// Check if an element is found in the current Sequence.
     ///
@@ -99,7 +99,7 @@ public extension Sequence where
 
 public extension Array where
     Element: CustomComparisonProtocol,
-    Element == Element.E {
+    Element == Element.ComparisonType {
     
     /// Append an unique element.
     ///
