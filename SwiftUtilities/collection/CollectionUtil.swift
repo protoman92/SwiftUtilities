@@ -8,6 +8,7 @@
 
 import GameKit
 
+/// Objects that require comparison should implement this protocol.
 public protocol CustomComparisonProtocol {
     associatedtype ComparisonType
     
@@ -15,7 +16,6 @@ public protocol CustomComparisonProtocol {
 }
 
 extension Array: IsInstanceProtocol {}
-
 extension Dictionary: IsInstanceProtocol {}
 
 public extension Sequence {
@@ -31,6 +31,40 @@ public extension Sequence {
         }
         
         return nil
+    }
+}
+
+public extension Sequence {
+    
+    /// Check if all Element passes a condition.
+    ///
+    /// - Parameter condition: Closure condition.
+    /// - Returns: A Bool value.
+    /// - Throws: An Error rethrown by any condition closure call.
+    public func all(satisfying condition: (Iterator.Element) throws -> Bool)
+        rethrows -> Bool
+    {
+        for element in self {
+            if try !condition(element) {
+                return false
+            }
+        }
+        
+        return true
+    }
+}
+
+public extension Sequence {
+    
+    /// Check if any Element satisfies a condition.
+    ///
+    /// - Parameter condition: Closure condition.
+    /// - Returns: A Bool value.
+    /// - Throws: An Error rethrown by any condition closure call.
+    public func any(satisfying condition: (Iterator.Element) throws -> Bool)
+        rethrows -> Bool
+    {
+        return try self.filter(condition).count >= 1
     }
 }
 

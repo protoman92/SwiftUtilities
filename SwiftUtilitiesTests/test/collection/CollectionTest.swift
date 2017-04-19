@@ -47,4 +47,52 @@ class CustomComparisonCollectionTest: XCTestCase {
         XCTAssertEqual(array.count, times)
         XCTAssertEqual(reconverted, (0..<10).map(eq))
     }
+    
+    func test_arrayAllPredicate_shouldSucceed() {
+        // Setup
+        let array = [1, 2, 3, 4, 5]
+        
+        // When
+        let allSatisfied = array.all(satisfying: Int.isEven)
+        
+        // Then
+        XCTAssertFalse(allSatisfied)
+    }
+    
+    func test_arrayAnyPredicate_shouldSucceed() {
+        // Setup
+        let array = [1, 2, 3, 4, 5]
+        
+        // When
+        let anySatisfied = array.any(satisfying: Int.isEven)
+        
+        // Then
+        XCTAssertTrue(anySatisfied)
+    }
+    
+    func test_dictionaryAllPredicate_shouldSucceed() {
+        // Setup
+        let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
+        
+        // When
+        let allSatisfied = dictionary.all(satisfying: {
+            $0.key.isEven && $0.value.isEven
+        })
+        
+        // Then
+        XCTAssertFalse(allSatisfied)
+    }
+    
+    func test_dictionaryAnyPredicate_shouldSucceed() {
+        // Setup
+        let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
+        
+        // When
+        let anySatisfied = dictionary.any(satisfying: {
+            $0.key.isEven && $0.value.isEven
+        })
+        
+        // Then
+        XCTAssertTrue(anySatisfied)
+    }
 }

@@ -306,6 +306,12 @@ extension InputData.Notification: InputNotificationType {
     }
 }
 
+extension InputData.Notification: CustomStringConvertible {
+    public var description: String {
+        return "hasErrors: \(hasErrors), output: \(outputs)"
+    }
+}
+
 extension InputData.Notification.Component: InputNotificationComponentType {
     
     /// Detect if there is an input error.
