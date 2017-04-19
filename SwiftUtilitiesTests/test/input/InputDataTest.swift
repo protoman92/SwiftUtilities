@@ -22,28 +22,22 @@ class InputDataTest: XCTestCase {
         // Setup
         let observer = scheduler.createObserver(Any.self)
         
-        var input1 = InputData.builder()
-            .with(identifier: "Input1")
-            .with(header: "Input1")
-            .isRequired(true)
+        let input1 = InputData.builder()
+            .with(input: MockInput.input1)
             .build()
         
-        var input2 = InputData.builder()
-            .with(identifier: "Input2")
-            .with(header: "Input2")
-            .isRequired(true)
+        let input2 = InputData.builder()
+            .with(input: MockInput.input2)
             .build()
         
-        var input3 = InputData.builder()
-            .with(identifier: "Input3")
-            .with(header: "Input3")
-            .isRequired(false)
+        let input3 = InputData.builder()
+            .with(input: MockInput.input3)
             .build()
         
         let inputs = [input1, input2, input3]
         
         // When
-        _ = inputs.inputListeners()
+        _ = inputs.inputObservables()
             .logNext()
             .cast(to: Any.self)
             .subscribe(observer)
@@ -60,7 +54,6 @@ class InputDataTest: XCTestCase {
         
         // Then
         print(observer.events.count)
-        print(inputs.allInputs())
     }
     
     func test_inputDataContentListener_shouldSucceed() {
@@ -69,21 +62,15 @@ class InputDataTest: XCTestCase {
         let subject = PublishSubject<String>()
         
         let input1 = InputData.builder()
-            .with(identifier: "Input1")
-            .with(header: "Input1")
-            .isRequired(true)
+            .with(input: MockInput.input1)
             .build()
         
         let input2 = InputData.builder()
-            .with(identifier: "Input2")
-            .with(header: "Input2")
-            .isRequired(true)
+            .with(input: MockInput.input2)
             .build()
         
         let input3 = InputData.builder()
-            .with(identifier: "Input3")
-            .with(header: "Input3")
-            .isRequired(false)
+            .with(input: MockInput.input3)
             .build()
         
         // When
@@ -100,5 +87,70 @@ class InputDataTest: XCTestCase {
         
         // Then
         print(observer.events)
+    }
+    
+    func test_inputValidator_shouldSucceed() {
+        // Setup
+        let observer = scheduler.createObserver(Any.self)
+        
+        let input1 = InputData.builder()
+            .with(input: MockInput.input1)
+            .with(inputValidator: MockInput.input1)
+            .build()
+        
+        let input2 = InputData.builder()
+            .with(input: MockInput.input2)
+            .with(inputValidator: MockInput.input2)
+            .build()
+        
+        let input3 = InputData.builder()
+            .with(input: MockInput.input3)
+            .with(inputValidator: MockInput.input3)
+            .build()
+        
+        let inputs = [input1, input2, input3]
+        let confirmSubject = PublishSubject<Bool>()
+        
+        // When
+        _ = confirmSubject
+            .flatMap({_ in inputs.rxValidate()})
+            .logNext({$0.outputs})
+            .cast(to: Any.self)
+            .subscribe(observer)
+        
+        for _ in 0..<100 {
+            input1.inputContent = "Input1"
+            input2.inputContent = "Input2"
+            input3.inputContent = "Input3"
+            confirmSubject.onNext(true)
+        }
+        
+        // Then
+    }
+}
+
+enum MockInput {
+    case input1
+    case input2
+    case input3
+}
+
+extension MockInput: InputType {
+    var identifier: String {
+        return String(describing: self)
+    }
+    
+    var isRequired: Bool {
+        return Bool.random()
+    }
+}
+
+extension MockInput: InputValidatorType {
+    func validate<S : Sequence>(input: InputDataType, against inputs: S)
+        throws where S.Iterator.Element : InputDataType
+    {
+        if Bool.random() {
+            throw Exception(identifier)
+        }
     }
 }

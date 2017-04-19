@@ -1,6 +1,6 @@
 //
 //  InputData.swift
-//  Heartland Chefs
+//  SwiftUtilities
 //
 //  Created by Hai Pham on 7/26/16.
 //  Copyright © 2016 Swiften. All rights reserved.
@@ -8,35 +8,135 @@
 
 import RxSwift
 
+/// Implement this protocol to provide input instances. Usually we can use
+/// an enum for this purpose.
+public protocol InputType {
+    
+    /// The input's identifier.
+    var identifier: String { get }
+    
+    /// Whether the input is required.
+    var isRequired: Bool { get }
+}
+
+/// Implement this protocol to provide validation.
+public protocol InputValidatorType {
+    
+    /// Validate an input against a Sequence of inputs. Throw an Error if
+    /// validation fails.
+    ///
+    /// - Parameters:
+    ///   - input: The InputData to be validated.
+    ///   - inputs: A Sequence of InputData to validate against.
+    /// - Throws: An Error if validation fails.
+    func validate<S: Sequence>(input: InputDataType, against inputs: S) throws
+        where S.Iterator.Element: InputDataType
+}
+
+/// Implement this protocol to notify observers of inputs or errors.
+public protocol InputNotificationType {
+    /// Whether there are input errors.
+    var hasErrors: Bool { get }
+    
+    /// Return either inputs or errors, depending on whether errors are
+    /// present.
+    var outputs: [String: String] { get }
+    
+    /// Append an input.
+    ///
+    /// - Parameters:
+    ///   - input: A String value.
+    ///   - key: A String value.
+    func append(input: String, for key: String)
+    
+    /// Append an error.
+    ///
+    /// - Parameters:
+    ///   - input: A String value.
+    ///   - key: A String value.
+    func append(error: String, for key: String)
+    
+    /// Construct from an Array of InputNotificationComponentType.
+    init(from components: [InputNotificationComponentType])
+}
+
+/// Implement this protocol to hold notification component for one input.
+public protocol InputNotificationComponentType {
+    
+    /// Whether there is an input error.
+    var hasError: Bool { get }
+    
+    /// The input's identifier.
+    var inputKey: String { get }
+    
+    /// The input value. Depending on whether hasError is true/false, this
+    /// can either be an input content or error message.
+    var inputValue: String { get }
+}
+
+public protocol InputDataType {
+    
+    /// Create a new InputNotificationType instance.
+    ///
+    /// - Parameters:
+    ///   - components: An Array of InputNotificationComponentType.
+    /// - Returns: An InputNotificationType instance.
+    static func notification(from components: [InputNotificationComponentType])
+        -> InputNotificationType
+    
+    // This should be a enum string value so that later we can perform input
+    // validation easily.
+    var inputIdentifier: String { get }
+    
+    // This is the user' input.
+    var inputContent: String { get set }
+    
+    /// Get a validator instance to validate the input.
+    var inputValidator: InputValidatorType? { get }
+    
+    /// Get an InputDataType Observable.
+    var inputDataObservable: Observable<InputDataType> { get }
+    
+    /// Get an InputDataType Observer.
+    var inputDataObserver: AnyObserver<InputDataType> { get }
+    
+    /// Check whether the input is required.
+    var isRequired: Bool { get }
+    
+    /// Check if input content is empty.
+    var isEmpty: Bool { get }
+    
+    /// Produce a notification component based on existing input.
+    ///
+    /// - Parameter inputs: A Sequence of InputDataType to validate against.
+    /// - Returns: An InputNotificationComponentType instance.
+    func notificationComponent<S: Sequence>(validatingAgainst inputs: S)
+        -> InputNotificationComponentType
+        where S.Iterator.Element: InputDataType
+}
+
 /// Use this class to hold input information (such as the input identifier
 /// and the current input). Objects of type InputData can be wrapped in a
 /// RxSwift Variable to watch for content changes.
-public struct InputData {
-    // This should be a enum string value so that later we can perform input
-    // validation easily.
-    fileprivate var identifier: String
+public class InputData {
     
-    // This should be a human-readable description that explains what the input
-    // is for. It shall be used for error messages.
-    fileprivate var header: String
+    /// Get the input identifier and isRequired flag from this.
+    fileprivate var input: InputType?
     
     // This is the user' input.
     fileprivate var content: Variable<String>
     
-    // Whether the input is required. This is used to check for blank input
-    // fields that must be filled.
-    fileprivate var isRequired: Bool
-    
     /// When the inputContent changes, this listener will call onNext.
-    fileprivate let inputListener: PublishSubject<InputData>
+    fileprivate let inputSubject: PublishSubject<InputDataType>
     
+    /// Validate inputs when they are confirmed.
+    fileprivate var validator: InputValidatorType?
+    
+    /// This can either be set, or initialized.
     fileprivate var disposeBag: DisposeBag?
     
     fileprivate init() {
-        identifier = ""
-        header = ""
-        isRequired = true
-        inputListener = PublishSubject<InputData>()
+        inputSubject = PublishSubject<InputDataType>()
         content = Variable("")
     }
 }
@@ -58,21 +158,12 @@ public extension InputData {
             inputData = InputData()
         }
         
-        /// Set the inputData's identifier.
+        /// Set the inputData's input.
         ///
-        /// - Parameter identifier: A String value.
+        /// - Parameter input: An InputType instance.
         /// - Returns: The current Builder instance.
-        public func with(identifier: String) -> Builder {
-            inputData.identifier = identifier
-            return self
-        }
-        
-        /// Set the inputData's header.
-        ///
-        /// - Parameter header: A String value.
-        /// - Returns: The current Builder instance.
-        public func with(header: String) -> Builder {
-            inputData.header = header
+        public func with(input: InputType) -> Builder {
+            inputData.input = input
             return self
         }
         
@@ -85,12 +176,12 @@ public extension InputData {
             return self
         }
         
-        /// Set the inputData's isRequired flag.
+        /// Set the inputData's inputValidator.
         ///
-        /// - Parameter required: A Bool value.
+        /// - Parameter inputValidator: An InputValidatorType instance.
         /// - Returns: The current Builder instance.
-        public func isRequired(_ required: Bool) -> Builder {
-            inputData.isRequired = required
+        public func with(inputValidator: InputValidatorType) -> Builder {
+            inputData.validator = inputValidator
             return self
         }
         
@@ -107,7 +198,7 @@ public extension InputData {
 fileprivate extension InputData {
     
     /// This method is called when Builder.build() is called.
-    fileprivate mutating func onInstanceBuilt() {
+    fileprivate func onInstanceBuilt() {
         // If no DisposeBag is provided, initialize a new one.
         if disposeBag == nil {
             disposeBag = DisposeBag()
@@ -127,41 +218,109 @@ fileprivate extension InputData {
     ///
     /// - Parameter content: A String value.
     fileprivate func contentDidChange(_ content: String) {
-        inputListener.onNext(self)
+        inputDataObserver.onNext(self)
     }
 }
 
 public extension InputData {
     
-    /// Return identifier.
-    public var inputIdentifier: String {
-        return identifier
+    /// Use this class to aggregate inputs/errors and notify observers.
+    public final class Notification {
+        
+        /// All entered inputs.
+        fileprivate var inputs: [String: String]
+        
+        /// All input errors.
+        fileprivate var errors: [String: String]
+        
+        public required init() {
+            inputs = [:]
+            errors = [:]
+        }
+        
+        /// Use this class to construct a Notification.
+        public final class Component {
+            
+            /// The input's identifier.
+            fileprivate var key: String
+            
+            /// The input content.
+            fileprivate var value: String
+            
+            /// The error message.
+            fileprivate var error: String
+            
+            fileprivate init() {
+                key = ""
+                value = ""
+                error = ""
+            }
+        }
+    }
+}
+
+extension InputData.Notification: InputNotificationType {
+    
+    /// Detect if there are input errors.
+    public var hasErrors: Bool {
+        return errors.isNotEmpty
     }
     
-    /// Return header.
-    public var inputHeader: String {
-        return header
+    /// Return either inputs or errors, depending on whether errors are
+    /// present.
+    public var outputs: [String: String] {
+        return hasErrors ? errors : inputs
     }
     
-    /// Return isRequired.
-    public var isInputRequired: Bool {
-        return isRequired
+    /// Append an input.
+    ///
+    /// - Parameters:
+    ///   - input: A String value.
+    ///   - key: A String value. This should be the input identifier.
+    public func append(input: String, for key: String) {
+        inputs.updateValue(input, forKey: key)
     }
     
-    /// Return content.
-    public var inputContent: String {
-        get { return content.value }
-        set { content.value = newValue }
+    /// Append an error.
+    ///
+    /// - Parameters:
+    ///   - error: A String value.
+    ///   - key: A String value. This should be the input identifier.
+    public func append(error: String, for key: String) {
+        errors.updateValue(error, forKey: key)
     }
     
-    /// Return inputListener.
-    public var inputDataListener: AnyObserver<InputData> {
-        return inputListener.asObserver()
+    public convenience init(from components: [InputNotificationComponentType]) {
+        self.init()
+        
+        for component in components {
+            let key = component.inputKey
+            let value = component.inputValue
+            
+            if component.hasError {
+                append(error: value, for: key)
+            } else {
+                append(input: value, for: key)
+            }
+        }
+    }
+}
+
+extension InputData.Notification.Component: InputNotificationComponentType {
+    
+    /// Detect if there is an input error.
+    public var hasError: Bool {
+        return error.isNotEmpty
     }
     
-    /// Check whether the input is empty.
-    public var isEmpty: Bool {
-        return inputContent.isEmpty
+    /// The input's identifier.
+    public var inputKey: String {
+        return key
+    }
+    
+    /// Either the input content, or an error message.
+    public var inputValue: String {
+        return hasError ? error : value
     }
 }
 
@@ -182,20 +341,7 @@ extension InputData: CustomComparisonProtocol {
 }
 
 public func ==(lhs: InputData, rhs: InputData) -> Bool {
-    return lhs.identifier == rhs.identifier && lhs.header == lhs.header
-}
-
-public protocol InputDataType {
-    // This should be a enum string value so that later we can perform input
-    // validation easily.
-    var inputIdentifier: String { get }
-    
-    // This should be a human-readable description that explains what the input
-    // is for. It shall be used for error messages.
-    var inputHeader: String { get }
-    
-    // This is the user' input.
-    var inputContent: String { get set }
+    return lhs.inputIdentifier == rhs.inputIdentifier
 }
 
 extension InputData: ObservableConvertibleType {
@@ -224,31 +370,108 @@ extension InputData: ObserverType {
     }
 }
 
-extension InputData: InputDataType {}
-
-public extension Sequence where Iterator.Element: InputDataType {
+extension InputData: InputDataType {
     
-    /// Get all inputs from the current Sequence of InputDataType.
+    /// Return a new Notification.
     ///
-    /// - Returns: A Dictionary instance.
-    public func allInputs() -> [String: String] {
-        var inputs: [String: String] = [:]
+    /// - Returns: A Notification instance.
+    public static
+        func notification(from components: [InputNotificationComponentType])
+        -> InputNotificationType
+    {
+        return Notification(from: components)
+    }
+    
+    /// Return identifier.
+    public var inputIdentifier: String {
+        guard let input = self.input else {
+            debugException()
+            return ""
+        }
         
-        self.forEach({
-            inputs.updateValue($0.inputContent, forKey: $0.inputIdentifier)
-        })
+        return input.identifier
+    }
+    
+    /// Return isRequired.
+    public var isRequired: Bool {
+        guard let input = self.input else {
+            debugException()
+            return false
+        }
         
-        return inputs
+        return input.isRequired
+    }
+    
+    /// Return content.
+    public var inputContent: String {
+        get { return content.value }
+        set { content.value = newValue }
+    }
+    
+    /// Return validator.
+    public var inputValidator: InputValidatorType? {
+        return validator
+    }
+    
+    /// Return inputSubject as an Observable.
+    public var inputDataObservable: Observable<InputDataType> {
+        return inputSubject.asObservable()
+    }
+    
+    /// Return inputSubject as an Observer.
+    public var inputDataObserver: AnyObserver<InputDataType> {
+        return inputSubject.asObserver()
+    }
+    
+    /// Check whether the input is empty.
+    public var isEmpty: Bool {
+        return inputContent.isEmpty
+    }
+    
+    /// Produce a notification component based on existing input.
+    ///
+    /// - Parameter inputs: A Sequence of InputDataType to validate against.
+    /// - Returns: An InputNotificationComponentType instance.
+    public func notificationComponent<S: Sequence>(validatingAgainst inputs: S)
+        -> InputNotificationComponentType
+        where S.Iterator.Element: InputDataType
+    {
+        let component = InputData.Notification.Component()
+        let value = inputContent
+        component.key = inputIdentifier
+        component.value = value
+        
+        if isRequired && value.isEmpty {
+            component.error = "input.error.required".localized
+        } else if let validator = inputValidator {
+            do {
+                try validator.validate(input: self, against: inputs)
+            } catch let e {
+                component.error = e.localizedDescription
+            }
+        }
+        
+        return component
     }
 }
 
-public extension Sequence where Iterator.Element == InputData {
+public extension Sequence where Iterator.Element: InputDataType {
     
-    /// Merge all inputListener into one Observable. We need to use merge 
+    /// Merge all inputListener into one Observable. We need to use merge
     /// because concat only takes the first element.
     ///
     /// - Returns: An Observable instance.
-    public func inputListeners() -> Observable<Iterator.Element> {
-        return self.map({$0.inputListener}).mergeAsObservable()
+    public func inputObservables() -> Observable<InputDataType> {
+        return self.map({$0.inputDataObservable}).mergeAsObservable()
+    }
+    
+    /// Validate reactively and return an InputNotificationType.
+    ///
+    /// - Returns: An Observable instance.
+    public func rxValidate() -> Observable<InputNotificationType> {
+        return Observable.from(self)
+            .map({$0.notificationComponent(validatingAgainst: self)})
+            .toArray()
+            .map({Iterator.Element.notification(from: $0)})
     }
 }
