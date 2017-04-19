@@ -13,6 +13,6 @@ public extension Array {
     /// - Returns: An Element instance.
     public func randomElement() -> Element? {
         let index = Int.random(0, count)
-        return self.element(at: index)
+        return self[index]
     }
 }
