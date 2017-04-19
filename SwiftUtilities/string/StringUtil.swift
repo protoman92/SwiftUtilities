@@ -15,7 +15,7 @@ extension String: CustomComparisonProtocol {
     }
 }
 
-extension String: IsInstanceProtocol {}
+extension String: IsInstanceType {}
 
 public extension String {
     

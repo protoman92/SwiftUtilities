@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 class Object1: NSObject {}
-class Object2: IsInstanceProtocol {}
+class Object2: IsInstanceType {}
 
 class TypeTest: XCTestCase {
     func test_isInstance_shouldSucceed() {

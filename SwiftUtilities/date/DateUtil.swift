@@ -8,9 +8,8 @@
 
 import UIKit
 
-extension Date: IsInstanceProtocol {}
-
-extension Calendar: IsInstanceProtocol {}
+extension Date: IsInstanceType {}
+extension Calendar: IsInstanceType {}
 
 public extension Date {
     

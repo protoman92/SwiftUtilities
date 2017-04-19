@@ -37,7 +37,7 @@ class InputDataTest: XCTestCase {
         let inputs = [input1, input2, input3]
         
         // When
-        _ = inputs.inputObservables()
+        _ = inputs.rxInputObservables()
             .logNext()
             .cast(to: Any.self)
             .subscribe(observer)
@@ -145,6 +145,34 @@ class InputDataTest: XCTestCase {
             } else if inputs.any(satisfying: {$0.throwValidatorError}) {
                 XCTAssertTrue(lastEvent.hasErrors)
             }
+        }
+    }
+    
+    func test_requiredInputWatcher_shouldWork() {
+        // Setup
+        let observer = scheduler.createObserver(Bool.self)
+        let input1 = MockInput(required: true, throwValidatorError: false)
+        let input2 = MockInput(required: true, throwValidatorError: false)
+        let input3 = MockInput(required: false, throwValidatorError: false)
+        let inputData1 = InputData.builder().with(input: input1).build()
+        let inputData2 = InputData.builder().with(input: input2).build()
+        let inputData3 = InputData.builder().with(input: input3).build()
+        let inputData = [inputData1, inputData2, inputData3]
+        
+        // When
+        _ = inputData.rxAllRequiredInputFilled().subscribe(observer)
+        
+        for _ in 0..<1000 {
+            let randomInput = inputData.randomElement()!
+            randomInput.inputContent = Bool.random() ? "Valid" : ""
+            
+            // Then
+            let anyEmptyRequired = inputData.filter({
+                $0.isRequired && $0.isEmpty
+            }).isNotEmpty
+            
+            let lastEvent = observer.events.last?.value.element!
+            XCTAssertNotEqual(lastEvent, anyEmptyRequired)
         }
     }
 }

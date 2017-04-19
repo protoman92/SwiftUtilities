@@ -15,8 +15,8 @@ public protocol CustomComparisonProtocol {
     func equals(object: ComparisonType?) -> Bool
 }
 
-extension Array: IsInstanceProtocol {}
-extension Dictionary: IsInstanceProtocol {}
+extension Array: IsInstanceType {}
+extension Dictionary: IsInstanceType {}
 
 public extension Sequence {
     /// Get the first item that is an instance of a specified Type.
@@ -52,9 +52,6 @@ public extension Sequence {
         
         return true
     }
-}
-
-public extension Sequence {
     
     /// Check if any Element satisfies a condition.
     ///

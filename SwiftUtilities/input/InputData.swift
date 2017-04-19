@@ -124,10 +124,14 @@ public class InputData {
     fileprivate var input: InputType?
     
     // This is the user' input.
-    fileprivate var content: Variable<String>
+    fileprivate let content: Variable<String>
     
-    /// When the inputContent changes, this listener will call onNext.
-    fileprivate let inputSubject: PublishSubject<InputDataType>
+    /// When the inputContent changes, this listener will call onNext. Lazy
+    /// properties that require self needs their types explicitly specified.
+    /// Here a BehaviorSubject is used because we want to emit empty input
+    /// as well. If we use a PublishSubject, the empty input will be omitted.
+    fileprivate lazy var inputSubject: BehaviorSubject<InputDataType> =
+        BehaviorSubject<InputDataType>(value: self)
     
     /// Validate inputs when they are confirmed.
     fileprivate var validator: InputValidatorType?
@@ -136,7 +140,6 @@ public class InputData {
     fileprivate var disposeBag: DisposeBag?
     
     fileprivate init() {
-        inputSubject = PublishSubject<InputDataType>()
         content = Variable("")
     }
 }
@@ -200,13 +203,8 @@ fileprivate extension InputData {
     /// This method is called when Builder.build() is called.
     fileprivate func onInstanceBuilt() {
         // If no DisposeBag is provided, initialize a new one.
-        if disposeBag == nil {
-            disposeBag = DisposeBag()
-        }
-        
-        guard let disposeBag = self.disposeBag else {
-            return
-        }
+        let disposeBag = self.disposeBag ?? DisposeBag()
+        self.disposeBag = disposeBag
         
         content.asObservable()
             .doOnNext(contentDidChange)
@@ -242,19 +240,13 @@ public extension InputData {
         public final class Component {
             
             /// The input's identifier.
-            fileprivate var key: String
+            fileprivate var key = ""
             
             /// The input content.
-            fileprivate var value: String
+            fileprivate var value = ""
             
             /// The error message.
-            fileprivate var error: String
-            
-            fileprivate init() {
-                key = ""
-                value = ""
-                error = ""
-            }
+            fileprivate var error = ""
         }
     }
 }
@@ -449,7 +441,7 @@ extension InputData: InputDataType {
         
         if isRequired && value.isEmpty {
             component.error = "input.error.required".localized
-        } else if let validator = inputValidator {
+        } else if let validator = inputValidator, value.isNotEmpty {
             do {
                 try validator.validate(input: self, against: inputs)
             } catch let e {
@@ -467,7 +459,7 @@ public extension Sequence where Iterator.Element: InputDataType {
     /// because concat only takes the first element.
     ///
     /// - Returns: An Observable instance.
-    public func inputObservables() -> Observable<InputDataType> {
+    public func rxInputObservables() -> Observable<InputDataType> {
         return self.map({$0.inputDataObservable}).mergeAsObservable()
     }
     
@@ -480,4 +472,19 @@ public extension Sequence where Iterator.Element: InputDataType {
             .toArray()
             .map({Iterator.Element.notification(from: $0)})
     }
+    
+    /// Check whether all required inputs have been filled.all
+    ///
+    /// - Returns: An Observable instance.
+    public func rxAllRequiredInputFilled() -> Observable<Bool> {
+        return Observable.combineLatest(self.map({$0.inputDataObservable}), {
+            for input in $0 {
+                if input.isRequired && input.isEmpty { return false }
+            }
+            
+            return true
+        })
+    }
 }
+
+public extension Sequence where Iterator.Element == InputData {}

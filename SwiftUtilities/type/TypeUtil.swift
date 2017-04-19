@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol IsInstanceProtocol {}
+public protocol IsInstanceType {}
 
-public extension IsInstanceProtocol {
+public extension IsInstanceType {
     
     /// Check if an object is of this type.
     ///
@@ -33,4 +33,4 @@ public extension IsInstanceProtocol {
     }
 }
 
-extension NSObject: IsInstanceProtocol {}
+extension NSObject: IsInstanceType {}

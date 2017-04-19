@@ -6,7 +6,7 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-extension Bool: IsInstanceProtocol {}
+extension Bool: IsInstanceType {}
 
 public extension Bool {
     
