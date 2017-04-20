@@ -204,9 +204,10 @@ extension MockInput: CustomStringConvertible {
     var description: String { return "MockInput-\(count)" }
 }
 
-extension MockInput: InputType {
+extension MockInput: InputDetailType {
     var identifier: String { return String(describing: self) }
     var isRequired: Bool { return required }
+    var inputType: InputType { return Input.mock }
 }
 
 extension MockInput: InputValidatorType {
@@ -215,4 +216,8 @@ extension MockInput: InputValidatorType {
     {
         if throwValidatorError { throw Exception(identifier) }
     }
+}
+
+enum Input: InputType {
+    case mock
 }

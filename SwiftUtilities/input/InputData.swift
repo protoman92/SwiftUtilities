@@ -8,17 +8,6 @@
 
 import RxSwift
 
-/// Implement this protocol to provide input instances. Usually we can use
-/// an enum for this purpose.
-public protocol InputType {
-    
-    /// The input's identifier.
-    var identifier: String { get }
-    
-    /// Whether the input is required.
-    var isRequired: Bool { get }
-}
-
 /// Implement this protocol to provide validation.
 public protocol InputValidatorType {
     
@@ -121,7 +110,7 @@ public protocol InputDataType {
 public class InputData {
     
     /// Get the input identifier and isRequired flag from this.
-    fileprivate var input: InputType?
+    fileprivate var inputDetail: InputDetailType?
     
     // This is the user' input.
     fileprivate let content: Variable<String>
@@ -165,8 +154,8 @@ public extension InputData {
         ///
         /// - Parameter input: An InputType instance.
         /// - Returns: The current Builder instance.
-        public func with(input: InputType) -> Builder {
-            inputData.input = input
+        public func with(input: InputDetailType) -> Builder {
+            inputData.inputDetail = input
             return self
         }
         
@@ -186,6 +175,17 @@ public extension InputData {
         public func with(inputValidator: InputValidatorType) -> Builder {
             inputData.validator = inputValidator
             return self
+        }
+        
+        /// Set inputDetailType and inputValidator at the same time. We can
+        /// do this for enums that implement both these protocols.
+        ///
+        /// - Parameter composite: An I instance.
+        /// - Returns: The current Builder instance.
+        public func with<I: InputDetailType & InputValidatorType>(composite: I)
+            -> Builder
+        {
+            return with(input: composite).with(inputValidator: composite)
         }
         
         /// Return inputData.
@@ -382,7 +382,7 @@ extension InputData: InputDataType {
     
     /// Return identifier.
     public var inputIdentifier: String {
-        guard let input = self.input else {
+        guard let input = self.inputDetail else {
             debugException()
             return ""
         }
@@ -392,7 +392,7 @@ extension InputData: InputDataType {
     
     /// Return isRequired.
     public var isRequired: Bool {
-        guard let input = self.input else {
+        guard let input = self.inputDetail else {
             debugException()
             return false
         }
