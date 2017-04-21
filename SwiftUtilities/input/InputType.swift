@@ -25,13 +25,3 @@ public protocol InputDetailType {
 
 /// Implement this protocol to provide information to populate input views.
 public protocol InputType {}
-
-/// Implement this protocol to provide implementation details for text inputs.
-public protocol TextInputType: InputType {
-    
-    /// The UIKeyboardType to use with soft input.
-    var keyboardType: UIKeyboardType? { get }
-    
-    /// Whether the input should be secured e.g. password inputs.
-    var isSecureInput: Bool { get }
-}
