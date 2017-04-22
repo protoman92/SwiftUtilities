@@ -1,5 +1,5 @@
 //
-//  InputType.swift
+//  InputDetailType.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 4/20/17.
@@ -18,10 +18,4 @@ public protocol InputDetailType {
     
     /// Whether the input is required.
     var isRequired: Bool { get }
-    
-    /// The InputType associated with this instance.
-    var inputType: InputType { get }
 }
-
-/// Implement this protocol to provide information to populate input views.
-public protocol InputType {}
