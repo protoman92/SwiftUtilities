@@ -66,7 +66,7 @@ public extension TestableObserver {
     ///
     /// - Returns: A Bool value.
     public func hasCompleted() -> Bool {
-        return completedEvent()
+        return (completedEvent() != nil)
     }
     
     /// Check if there is no completed event.
