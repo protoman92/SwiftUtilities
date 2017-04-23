@@ -295,7 +295,7 @@ extension InputData: CustomStringConvertible {
     }
 }
 
-extension InputData: CustomComparisonProtocol {
+extension InputData: CustomComparisonType {
     public func equals(object: InputData?) -> Bool {
         if let object = object {
             return object == self

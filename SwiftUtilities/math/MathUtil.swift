@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension Int: CustomComparisonProtocol {
+extension Int: CustomComparisonType {
     public func equals(object: Int?) -> Bool {
         return self == object
     }
@@ -39,7 +39,7 @@ extension Double: Summable {
     public static var Zero: Double { return 0.0 }
 }
 
-extension Double: CustomComparisonProtocol {
+extension Double: CustomComparisonType {
     public func equals(object: Double?) -> Bool {
         return object == self
     }

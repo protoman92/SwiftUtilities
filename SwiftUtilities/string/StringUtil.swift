@@ -9,9 +9,15 @@
 import Foundation
 import UIKit
 
-extension String: CustomComparisonProtocol {
+extension String: CustomComparisonType {
     public func equals(object: String?) -> Bool {
         return object == self
+    }
+}
+
+extension String: ComparisonResultType {
+    public func compare(against element: String) -> ComparisonResult {
+        return compare(element)
     }
 }
 

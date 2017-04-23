@@ -8,11 +8,20 @@
 
 import GameKit
 
+/// Objects that require custom equality functions should implement this 
+/// protocol.
+public protocol CustomComparisonType {
+    func equals(object: Self?) -> Bool
+}
+
 /// Objects that require comparison should implement this protocol.
-public protocol CustomComparisonProtocol {
-    associatedtype ComparisonType
+public protocol ComparisonResultType {
     
-    func equals(object: ComparisonType?) -> Bool
+    /// Produce a ComparisonResult against another ComparisonType.
+    ///
+    /// - Parameter element: A ComparisonType instance.
+    /// - Returns: A ComparisonResult instance.
+    func compare(against element: Self) -> ComparisonResult
 }
 
 extension Array: IsInstanceType {}
@@ -115,9 +124,7 @@ public extension Array {
     }
 }
 
-public extension Sequence where
-    Iterator.Element: CustomComparisonProtocol,
-    Iterator.Element == Iterator.Element.ComparisonType {
+public extension Sequence where Iterator.Element: CustomComparisonType {
     
     /// Check if an element is found in the current Sequence.
     ///
@@ -128,9 +135,7 @@ public extension Sequence where
     }
 }
 
-public extension Array where
-    Element: CustomComparisonProtocol,
-    Element == Element.ComparisonType {
+public extension Array where Element: CustomComparisonType {
     
     /// Append an unique element.
     ///
@@ -347,6 +352,31 @@ public extension Array {
     }
 }
 
+public extension Sequence where Iterator.Element: ComparisonResultType {
+    
+    /// Sort using a ComparisonResult instance.
+    ///
+    /// - Parameter result: A ComparisonResult instance.
+    /// - Returns: An Array of a ComparisonResultType subclass.
+    public func sorted(by result: ComparisonResult) -> [Iterator.Element] {
+        return sorted(by: {$0.0.compare(against: $0.1) == result})
+    }
+    
+    /// Sort in ascending order.
+    ///
+    /// - Returns: An Array of a ComparisonResultType subclass.
+    public func sortedAscending() -> [Iterator.Element] {
+        return sorted(by: .orderedAscending)
+    }
+    
+    /// Sort in descending order.
+    ///
+    /// - Returns: An Array of a ComparisonResultType subclass.
+    public func sortedDescending() -> [Iterator.Element] {
+        return sorted(by: .orderedDescending)
+    }
+}
+
 public extension Dictionary {
     
     /// Update the current Dictionary with another Dictionary.
@@ -356,5 +386,30 @@ public extension Dictionary {
         for (key, value) in dict {
             self.updateValue(value, forKey: key)
         }
+    }
+}
+
+public extension Dictionary where Key: ComparisonResultType {
+    
+    /// Sort using a ComparisonResult instance.
+    ///
+    /// - Parameter result: A ComparisonResult instance.
+    /// - Returns: A Dictionary instance.
+    public func sorted(by result: ComparisonResult) -> [(Key, Value)] {
+        return self.sorted(by: {$0.0.key.compare(against: $0.1.key) == result})
+    }
+    
+    /// Sort in ascending order.
+    ///
+    /// - Returns: A Dictionary instance.
+    public func sortedAscending() -> [(Key, Value)] {
+        return sorted(by: .orderedAscending)
+    }
+    
+    /// Sort in descending order.
+    ///
+    /// - Returns: A Dictionary instance.
+    public func sortedDescending() -> [(Key, Value)] {
+        return sorted(by: .orderedDescending)
     }
 }

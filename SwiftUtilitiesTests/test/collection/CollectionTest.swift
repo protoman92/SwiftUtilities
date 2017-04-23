@@ -95,4 +95,32 @@ class CustomComparisonCollectionTest: XCTestCase {
         // Then
         XCTAssertTrue(anySatisfied)
     }
+    
+    func test_dictionarySortedAscending_shouldWork() {
+        // Setup
+        let array = ["c", "a", "z", "b"]
+        var dict = [String: String]()
+        for item in array { dict[item] = item }
+        
+        // When
+        let sortedArray = array.sortedAscending()
+        let sortedDict = dict.sortedAscending()
+        
+        // Then
+        XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
+    }
+    
+    func test_dictionarySortedDescending_shouldWork() {
+        // Setup
+        let array = ["c", "a", "z", "b"]
+        var dict = [String: String]()
+        for item in array { dict[item] = item }
+        
+        // When
+        let sortedArray = array.sortedDescending()
+        let sortedDict = dict.sortedDescending()
+        
+        // Then
+        XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
+    }
 }
