@@ -24,7 +24,7 @@ public extension TestableObserver {
     ///
     /// - Returns: A Bool value.
     public func hasNextElements() -> Bool {
-        return nextElements().isNotEmpty
+        return nextElements().count > 0
     }
     
     /// Check if there are no next elements.
