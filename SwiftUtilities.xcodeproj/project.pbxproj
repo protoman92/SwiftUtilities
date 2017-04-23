@@ -14,6 +14,7 @@
 		D31285DD1E9F2BF400F2AB64 /* pod-publish.txt in Resources */ = {isa = PBXBuildFile; fileRef = D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */; };
 		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
+		D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
 		D3474B0E1EAC875000251A2F /* InputNotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotificationType.swift */; };
@@ -78,6 +79,7 @@
 		D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDataTest.swift; sourceTree = "<group>"; };
 		D31285DC1E9F2BF400F2AB64 /* pod-publish.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pod-publish.txt"; sourceTree = "<group>"; };
 		D313E5C71EA08AD00063F91F /* BooleanUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanUtil.swift; path = boolean/BooleanUtil.swift; sourceTree = "<group>"; };
+		D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTestUtil.swift; path = util/rx/RxTestUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
 		D3474B0D1EAC875000251A2F /* InputNotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNotificationType.swift; sourceTree = "<group>"; };
@@ -166,6 +168,14 @@
 				D313E5C71EA08AD00063F91F /* BooleanUtil.swift */,
 			);
 			name = boolean;
+			sourceTree = "<group>";
+		};
+		D31ED74E1EACE72400632FF4 /* rx */ = {
+			isa = PBXGroup;
+			children = (
+				D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */,
+			);
+			name = rx;
 			sourceTree = "<group>";
 		};
 		D334C9411E9E8CEC00B88826 /* mock */ = {
@@ -331,6 +341,7 @@
 		D393B1751E9E12A200DBC683 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				D31ED74E1EACE72400632FF4 /* rx */,
 				D36FEDA11EA7DADD0078E37A /* collection */,
 				D3F7CD941EA4D57700479B7A /* boolean */,
 				D393B1831E9E1D1400DBC683 /* string */,
@@ -652,6 +663,7 @@
 				D3474B0F1EAC879400251A2F /* InputNotificationType.swift in Sources */,
 				D3F9A7DC1EA90788004EA340 /* InputType.swift in Sources */,
 				D3107F001EA71E0300E43FEE /* InputData.swift in Sources */,
+				D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */,
 				D38316961EA3DB70009706FF /* TypeUtil.swift in Sources */,
 				D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */,
 				D393B1861E9E1FB900DBC683 /* CollectionUtil.swift in Sources */,
