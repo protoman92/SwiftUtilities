@@ -182,7 +182,7 @@ fileprivate extension InputData {
 public extension InputData {
     
     /// Use this class to aggregate inputs/errors and notify observers.
-    public final class Notification {
+    public struct Notification {
         
         /// All entered inputs.
         fileprivate var inputs: [String: String]
@@ -190,13 +190,13 @@ public extension InputData {
         /// All input errors.
         fileprivate var errors: [String: String]
         
-        public required init() {
+        public init() {
             inputs = [:]
             errors = [:]
         }
         
         /// Use this class to construct a Notification.
-        public final class Component {
+        public struct Component {
             
             /// The input's identifier.
             fileprivate var key = ""
@@ -228,7 +228,7 @@ extension InputData.Notification: InputNotificationType {
     /// - Parameters:
     ///   - input: A String value.
     ///   - key: A String value. This should be the input identifier.
-    public func append(input: String, for key: String) {
+    public mutating func append(input: String, for key: String) {
         inputs.updateValue(input, forKey: key)
     }
     
@@ -237,11 +237,11 @@ extension InputData.Notification: InputNotificationType {
     /// - Parameters:
     ///   - error: A String value.
     ///   - key: A String value. This should be the input identifier.
-    public func append(error: String, for key: String) {
+    public mutating func append(error: String, for key: String) {
         errors.updateValue(error, forKey: key)
     }
     
-    public convenience init(from components: [InputNotificationComponentType]) {
+    public init(from components: [InputNotificationComponentType]) {
         self.init()
         
         for component in components {
@@ -401,7 +401,7 @@ extension InputData: InputDataType {
         -> InputNotificationComponentType
         where S.Iterator.Element: InputDataType
     {
-        let component = InputData.Notification.Component()
+        var component = InputData.Notification.Component()
         let value = inputContent
         component.key = inputIdentifier
         component.value = value

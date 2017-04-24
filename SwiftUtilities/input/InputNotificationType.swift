@@ -20,14 +20,14 @@ public protocol InputNotificationType {
     /// - Parameters:
     ///   - input: A String value.
     ///   - key: A String value.
-    func append(input: String, for key: String)
+    mutating func append(input: String, for key: String)
     
     /// Append an error.
     ///
     /// - Parameters:
     ///   - input: A String value.
     ///   - key: A String value.
-    func append(error: String, for key: String)
+    mutating func append(error: String, for key: String)
     
     /// Construct from an Array of InputNotificationComponentType.
     init(from components: [InputNotificationComponentType])
