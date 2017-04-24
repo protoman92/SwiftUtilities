@@ -22,7 +22,31 @@ public protocol InputValidatorType {
         where S.Iterator.Element: InputDataType
 }
 
-public protocol InputDataType {
+/// Implement this protocol to deliver input content.
+public protocol InputContentType {
+    // This should be a enum string value so that later we can perform input
+    // validation easily.
+    var inputIdentifier: String { get }
+    
+    // This is the user' input.
+    var inputContent: String { get }
+    
+    /// Check whether the input is required.
+    var isRequired: Bool { get }
+    
+    /// Check if input content is empty.
+    var isEmpty: Bool { get }
+}
+
+/// Encompasses all InputData functionalities. Built on top of 
+/// InputContentType.
+public protocol InputDataType: InputContentType {
+    
+    /// Get a validator instance to validate the input.
+    var inputValidator: InputValidatorType? { get }
+    
+    /// Override inputContent to provide setter.
+    var inputContent: String { get set }
     
     /// Create a new InputNotificationType instance.
     ///
@@ -32,27 +56,11 @@ public protocol InputDataType {
     static func notification(from components: [InputNotificationComponentType])
         -> InputNotificationType
     
-    // This should be a enum string value so that later we can perform input
-    // validation easily.
-    var inputIdentifier: String { get }
-    
-    // This is the user' input.
-    var inputContent: String { get set }
-    
-    /// Get a validator instance to validate the input.
-    var inputValidator: InputValidatorType? { get }
-    
     /// Get an InputDataType Observable.
-    var inputDataObservable: Observable<InputDataType> { get }
+    var inputDataObservable: Observable<InputContentType> { get }
     
     /// Get an InputDataType Observer.
-    var inputDataObserver: AnyObserver<InputDataType> { get }
-    
-    /// Check whether the input is required.
-    var isRequired: Bool { get }
-    
-    /// Check if input content is empty.
-    var isEmpty: Bool { get }
+    var inputDataObserver: AnyObserver<InputContentType> { get }
     
     /// Produce a notification component based on existing input.
     ///
@@ -78,8 +86,8 @@ public class InputData {
     /// properties that require self needs their types explicitly specified.
     /// Here a BehaviorSubject is used because we want to emit empty input
     /// as well. If we use a PublishSubject, the empty input will be omitted.
-    fileprivate lazy var inputSubject: BehaviorSubject<InputDataType> =
-        BehaviorSubject<InputDataType>(value: self)
+    fileprivate lazy var inputSubject: BehaviorSubject<InputContentType> =
+        BehaviorSubject<InputContentType>(value: Input.empty)
     
     /// Validate inputs when they are confirmed.
     fileprivate var validator: InputValidatorType?
@@ -102,8 +110,8 @@ public extension InputData {
     }
     
     /// Buider class for InputData.
-    public final class Builder {
-        fileprivate var inputData: InputData
+    public struct Builder {
+        fileprivate let inputData: InputData
         
         fileprivate init() {
             inputData = InputData()
@@ -157,6 +165,68 @@ public extension InputData {
     }
 }
 
+public extension InputData {
+    
+    /// Use this struct to deliver content, instead of the main InputData,
+    /// since it may lead to a resource leak.
+    fileprivate struct Input {
+        fileprivate var identifier: String
+        fileprivate var content: String
+        fileprivate var required: Bool
+        
+        fileprivate init() {
+            identifier = ""
+            content = ""
+            required = false
+        }
+        
+        /// We are not using Builder for this struct since we don't expect
+        /// the init method to accept more than these 3 arguments, and it is
+        /// set to fileprivate access.
+        ///
+        /// - Parameters:
+        ///   - identifier: A String value.
+        ///   - content: A String value.
+        ///   - required: A Bool value.
+        fileprivate init(identifier: String, content: String, required: Bool) {
+            self.identifier = identifier
+            self.content = content
+            self.required = required
+        }
+    }
+}
+
+fileprivate extension InputData.Input: InputContentType {
+    
+    /// Return identifier.
+    public var inputIdentifier: String {
+        return identifier
+    }
+    
+    /// Return input content.
+    public var inputContent: String {
+        return content
+    }
+    
+    /// Return required.
+    public var isRequired: Bool {
+        return required
+    }
+    
+    /// Check whether inputContent is empty.
+    public var isEmpty: Bool {
+        return inputContent.isEmpty
+    }
+}
+
+fileprivate extension InputData.Input {
+    
+    /// Use this for when we don't want to pass any content.
+    fileprivate static var empty: InputData.Input {
+        return InputData.Input()
+    }
+}
+
 fileprivate extension InputData {
     
     /// This method is called when Builder.build() is called.
@@ -166,7 +236,7 @@ fileprivate extension InputData {
         self.disposeBag = disposeBag
         
         content.asObservable()
-            .doOnNext(contentDidChange)
+            .doOnNext({[weak self] in self?.contentChanged($0, with: self)})
             .subscribe()
             .addDisposableTo(disposeBag)
     }
@@ -174,15 +244,21 @@ fileprivate extension InputData {
     /// This method is called when the inputContent changes.
     ///
     /// - Parameter content: A String value.
-    fileprivate func contentDidChange(_ content: String) {
-        inputDataObserver.onNext(self)
+    fileprivate func contentChanged(_ str: String, with current: InputData?) {
+        if let current = current {
+            let input = Input(identifier: current.inputIdentifier,
+                              content: current.inputContent,
+                              required: current.isRequired)
+            
+            current.inputDataObserver.onNext(input)
+        }
     }
 }
 
 public extension InputData {
     
     /// Use this class to aggregate inputs/errors and notify observers.
-    public struct Notification {
+    fileprivate struct Notification {
         
         /// All entered inputs.
         fileprivate var inputs: [String: String]
@@ -190,13 +266,14 @@ public extension InputData {
         /// All input errors.
         fileprivate var errors: [String: String]
         
-        public init() {
+        fileprivate init() {
             inputs = [:]
             errors = [:]
         }
         
-        /// Use this class to construct a Notification.
-        public struct Component {
+        /// Use this class to construct a Notification. We do not need a
+        /// Builder for this struct since it is set to fileprivate.
+        fileprivate struct Component {
             
             /// The input's identifier.
             fileprivate var key = ""
@@ -340,10 +417,9 @@ extension InputData: InputDataType {
     /// Return a new Notification.
     ///
     /// - Returns: A Notification instance.
-    public static
-        func notification(from components: [InputNotificationComponentType])
-        -> InputNotificationType
-    {
+    public static func notification(
+        from components: [InputNotificationComponentType]
+    ) -> InputNotificationType {
         return Notification(from: components)
     }
     
@@ -379,12 +455,12 @@ extension InputData: InputDataType {
     }
     
     /// Return inputSubject as an Observable.
-    public var inputDataObservable: Observable<InputDataType> {
+    public var inputDataObservable: Observable<InputContentType> {
         return inputSubject.asObservable()
     }
     
     /// Return inputSubject as an Observer.
-    public var inputDataObserver: AnyObserver<InputDataType> {
+    public var inputDataObserver: AnyObserver<InputContentType> {
         return inputSubject.asObserver()
     }
     
@@ -426,7 +502,7 @@ public extension Sequence where Iterator.Element: InputDataType {
     /// because concat only takes the first element.
     ///
     /// - Returns: An Observable instance.
-    public func rxInputObservables() -> Observable<InputDataType> {
+    public func rxInputObservables() -> Observable<InputContentType> {
         return self.map({$0.inputDataObservable}).mergeAsObservable()
     }
     
