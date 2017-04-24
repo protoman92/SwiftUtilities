@@ -6,6 +6,8 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+import Foundation
+
 extension Bool: IsInstanceType {}
 
 public extension Bool {
@@ -24,5 +26,12 @@ public extension Bool {
     /// - Returns: A Bool value.
     public static func isFalse(_ value: Bool) -> Bool {
         return value == false;
+    }
+    
+    /// Create a random Bool value.
+    ///
+    /// - Returns: A Bool value.
+    public static func random() -> Bool {
+        return arc4random_uniform(2) == 0
     }
 }

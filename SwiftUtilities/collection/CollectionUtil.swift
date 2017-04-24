@@ -350,6 +350,14 @@ public extension Array {
             catch {}
         }
     }
+    
+    /// Get a random Element from the current Array.
+    ///
+    /// - Returns: An Element instance.
+    public func randomElement() -> Element? {
+        let index = Int.random(0, count)
+        return self[index]
+    }
 }
 
 public extension Sequence where Iterator.Element: ComparisonResultType {
