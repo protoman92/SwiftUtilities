@@ -196,7 +196,7 @@ public extension InputData {
     }
 }
 
-fileprivate extension InputData.Input: InputContentType {
+extension InputData.Input: InputContentType {
     
     /// Return identifier.
     public var inputIdentifier: String {
