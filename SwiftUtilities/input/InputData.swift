@@ -496,6 +496,30 @@ extension InputData: InputDataType {
     }
 }
 
+public extension Sequence where Iterator.Element == InputContentType {
+    
+    /// Check if all required inputs are filled.
+    ///
+    /// - Returns: A Bool value.
+    public func allRequiredInputFilled() -> Bool {
+        for input in self {
+            if input.isRequired && input.isEmpty { return false }
+        }
+        
+        return true
+    }
+}
+
+public extension Sequence where Iterator.Element: InputContentType {
+    
+    /// Check if all required inputs are filled.
+    ///
+    /// - Returns: A Bool value.
+    public func allRequiredInputFilled() -> Bool {
+        return map({$0 as InputContentType}).allRequiredInputFilled()
+    }
+}
+
 public extension Sequence where Iterator.Element: InputDataType {
     
     /// Merge all inputListener into one Observable. We need to use merge
@@ -521,11 +545,7 @@ public extension Sequence where Iterator.Element: InputDataType {
     /// - Returns: An Observable instance.
     public func rxAllRequiredInputFilled() -> Observable<Bool> {
         return Observable.combineLatest(self.map({$0.inputDataObservable}), {
-            for input in $0 {
-                if input.isRequired && input.isEmpty { return false }
-            }
-            
-            return true
+            return $0.allRequiredInputFilled()
         })
     }
 }

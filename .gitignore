@@ -24,8 +24,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
-pod-publish.txt
-pod-lint.txt
+pod-publish
 
 ### Xcode Patch ###
 *.xcodeproj/*
