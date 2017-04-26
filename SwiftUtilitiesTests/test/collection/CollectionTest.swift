@@ -123,4 +123,14 @@ class CustomComparisonCollectionTest: XCTestCase {
         // Then
         XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
     }
+    
+    func test_logEach_shouldWork() {
+        // Setup
+        let array1 = [1, 2, 3, 4]
+        let array2 = [1, 2, 3, 4]
+        
+        // When & Then
+        array1.logEach()
+        array2.logEach({$0 * 2})
+    }
 }

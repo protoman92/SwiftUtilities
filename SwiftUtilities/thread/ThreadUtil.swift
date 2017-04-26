@@ -8,6 +8,28 @@
 
 import Foundation
 
+public extension DispatchQueue {
+    private static var _onceTracker = [String]()
+    
+    /// Executes a block of code, associated with a unique token, only once.
+    /// The code is thread safe and will only execute the code once even in
+    /// the presence of multithreaded calls.
+    ///
+    /// - Parameters:
+    ///   - token: A unique reverse DNS style name or a GUID.
+    ///   - block: Block to execute once.
+    public class func once(using token: String, then block: (Void) -> Void) {
+        synchronized(self) {
+            guard !_onceTracker.contains(token) else {
+                return
+            }
+            
+            _onceTracker.append(token)
+            block()
+        }
+    }
+}
+
 /// Delay execution in the main thread by some time.
 ///
 /// - Parameters:
@@ -39,6 +61,14 @@ public func background(_ qos: DispatchQoS.QoSClass? = nil,
     DispatchQueue.global(qos: qos).async(execute: closure)
 }
 
+/// Perform an action only once.
+///
+/// - Parameters:
+///   - token: A unique reverse DNS style name or a GUID.
+///   - block: Block to execute once.
+public func once(using token: String, then block: (Void) -> Void) {
+    DispatchQueue.once(using: token, then: block)
+}
 
 /// Synchronize access to a lock, and perform an operation.
 ///

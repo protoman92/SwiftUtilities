@@ -41,9 +41,6 @@ public extension Sequence {
         
         return nil
     }
-}
-
-public extension Sequence {
     
     /// Check if all Element passes a condition.
     ///
@@ -71,6 +68,43 @@ public extension Sequence {
         rethrows -> Bool
     {
         return try self.filter(condition).count >= 1
+    }
+    
+    /// Check if the current Sequence contains an element, according to a
+    /// predicate.
+    ///
+    /// - Parameter where: A Bool predicate.
+    /// - Returns: A Bool value.
+    /// - Throws: If any of the predicate checks throws an Error, rethrow it.
+    public func doesNotContain(where: (Iterator.Element) throws -> Bool)
+        rethrows -> Bool
+    {
+        return try !contains(where: `where`)
+    }
+    
+    /// Print each element in the current Sequence.
+    ///
+    /// - Parameter convert: An optional conversion closure.
+    /// - Throws: If any conversion throws an Error, rethrow it.
+    public func logEach(_ convert: ((Iterator.Element) throws -> Any)? = nil)
+        rethrows
+    {
+        if let convert = convert {
+            do { try map(convert).logEach() } catch {}
+        } else {
+            forEach(debugPrint)
+        }
+    }
+}
+
+public extension Sequence where Iterator.Element: Hashable {
+    
+    /// Check if the current Sequence contains an element.
+    ///
+    /// - Parameter item: The Element to be checked.
+    /// - Returns: A Bool value.
+    public func doesNotContain(_ item: Iterator.Element) -> Bool {
+        return !contains(item)
     }
 }
 
@@ -116,11 +150,11 @@ public extension Array {
     ///
     /// - Parameter elementCount: The number of random elements to get.
     /// - Returns: An Array of elements.
-    public func randomize(_ elementCount: Int) -> [Any] {
+    public func randomize(_ elementCount: Int) -> [Element] {
         let rand = GKRandomSource.sharedRandom()
         let shuffled = rand.arrayByShufflingObjects(in: self)
         let prefixed = shuffled.prefix(Swift.max(0, elementCount))
-        return prefixed.map({$0})
+        return prefixed.flatMap({$0 as? Element})
     }
 }
 
