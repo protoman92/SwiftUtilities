@@ -255,109 +255,6 @@ fileprivate extension InputData {
     }
 }
 
-public extension InputData {
-    
-    /// Use this class to aggregate inputs/errors and notify observers.
-    fileprivate struct Notification {
-        
-        /// All entered inputs.
-        fileprivate var inputs: [String: String]
-        
-        /// All input errors.
-        fileprivate var errors: [String: String]
-        
-        fileprivate init() {
-            inputs = [:]
-            errors = [:]
-        }
-        
-        /// Use this class to construct a Notification. We do not need a
-        /// Builder for this struct since it is set to fileprivate.
-        fileprivate struct Component {
-            
-            /// The input's identifier.
-            fileprivate var key = ""
-            
-            /// The input content.
-            fileprivate var value = ""
-            
-            /// The error message.
-            fileprivate var error = ""
-        }
-    }
-}
-
-extension InputData.Notification: InputNotificationType {
-    
-    /// Detect if there are input errors.
-    public var hasErrors: Bool {
-        return errors.isNotEmpty
-    }
-    
-    /// Return either inputs or errors, depending on whether errors are
-    /// present.
-    public var outputs: [String: String] {
-        return hasErrors ? errors : inputs
-    }
-    
-    /// Append an input.
-    ///
-    /// - Parameters:
-    ///   - input: A String value.
-    ///   - key: A String value. This should be the input identifier.
-    public mutating func append(input: String, for key: String) {
-        inputs.updateValue(input, forKey: key)
-    }
-    
-    /// Append an error.
-    ///
-    /// - Parameters:
-    ///   - error: A String value.
-    ///   - key: A String value. This should be the input identifier.
-    public mutating func append(error: String, for key: String) {
-        errors.updateValue(error, forKey: key)
-    }
-    
-    public init(from components: [InputNotificationComponentType]) {
-        self.init()
-        
-        for component in components {
-            let key = component.inputKey
-            let value = component.inputValue
-            
-            if component.hasError {
-                append(error: value, for: key)
-            } else {
-                append(input: value, for: key)
-            }
-        }
-    }
-}
-
-extension InputData.Notification: CustomStringConvertible {
-    public var description: String {
-        return "hasErrors: \(hasErrors), output: \(outputs)"
-    }
-}
-
-extension InputData.Notification.Component: InputNotificationComponentType {
-    
-    /// Detect if there is an input error.
-    public var hasError: Bool {
-        return error.isNotEmpty
-    }
-    
-    /// The input's identifier.
-    public var inputKey: String {
-        return key
-    }
-    
-    /// Either the input content, or an error message.
-    public var inputValue: String {
-        return hasError ? error : value
-    }
-}
-
 extension InputData: Hashable {
     public var hashValue: Int {
         return inputIdentifier.hashValue
@@ -485,6 +382,12 @@ extension InputData: InputDataType {
         if isRequired && value.isEmpty {
             component.error = "input.error.required".localized
         } else if let validator = inputValidator, value.isNotEmpty {
+            // If the input is not required and empty, we do not worry about
+            // it. The validation below applies to:
+            //  - Required inputs that are not empty (empty required inputs
+            //    should have thrown an error above).
+            //  - Non-required inputs that are not empty - which indicates
+            //    the user wants to change some non-crucial data.
             do {
                 try validator.validate(input: self, against: inputs)
             } catch let e {

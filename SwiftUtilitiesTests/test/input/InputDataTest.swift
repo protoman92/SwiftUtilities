@@ -11,10 +11,13 @@ import RxSwift
 import XCTest
 
 class InputDataTest: XCTestCase {
+    fileprivate var disposeBag: DisposeBag!
     fileprivate var scheduler: TestScheduler!
     
     override func setUp() {
         super.setUp()
+        continueAfterFailure = false
+        disposeBag = DisposeBag()
         scheduler = TestScheduler(initialClock: 0)
     }
     
@@ -96,11 +99,12 @@ class InputDataTest: XCTestCase {
         var inputData = [InputData]()
         
         // When
-        _ = confirmSubject
+        confirmSubject
             .flatMap({_ in inputData.rxValidate()})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
-        for _ in 0..<10000 {
+        for _ in 0..<1000 {
             let input1 = MockInput(required: Bool.random(),
                                    throwValidatorError: Bool.random())
             
@@ -142,8 +146,18 @@ class InputDataTest: XCTestCase {
                     $0.value == "input.error.required".localized
                 }))
                 
-            } else if inputs.any(satisfying: {$0.throwValidatorError}) {
-                XCTAssertTrue(lastEvent.hasErrors)
+            } else {
+                let invalidInputs = inputs.filter({$0.throwValidatorError})
+                
+                let invalidData = invalidInputs.flatMap({input in
+                    inputData.filter({
+                        $0.inputIdentifier == input.identifier
+                    }).first
+                })
+                
+                if invalidData.any(satisfying: {$0.inputContent.isNotEmpty}) {
+                    XCTAssertTrue(lastEvent.hasErrors)
+                }
             }
         }
     }
@@ -201,7 +215,9 @@ class MockInput {
 }
 
 extension MockInput: CustomStringConvertible {
-    var description: String { return "MockInput-\(count)" }
+    var description: String {
+        return "\(required)-\(throwValidatorError)-\(count)"
+    }
 }
 
 extension MockInput: InputDetailType {
@@ -210,9 +226,9 @@ extension MockInput: InputDetailType {
 }
 
 extension MockInput: InputValidatorType {
-    func validate<S : Sequence>(input: InputDataType, against inputs: S)
+    func validate<S: Sequence>(input: InputDataType, against inputs: S)
         throws where S.Iterator.Element : InputDataType
     {
-        if throwValidatorError { throw Exception(identifier) }
+        if throwValidatorError { throw Exception("Error!!!") }
     }
 }

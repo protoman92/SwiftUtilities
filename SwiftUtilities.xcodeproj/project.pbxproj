@@ -17,8 +17,8 @@
 		D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
-		D3474B0E1EAC875000251A2F /* InputNotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotificationType.swift */; };
-		D3474B0F1EAC879400251A2F /* InputNotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotificationType.swift */; };
+		D3474B0E1EAC875000251A2F /* InputNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotification.swift */; };
+		D3474B0F1EAC879400251A2F /* InputNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotification.swift */; };
 		D37905911E9F61810028E2B2 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37905901E9F61810028E2B2 /* RxTest.swift */; };
 		D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38316911EA3D97E009706FF /* TypeUtil.swift */; };
 		D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38316941EA3DAA6009706FF /* TypeTest.swift */; };
@@ -77,7 +77,7 @@
 		D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTestUtil.swift; path = util/rx/RxTestUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
-		D3474B0D1EAC875000251A2F /* InputNotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNotificationType.swift; sourceTree = "<group>"; };
+		D3474B0D1EAC875000251A2F /* InputNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNotification.swift; sourceTree = "<group>"; };
 		D37905901E9F61810028E2B2 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTest.swift; path = test/rx/RxTest.swift; sourceTree = "<group>"; };
 		D38316911EA3D97E009706FF /* TypeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeUtil.swift; path = type/TypeUtil.swift; sourceTree = "<group>"; };
 		D38316941EA3DAA6009706FF /* TypeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeTest.swift; path = test/type/TypeTest.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 			children = (
 				D3107EFB1EA71DDA00E43FEE /* InputData.swift */,
 				D3F9A7DA1EA9076F004EA340 /* InputType.swift */,
-				D3474B0D1EAC875000251A2F /* InputNotificationType.swift */,
+				D3474B0D1EAC875000251A2F /* InputNotification.swift */,
 			);
 			path = input;
 			sourceTree = "<group>";
@@ -597,7 +597,7 @@
 				D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */,
 				D38CC4E41E9CA33400A09A5E /* RxUtil.swift in Sources */,
 				D38CC4E51E9CA33400A09A5E /* StringUtil.swift in Sources */,
-				D3474B0E1EAC875000251A2F /* InputNotificationType.swift in Sources */,
+				D3474B0E1EAC875000251A2F /* InputNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,7 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3474B0F1EAC879400251A2F /* InputNotificationType.swift in Sources */,
+				D3474B0F1EAC879400251A2F /* InputNotification.swift in Sources */,
 				D3F9A7DC1EA90788004EA340 /* InputType.swift in Sources */,
 				D3107F001EA71E0300E43FEE /* InputData.swift in Sources */,
 				D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */,
