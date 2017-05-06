@@ -1,2 +1,0 @@
-pod trunk push SwiftUtilitiesTests.podspec
-pod trunk push SwiftUtilities.podspec

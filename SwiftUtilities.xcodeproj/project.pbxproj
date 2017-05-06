@@ -11,7 +11,6 @@
 		D3107EFC1EA71DDA00E43FEE /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFB1EA71DDA00E43FEE /* InputData.swift */; };
 		D3107EFF1EA71DE300E43FEE /* InputDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */; };
 		D3107F001EA71E0300E43FEE /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFB1EA71DDA00E43FEE /* InputData.swift */; };
-		D31285DD1E9F2BF400F2AB64 /* pod-publish in Resources */ = {isa = PBXBuildFile; fileRef = D31285DC1E9F2BF400F2AB64 /* pod-publish */; };
 		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
@@ -72,7 +71,6 @@
 		D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		D3107EFB1EA71DDA00E43FEE /* InputData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDataTest.swift; sourceTree = "<group>"; };
-		D31285DC1E9F2BF400F2AB64 /* pod-publish */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pod-publish"; sourceTree = "<group>"; };
 		D313E5C71EA08AD00063F91F /* BooleanUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanUtil.swift; path = boolean/BooleanUtil.swift; sourceTree = "<group>"; };
 		D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTestUtil.swift; path = util/rx/RxTestUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */,
-				D31285DC1E9F2BF400F2AB64 /* pod-publish */,
 				D38CC4EB1E9CBAD200A09A5E /* SwiftUtilities.podspec */,
 				D38CC49A1E9CA23600A09A5E /* SwiftUtilities */,
 				D38CC4A51E9CA23600A09A5E /* SwiftUtilitiesTests */,
@@ -488,7 +485,6 @@
 			files = (
 				D38CC4EC1E9CBAD200A09A5E /* SwiftUtilities.podspec in Resources */,
 				D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */,
-				D31285DD1E9F2BF400F2AB64 /* pod-publish in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,7 +755,7 @@
 				INFOPLIST_FILE = SwiftUtilities/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiften.SwiftUtilities;
+				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -782,7 +778,7 @@
 				INFOPLIST_FILE = SwiftUtilities/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiften.SwiftUtilities;
+				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
