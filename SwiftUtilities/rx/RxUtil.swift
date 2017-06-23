@@ -182,12 +182,12 @@ public extension Observable {
     /// - Parameter type: The type to be cast to.
     /// - Returns: An Observable instance.
     public func cast<T>(to type: T.Type) -> Observable<T> {
-        return flatMap({(item) -> Observable<T> in
+        return map({(item) -> T in
             guard let cast = item as? T else {
-                return Observable<T>.error("Cast to \(type) failed")
+                throw Exception("Failed to cast \(item) to \(type)")
             }
             
-            return Observable<T>.just(cast)
+            return cast
         })
     }
     
@@ -238,37 +238,6 @@ public extension Observable {
         
         let scheduler = ConcurrentDispatchQueueScheduler(qos: type)
         return subscribeOn(scheduler)
-    }
-    
-    /// Subscribe to a LifeCycleObserverType.
-    ///
-    /// - Parameters:
-    ///   - o: A LifecycleObserverType instance.
-    ///   - tag: An optional OperationProtocol instance.
-    /// - Returns: A Disposable instance.
-    public func subscribe<O>(_ o: O, tag: OperationProtocol?) -> Disposable
-        where O: LifecycleObserverType, O.E == Element {
-        return subscribe(
-            onNext: {
-                if o.canObserve(tag) {
-                    o.onNext($0, tag: tag)
-                }
-            },
-            onError: {
-                if o.canObserve(tag) {
-                    o.onError($0, tag: tag)
-                }
-            },
-            onCompleted: {
-                if o.canObserve(tag) {
-                    o.onCompleted(tag)
-                }
-            },
-            onDisposed: {
-                if o.canObserve(tag) {
-                    o.onDisposed(tag)
-                }
-            })
     }
 }
 
@@ -455,23 +424,6 @@ public extension ObservableType {
     ) -> Observable<E> {
         return `if`(condition, thenReturn: selector, elseReturn: {$0})
     }
-}
-
-/// Class instances that make use of rx may implement this protocol to avoid
-/// Observable emission, i.e. when a ViewController is not present on screen
-/// and we want to stop fetching data.
-public protocol LifecycleObserverType {
-    associatedtype E
-    
-    func canObserve(_ tag: OperationProtocol?) -> Bool
-    
-    func onCompleted(_ tag: OperationProtocol?)
-    
-    func onError(_ error: Error, tag: OperationProtocol?)
-    
-    func onNext(_ element: E, tag: OperationProtocol?)
-    
-    func onDisposed(_ tag: OperationProtocol?)
 }
 
 public extension Sequence where Iterator.Element: ObservableConvertibleType {

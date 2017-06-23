@@ -10,6 +10,7 @@ import UIKit
 
 extension Date: IsInstanceType {}
 extension Calendar: IsInstanceType {}
+public typealias CalendarUnits = Set<Calendar.Component>
 
 public extension Date {
     
@@ -134,23 +135,6 @@ public extension Calendar {
         let result = compare(date, to: ref, toGranularity: granularity)
         return result == .orderedSame
     }
-}
-
-/// Convenience typealias
-public typealias CalendarUnits = Set<Calendar.Component>
-
-public enum DateFormat: String {
-    case ddMM = "dd MM"
-    case ddMMM = "dd MMM"
-    case ddMMMM = "dd MMMM"
-    case ddMMMYYYYhhmma = "dd MMM YYYY hh:mm a"
-    case ddMMMMYYYYhhmma = "dd MMMM YYYY hh:mm a"
-    case EEddMMYY = "EE, dd-MM-YY"
-    case EEddMMYYhhmma = "EE, dd-MM-YY hh:mm a"
-    case EEEEddMMMYYYY = "EEEE, dd MMMM YYYY"
-    case EEEEddMMMYYYYhhmma = "EEEE, dd MMMM YYYY hh:mm a"
-    case hhmma = "hh:mm a"
-    case MMMMYYYY = "MMMM, YYYY"
 }
 
 public extension DateComponents {

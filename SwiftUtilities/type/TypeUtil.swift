@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// This protocol provides methods to determine whether an object is of a
+/// particular type.
 public protocol IsInstanceType {}
 
 public extension IsInstanceType {

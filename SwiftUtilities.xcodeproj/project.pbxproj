@@ -8,16 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2AD5B2F4B8E112C82590DB2E /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */; };
-		D3107EFC1EA71DDA00E43FEE /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFB1EA71DDA00E43FEE /* InputData.swift */; };
-		D3107EFF1EA71DE300E43FEE /* InputDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */; };
-		D3107F001EA71E0300E43FEE /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3107EFB1EA71DDA00E43FEE /* InputData.swift */; };
 		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
-		D3474B0E1EAC875000251A2F /* InputNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotification.swift */; };
-		D3474B0F1EAC879400251A2F /* InputNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3474B0D1EAC875000251A2F /* InputNotification.swift */; };
 		D37905911E9F61810028E2B2 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37905901E9F61810028E2B2 /* RxTest.swift */; };
 		D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38316911EA3D97E009706FF /* TypeUtil.swift */; };
 		D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38316941EA3DAA6009706FF /* TypeTest.swift */; };
@@ -31,12 +26,10 @@
 		D38CC4E41E9CA33400A09A5E /* RxUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4D91E9CA33400A09A5E /* RxUtil.swift */; };
 		D38CC4E51E9CA33400A09A5E /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DB1E9CA33400A09A5E /* StringUtil.swift */; };
 		D38CC4E61E9CA33400A09A5E /* ThreadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4DD1E9CA33400A09A5E /* ThreadUtil.swift */; };
-		D38CC4E81E9CB0DE00A09A5E /* OperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4E71E9CB0DE00A09A5E /* OperationProtocol.swift */; };
 		D38CC4EC1E9CBAD200A09A5E /* SwiftUtilities.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D38CC4EB1E9CBAD200A09A5E /* SwiftUtilities.podspec */; };
 		D393B17C1E9E15F000DBC683 /* DateUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393B17B1E9E15F000DBC683 /* DateUtilTest.swift */; };
 		D393B1861E9E1FB900DBC683 /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4CD1E9CA33400A09A5E /* CollectionUtil.swift */; };
 		D393B1871E9E1FB900DBC683 /* SwiftUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4CF1E9CA33400A09A5E /* SwiftUtil.swift */; };
-		D393B1881E9E1FB900DBC683 /* OperationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4E71E9CB0DE00A09A5E /* OperationProtocol.swift */; };
 		D393B1891E9E1FB900DBC683 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4D11E9CA33400A09A5E /* DateUtil.swift */; };
 		D393B18A1E9E1FB900DBC683 /* ExceptionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4D31E9CA33400A09A5E /* ExceptionUtil.swift */; };
 		D393B18B1E9E1FB900DBC683 /* MathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38CC4D71E9CA33400A09A5E /* MathUtil.swift */; };
@@ -46,8 +39,6 @@
 		D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */; };
 		D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C87B971E9FC8DE000BAB62 /* MockTest.swift */; };
 		D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBC9941EA67769008C90FB /* ThreadTest.swift */; };
-		D3F9A7DB1EA9076F004EA340 /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9A7DA1EA9076F004EA340 /* InputType.swift */; };
-		D3F9A7DC1EA90788004EA340 /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9A7DA1EA9076F004EA340 /* InputType.swift */; };
 		D3FE35F51EA3704400C44052 /* CollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE35F41EA3704400C44052 /* CollectionTest.swift */; };
 		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -69,13 +60,10 @@
 		9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6387B60973500599312E56 /* Pods-SwiftUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.release.xcconfig"; sourceTree = "<group>"; };
 		D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
-		D3107EFB1EA71DDA00E43FEE /* InputData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
-		D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputDataTest.swift; sourceTree = "<group>"; };
 		D313E5C71EA08AD00063F91F /* BooleanUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanUtil.swift; path = boolean/BooleanUtil.swift; sourceTree = "<group>"; };
 		D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTestUtil.swift; path = util/rx/RxTestUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
-		D3474B0D1EAC875000251A2F /* InputNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNotification.swift; sourceTree = "<group>"; };
 		D37905901E9F61810028E2B2 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTest.swift; path = test/rx/RxTest.swift; sourceTree = "<group>"; };
 		D38316911EA3D97E009706FF /* TypeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeUtil.swift; path = type/TypeUtil.swift; sourceTree = "<group>"; };
 		D38316941EA3DAA6009706FF /* TypeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TypeTest.swift; path = test/type/TypeTest.swift; sourceTree = "<group>"; };
@@ -92,13 +80,11 @@
 		D38CC4D91E9CA33400A09A5E /* RxUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxUtil.swift; sourceTree = "<group>"; };
 		D38CC4DB1E9CA33400A09A5E /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		D38CC4DD1E9CA33400A09A5E /* ThreadUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadUtil.swift; sourceTree = "<group>"; };
-		D38CC4E71E9CB0DE00A09A5E /* OperationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationProtocol.swift; path = SwiftUtilities/protocol/OperationProtocol.swift; sourceTree = SOURCE_ROOT; };
 		D38CC4EB1E9CBAD200A09A5E /* SwiftUtilities.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilities.podspec; sourceTree = "<group>"; };
 		D393B17B1E9E15F000DBC683 /* DateUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateUtilTest.swift; path = test/date/DateUtilTest.swift; sourceTree = "<group>"; };
 		D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D3C87B971E9FC8DE000BAB62 /* MockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTest.swift; path = test/mock/MockTest.swift; sourceTree = "<group>"; };
 		D3EBC9941EA67769008C90FB /* ThreadTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThreadTest.swift; path = test/thread/ThreadTest.swift; sourceTree = "<group>"; };
-		D3F9A7DA1EA9076F004EA340 /* InputType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputType.swift; sourceTree = "<group>"; };
 		D3FE35F41EA3704400C44052 /* CollectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionTest.swift; path = test/collection/CollectionTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,25 +115,6 @@
 				76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D3107EFA1EA71DDA00E43FEE /* input */ = {
-			isa = PBXGroup;
-			children = (
-				D3107EFB1EA71DDA00E43FEE /* InputData.swift */,
-				D3F9A7DA1EA9076F004EA340 /* InputType.swift */,
-				D3474B0D1EAC875000251A2F /* InputNotification.swift */,
-			);
-			path = input;
-			sourceTree = "<group>";
-		};
-		D3107EFD1EA71DE300E43FEE /* input */ = {
-			isa = PBXGroup;
-			children = (
-				D3107EFE1EA71DE300E43FEE /* InputDataTest.swift */,
-			);
-			name = input;
-			path = test/input;
 			sourceTree = "<group>";
 		};
 		D313E5C61EA08AAF0063F91F /* boolean */ = {
@@ -224,7 +191,6 @@
 		D38CC49A1E9CA23600A09A5E /* SwiftUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				D3107EFA1EA71DDA00E43FEE /* input */,
 				D38316901EA3D96B009706FF /* type */,
 				D313E5C61EA08AAF0063F91F /* boolean */,
 				D38CC4CC1E9CA33400A09A5E /* collection */,
@@ -264,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				D38CC4CF1E9CA33400A09A5E /* SwiftUtil.swift */,
-				D38CC4E71E9CB0DE00A09A5E /* OperationProtocol.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -328,7 +293,6 @@
 		D393B1761E9E12AF00DBC683 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				D3107EFD1EA71DE300E43FEE /* input */,
 				D3EBC9931EA67753008C90FB /* thread */,
 				D38316931EA3DA95009706FF /* type */,
 				D3FE35F31EA3702A00C44052 /* collection */,
@@ -583,17 +547,13 @@
 				D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */,
 				D38CC4E01E9CA33400A09A5E /* DateUtil.swift in Sources */,
 				D38CC4E31E9CA33400A09A5E /* MathUtil.swift in Sources */,
-				D3F9A7DB1EA9076F004EA340 /* InputType.swift in Sources */,
 				D38CC4DE1E9CA33400A09A5E /* CollectionUtil.swift in Sources */,
-				D3107EFC1EA71DDA00E43FEE /* InputData.swift in Sources */,
-				D38CC4E81E9CB0DE00A09A5E /* OperationProtocol.swift in Sources */,
 				D38CC4DF1E9CA33400A09A5E /* SwiftUtil.swift in Sources */,
 				D38CC4E11E9CA33400A09A5E /* ExceptionUtil.swift in Sources */,
 				D38CC4E61E9CA33400A09A5E /* ThreadUtil.swift in Sources */,
 				D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */,
 				D38CC4E41E9CA33400A09A5E /* RxUtil.swift in Sources */,
 				D38CC4E51E9CA33400A09A5E /* StringUtil.swift in Sources */,
-				D3474B0E1EAC875000251A2F /* InputNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,9 +561,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3474B0F1EAC879400251A2F /* InputNotification.swift in Sources */,
-				D3F9A7DC1EA90788004EA340 /* InputType.swift in Sources */,
-				D3107F001EA71E0300E43FEE /* InputData.swift in Sources */,
 				D31ED7501EACE73C00632FF4 /* RxTestUtil.swift in Sources */,
 				D38316961EA3DB70009706FF /* TypeUtil.swift in Sources */,
 				D313E5C91EA08BCD0063F91F /* BooleanUtil.swift in Sources */,
@@ -611,7 +568,6 @@
 				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
 				D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */,
 				D393B1871E9E1FB900DBC683 /* SwiftUtil.swift in Sources */,
-				D393B1881E9E1FB900DBC683 /* OperationProtocol.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
 				D393B1891E9E1FB900DBC683 /* DateUtil.swift in Sources */,
 				D393B18A1E9E1FB900DBC683 /* ExceptionUtil.swift in Sources */,
@@ -620,7 +576,6 @@
 				D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */,
 				D393B18C1E9E1FB900DBC683 /* RxUtil.swift in Sources */,
 				D393B18D1E9E1FB900DBC683 /* StringUtil.swift in Sources */,
-				D3107EFF1EA71DE300E43FEE /* InputDataTest.swift in Sources */,
 				D393B18E1E9E1FB900DBC683 /* ThreadUtil.swift in Sources */,
 				D393B17C1E9E15F000DBC683 /* DateUtilTest.swift in Sources */,
 				D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */,

@@ -15,7 +15,7 @@ extension String: CustomComparisonType {
     }
 }
 
-extension String: ComparisonResultType {
+extension String: ComparisonResultConvertibleType {
     public func compare(against element: String) -> ComparisonResult {
         return compare(element)
     }

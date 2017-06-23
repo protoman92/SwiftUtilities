@@ -15,17 +15,14 @@ public protocol CustomComparisonType {
 }
 
 /// Objects that require comparison should implement this protocol.
-public protocol ComparisonResultType {
+public protocol ComparisonResultConvertibleType {
     
-    /// Produce a ComparisonResult against another ComparisonType.
+    /// Compare against another ComparisonResultConvertibleType.
     ///
-    /// - Parameter element: A ComparisonType instance.
+    /// - Parameter element: A ComparisonResultConvertibleType instance.
     /// - Returns: A ComparisonResult instance.
     func compare(against element: Self) -> ComparisonResult
 }
-
-extension Array: IsInstanceType {}
-extension Dictionary: IsInstanceType {}
 
 public extension Sequence {
     /// Get the first item that is an instance of a specified Type.
@@ -127,11 +124,7 @@ public extension Array {
     /// - Parameter index: The index to be inspected.
     /// - Returns: An optional element.
     public func element(at index: Int) -> Element? {
-        if containsElement(at: index) {
-            return self[index]
-        }
-        
-        return nil
+        return containsElement(at: index) ? self[index] : nil
     }
     
     /// Get an element that satisfies a certain condition.
@@ -180,9 +173,9 @@ public extension Array where Element: CustomComparisonType {
         if !contains(where: {$0.equals(object: element)}) {
             append(element)
             return true
+        } else {
+            return false
         }
-        
-        return false
     }
     
     /// Append a unique element, or replace an existing element with this
@@ -394,26 +387,26 @@ public extension Array {
     }
 }
 
-public extension Sequence where Iterator.Element: ComparisonResultType {
+public extension Sequence where Iterator.Element: ComparisonResultConvertibleType {
     
     /// Sort using a ComparisonResult instance.
     ///
     /// - Parameter result: A ComparisonResult instance.
-    /// - Returns: An Array of a ComparisonResultType subclass.
+    /// - Returns: An Array of a ComparisonResultConvertibleType subclass.
     public func sorted(by result: ComparisonResult) -> [Iterator.Element] {
         return sorted(by: {$0.0.compare(against: $0.1) == result})
     }
     
     /// Sort in ascending order.
     ///
-    /// - Returns: An Array of a ComparisonResultType subclass.
+    /// - Returns: An Array of a ComparisonResultConvertibleType subclass.
     public func sortedAscending() -> [Iterator.Element] {
         return sorted(by: .orderedAscending)
     }
     
     /// Sort in descending order.
     ///
-    /// - Returns: An Array of a ComparisonResultType subclass.
+    /// - Returns: An Array of a ComparisonResultConvertibleType subclass.
     public func sortedDescending() -> [Iterator.Element] {
         return sorted(by: .orderedDescending)
     }
@@ -431,7 +424,7 @@ public extension Dictionary {
     }
 }
 
-public extension Dictionary where Key: ComparisonResultType {
+public extension Dictionary where Key: ComparisonResultConvertibleType {
     
     /// Sort using a ComparisonResult instance.
     ///
@@ -455,3 +448,6 @@ public extension Dictionary where Key: ComparisonResultType {
         return sorted(by: .orderedDescending)
     }
 }
+
+extension Array: IsInstanceType {}
+extension Dictionary: IsInstanceType {}
