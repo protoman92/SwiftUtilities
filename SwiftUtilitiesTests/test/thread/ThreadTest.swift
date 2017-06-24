@@ -10,7 +10,7 @@ import RxSwift
 import RxTest
 import XCTest
 
-class ThreadTest: XCTestCase {
+final class ThreadTest: XCTestCase {
     func test_synchronized_shouldSucceed() {
         // Setup
         let scheduler = TestScheduler(initialClock: 0)

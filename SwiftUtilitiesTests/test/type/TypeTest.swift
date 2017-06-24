@@ -12,7 +12,7 @@ import XCTest
 class Object1: NSObject {}
 class Object2: IsInstanceType {}
 
-class TypeTest: XCTestCase {
+final class TypeTest: XCTestCase {
     func test_isInstance_shouldSucceed() {
         // Setup
         let object1 = Object1()

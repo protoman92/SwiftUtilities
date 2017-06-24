@@ -8,7 +8,7 @@
 
 import XCTest
 
-class DateUtilTest: XCTestCase {
+final class DateUtilTest: XCTestCase {
     
     /// Test date comparison methods and ensure they work correctly.
     func test_dateComparison_shouldSucceed() {
@@ -40,29 +40,12 @@ class DateUtilTest: XCTestCase {
             XCTAssertTrue(date.notLaterThan(date: sDate))
             
             /// Comparing using a Calendar instance.
-            XCTAssertTrue(calendar.notLaterThan(compare: date,
-                                                to: date,
-                                                granularity: $0.2))
-            
-            XCTAssertTrue(calendar.notEarlierThan(compare: date,
-                                                  to: date,
-                                                  granularity: $0.2))
-            
-            XCTAssertTrue(calendar.notEarlierThan(compare: date,
-                                                  to: fDate,
-                                                  granularity: $0.2))
-            
-            XCTAssertTrue(calendar.notLaterThan(compare: date,
-                                                to: sDate,
-                                                granularity: $0.2))
-            
-            XCTAssertTrue(calendar.laterThan(compare: date,
-                                             to: fDate,
-                                             granularity: $0.2))
-            
-            XCTAssertTrue(calendar.notLaterThan(compare: date,
-                                                to: sDate,
-                                                granularity: $0.2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: date, granularity: $0.2))
+            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: date, granularity: $0.2))
+            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: fDate, granularity: $0.2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $0.2))
+            XCTAssertTrue(calendar.laterThan(compare: date, to: fDate, granularity: $0.2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $0.2))
         }
         
         // When
@@ -73,13 +56,5 @@ class DateUtilTest: XCTestCase {
             let calendarComponent = Calendar.Component.random()
             testDateComparison(date, offset, calendarComponent)
         }
-    }
-    
-    /// Verify that DateFormat works.
-    func test_dateConversion_shouldSucceed() {
-        let millis: Double = 1478372157
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.EEEEddMMMYYYYhhmma.rawValue
-        print(formatter.string(from: Date(timeIntervalSince1970: millis)))
     }
 }

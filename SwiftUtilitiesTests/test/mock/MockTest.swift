@@ -8,7 +8,7 @@
 
 import XCTest
 
-class MockTest: XCTestCase {
+final class MockTest: XCTestCase {
     let mc = MockClass()
     
     override func tearDown() {

@@ -10,10 +10,12 @@ import RxSwift
 import RxTest
 import XCTest
 
-class RxTest: XCTestCase {
-    fileprivate var scheduler = TestScheduler(initialClock: 0)
+final class RxTest: XCTestCase {
+    fileprivate var disposeBag: DisposeBag!
+    fileprivate var scheduler: TestScheduler!
     
     override func setUp() {
+        disposeBag = DisposeBag()
         scheduler = TestScheduler(initialClock: 0)
     }
     
@@ -23,7 +25,7 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable<Any>
+        Observable<Any>
             .create({observer in
                 for (i, n) in array.enumerated() {
                     observer.onNext(n)
@@ -36,6 +38,7 @@ class RxTest: XCTestCase {
                 return Disposables.create()
             })
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -52,27 +55,16 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable.just(1)
+        Observable.just(1)
             .flatMap({_ in Observable.error(Exception())})
-            .doOnNext {_ in
-                print("OnNext")
-            }
-            .doOnError {_ in
-                print("OnError")
-            }
-            .doOnCompleted {
-                print("OnCompleted")
-            }
-            .doOnSubscribe {
-                print("OnSubscribe")
-            }
-            .doOnSubscribed {
-                print("OnSubscribed")
-            }
-            .doOnDispose {
-                print("OnDisposed")
-            }
+            .doOnNext {_ in print("OnNext")}
+            .doOnError {_ in print("OnError")}
+            .doOnCompleted {print("OnCompleted")}
+            .doOnSubscribe {print("OnSubscribe")}
+            .doOnSubscribed {print("OnSubscribed")}
+            .doOnDispose {print("OnDisposed")}
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
     }
@@ -82,9 +74,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable.empty()
+        Observable.empty()
             .throwIfEmpty("Empty error")
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         XCTAssertNotNil(observer.events[0].value.error)
@@ -95,9 +88,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable.error("Error")
+        Observable.error("Error")
             .catchSwitchToEmpty()
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let event = observer.events[0].value
@@ -111,11 +105,12 @@ class RxTest: XCTestCase {
         let array: [Int] = [1, 2, 3, 4]
         
         // When
-        _ = Observable.from(array)
+        Observable.from(array)
             .mapIf(Int.isEven,
                    thenReturn: {_ in "Even"},
                    elseReturn: {_ in "Odd"})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -138,9 +133,10 @@ class RxTest: XCTestCase {
         let array: [Int] = [1, 2, 3, 4]
         
         // When
-        _ = Observable.from(array)
+        Observable.from(array)
             .if(Int.isEven, thenReturn: {$0 + 1})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -155,11 +151,12 @@ class RxTest: XCTestCase {
         let array: [Int] = [1, 2, 3, 4]
         
         // When
-        _ = Observable<Int>.from(array)
+        Observable<Int>.from(array)
             .if(Int.isEven,
                 then: Observable.just,
                 else: {_ in Observable.empty()})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -173,11 +170,12 @@ class RxTest: XCTestCase {
         let array: [Int] = [1, 2, 3, 4]
         
         // When
-        _ = Observable.from(array)
+        Observable.from(array)
             .flatMapIf(Int.isEven,
                        then: {_ in Observable.just("Even")},
                        else: {_ in Observable.just("Odd")})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -193,9 +191,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(String.self)
         
         // When
-        _ = Observable.just(1)
+        Observable.just(1)
             .cast(to: String.self)
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -208,9 +207,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable.just("Test")
+        Observable.just("Test")
             .cast(to: Any.self)
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -224,9 +224,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(String.self)
         
         // When
-        _ = Observable.just(1)
+        Observable.just(1)
             .ofType(String.self)
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -239,9 +240,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable.just("Test")
+        Observable.just("Test")
             .cast(to: Any.self)
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         let events = observer.events
@@ -255,11 +257,10 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable<Int>
-            .if({true},
-                then: {Observable.just(1)},
-                else: {Observable.just(2)})
+        Observable<Int>
+            .if({true}, then: {Observable.just(1)}, else: {Observable.just(2)})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
@@ -270,88 +271,31 @@ class RxTest: XCTestCase {
         let observer = scheduler.createObserver(Any.self)
         
         // When
-        _ = Observable<Int>
+        Observable<Int>
             .if({true}, thenReturn: {1}, elseReturn: {2})
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
         XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
     }
     
-    func test_concatAsObservable_shouldSucceed() {
+    func test_range_shouldSucceed() {
         // Setup
+        let count = 100
         let observer = scheduler.createObserver(Int.self)
         
         // When
-        _ = [
-            Observable.just(1),
-            Observable.just(2),
-            Observable.just(3),
-            Observable.just(4)
-            ]
-            .concatAsObservable()
+        Observable<Int>
+            .concat(
+                Observable<Int>.range(inclusive: 0, exclusive: count),
+                Observable<Int>.range(start: 0, count: count)
+            )
             .subscribe(observer)
+            .addDisposableTo(disposeBag)
         
         // Then
-        let events = observer.events
-        let nextValues = events[0..<4].flatMap({$0.value.element})
-        XCTAssertEqual(nextValues, [1, 2, 3, 4])
-    }
-    
-    func test_sequenceOnNext_shouldSucceed() {
-        // Setup
-        let observers = [
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self)
-        ]
-        
-        // When
-        observers.onNext(1)
-        
-        // Then
-        observers.forEach({
-            let events = $0.events
-            let nextValues = events.flatMap({$0.value.element})
-            XCTAssertEqual(nextValues, [1])
-        })
-    }
-    
-    func test_sequenceOnError_shouldSucceed() {
-        // Setup
-        let observers = [
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self)
-        ]
-        
-        // When
-        observers.onError(Exception())
-        
-        // Then
-        observers.forEach({
-            let events = $0.events
-            let errorValues = events.flatMap({$0.value.error})
-            XCTAssertEqual(errorValues.count, 1)
-        })
-    }
-    
-    func test_sequenceOnCompleted_shouldSucceed() {
-        // Setup
-        let observers = [
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self),
-            scheduler.createObserver(Int.self)
-        ]
-        
-        // When
-        observers.onCompleted()
-        
-        // Then
-        observers.forEach({
-            let events = $0.events
-            let completeEvents = events.filter({$0.value == .completed})
-            XCTAssertEqual(completeEvents.count, 1)
-        })
+        let nextElements = observer.nextElements()
+        XCTAssertEqual(nextElements.count, count * 2)
     }
 }

@@ -155,14 +155,14 @@ public extension ObservableType {
     ///
     /// - Returns: An Observable instance.
     public func logNext() -> Observable<E> {
-        return doOnNext(debugPrint)
+        return logNext(eq)
     }
     
     /// Print onError emission.
     ///
     /// - Parameter selector: Closure to convert the error into another object.
     /// - Returns: An Observable instance.
-    public func logNext(_ selector: @escaping (Error) -> Any) -> Observable<E> {
+    public func logError(_ selector: @escaping (Error) -> Any) -> Observable<E> {
         return doOnError({debugPrint(selector($0))})
     }
     
@@ -170,7 +170,7 @@ public extension ObservableType {
     ///
     /// - Returns: An Observable instance.
     public func logError() -> Observable<E> {
-        return doOnError(debugPrint)
+        return logError(eq)
     }
 }
 
@@ -426,60 +426,26 @@ public extension ObservableType {
     }
 }
 
-public extension Sequence where Iterator.Element: ObservableConvertibleType {
+public extension ObservableType {
     
-    /// Concat all ObservableConvertibleType in the Sequence into one
-    /// Observable.
+    /// Get an Observable that emits incremental Int sequentially.
     ///
+    /// - Parameters:
+    ///   - start: Inclusive starting Int value.
+    ///   - end: Exclusive ending Int value.
     /// - Returns: An Observable instance.
-    public func concatAsObservable() -> Observable<Iterator.Element.E> {
-        return Observable.concat(self.map({$0.asObservable()}))
+    public static func range(inclusive start: Int,
+                             exclusive end: Int) -> Observable<Int> {
+        return Observable.from(start..<end)
     }
     
-    /// Merge all ObservableConvertibleType in the Sequence into one
-    /// Observable.
+    /// Get an Observable that emits incremental Int sequentially.
     ///
+    /// - Parameters:
+    ///   - start: Inclusive starting Int value.
+    ///   - count: An Int value.
     /// - Returns: An Observable instance.
-    public func mergeAsObservable() -> Observable<Iterator.Element.E> {
-        return Observable.merge(self.map({$0.asObservable()}))
-    }
-    
-    /// Amb all ObservableConvertibleType in the Sequence into one Observable.
-    /// The ObservableConvertibleType that emits value first will be chosen
-    /// as the main sequence, all others discarded.
-    ///
-    /// - Returns: An Observable instance.
-    public func ambAsObservable() -> Observable<Iterator.Element.E> {
-        return Observable.amb(self.map({$0.asObservable()}))
-    }
-}
-
-public extension Sequence where Iterator.Element: ObserverType {
-    
-    /// Call on(event:) on each ObserverType in the current Sequence.
-    ///
-    /// - Parameter event: An Event instance.
-    public func on(_ event: Event<Iterator.Element.E>) {
-        self.forEach({$0.on(event)})
-    }
-    
-    
-    /// Call onNext on each ObserverType in the current Sequence.
-    ///
-    /// - Parameter element: An element that matches ObserverType.E.
-    public func onNext(_ element: Iterator.Element.E) {
-        self.forEach({$0.onNext(element)})
-    }
-    
-    /// Call onError on each ObserverType in the current Sequence.
-    ///
-    /// - Parameter error: An Error instance.
-    public func onError(_ error: Error) {
-        self.forEach({$0.onError(error)})
-    }
-    
-    /// Call onCompleted on each ObserverType in the current Sequence.
-    public func onCompleted() {
-        self.forEach({$0.onCompleted()})
+    public static func range(start: Int, count: Int) -> Observable<Int> {
+        return range(inclusive: start, exclusive: start + count)
     }
 }

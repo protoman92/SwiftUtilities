@@ -8,7 +8,7 @@
 
 import XCTest
 
-class CustomComparisonCollectionTest: XCTestCase {
+final class CustomComparisonCollectionTest: XCTestCase {
     func test_arrayAddUniqueContents_shouldSucceed() {
         // Setup
         var array1 = [1, 2, 3]
