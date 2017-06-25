@@ -99,93 +99,6 @@ final class RxTest: XCTestCase {
         XCTAssertNil(event.error)
     }
     
-    func test_mapIfToOtherType_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(String.self)
-        let array: [Int] = [1, 2, 3, 4]
-        
-        // When
-        Observable.from(array)
-            .mapIf(Int.isEven,
-                   thenReturn: {_ in "Even"},
-                   elseReturn: {_ in "Odd"})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        let events = observer.events
-        let values = events.flatMap({$0.value.element})
-        
-        XCTAssertEqual(
-            values.filter({$0 == "Even"}).count,
-            array.filter(Int.isEven).count
-        )
-        
-        XCTAssertEqual(
-            values.filter({$0 == "Odd"}).count,
-            array.filter(Int.isOdd).count
-        )
-    }
-    
-    func test_mapIfToSameType_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(Int.self)
-        let array: [Int] = [1, 2, 3, 4]
-        
-        // When
-        Observable.from(array)
-            .if(Int.isEven, thenReturn: {$0 + 1})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        let events = observer.events
-        let values = events.flatMap({$0.value.element})
-        
-        XCTAssertEqual(values.filter(Int.isOdd).count, array.count)
-    }
-    
-    func test_flatMapToSameType_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(Int.self)
-        let array: [Int] = [1, 2, 3, 4]
-        
-        // When
-        Observable<Int>.from(array)
-            .if(Int.isEven,
-                then: Observable.just,
-                else: {_ in Observable.empty()})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        let events = observer.events
-        let values = events.flatMap({$0.value.element})
-        XCTAssertEqual(values.count, array.filter(Int.isEven).count)
-    }
-    
-    func test_flatMapToOtherType_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(String.self)
-        let array: [Int] = [1, 2, 3, 4]
-        
-        // When
-        Observable.from(array)
-            .flatMapIf(Int.isEven,
-                       then: {_ in Observable.just("Even")},
-                       else: {_ in Observable.just("Odd")})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        let events = observer.events
-        let values = events.flatMap({$0.value.element})
-        let evens = array.filter(Int.isEven)
-        let odds = array.filter(Int.isOdd)
-        XCTAssertEqual(values.filter({$0 == "Even"}).count, evens.count)
-        XCTAssertEqual(values.filter({$0 == "Odd"}).count, odds.count)
-    }
-    
     func test_castToWrongType_shouldThrow() {
         // Setup
         let observer = scheduler.createObserver(String.self)
@@ -250,34 +163,6 @@ final class RxTest: XCTestCase {
         let next = events.first!.value.element
         XCTAssertNotNil(next)
         XCTAssertEqual(next as! String, "Test")
-    }
-    
-    func test_staticIfSwitch_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(Any.self)
-        
-        // When
-        Observable<Int>
-            .if({true}, then: {Observable.just(1)}, else: {Observable.just(2)})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
-    }
-    
-    func test_staticIfReturn_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(Any.self)
-        
-        // When
-        Observable<Int>
-            .if({true}, thenReturn: {1}, elseReturn: {2})
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        XCTAssertEqual(observer.events.first!.value.element as! Int, 1)
     }
     
     func test_range_shouldSucceed() {

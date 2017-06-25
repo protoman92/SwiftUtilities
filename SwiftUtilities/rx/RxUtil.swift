@@ -22,15 +22,6 @@ public extension Observable {
 
 public extension Observable {
     
-    /// Apply common schedulers to an Observable stream.
-    ///
-    /// - Returns: An Observable instance.
-    public func applyCommonSchedulers() -> Observable<E> {
-        return self
-            .subscribeOn(qos: .userInteractive)
-            .observeOn(MainScheduler.instance)
-    }
-    
     /// Switch to an empty Observable if an Error is caught.
     ///
     /// - Returns: An Observable instance.
@@ -239,190 +230,36 @@ public extension Observable {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: type)
         return subscribeOn(scheduler)
     }
-}
-
-public extension Observable {
     
-    /// Static if method that accepts a condition selector, and return the
-    /// appropriate Observable based on whether the condition is satisfied.
+    /// Convenient for observeOn with a QoS.
     ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
+    /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
-    public static func `if`<T>(
-        _ condition: () throws -> Bool,
-        then firstSelector: () throws -> Observable<T>,
-        else secondSelector: (() throws -> Observable<T>)? = nil
-    ) -> Observable<T> {
-        do {
-            if try condition() {
-                return try firstSelector()
-            } else if let secondSelector = secondSelector {
-                return try secondSelector()
-            } else {
-                return Observable<T>.empty()
-            }
-        } catch let e {
-            return Observable<T>.error(e)
-        }
-    }
-    
-    /// flatMap into an Observable if the emitted element passes a condition,
-    /// else into another Observable.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func flatMapIf<T>(
-        _ condition: @escaping (E) throws -> Bool,
-        then firstSelector: @escaping (E) throws -> Observable<T>,
-        else secondSelector: @escaping (E) throws -> Observable<T>
-    ) -> Observable<T> {
-        return flatMap({(element) -> Observable<T> in
-            do {
-                if try condition(element) {
-                    return try firstSelector(element)
-                } else {
-                    return try secondSelector(element)
-                }
-            } catch let e {
-                return Observable<T>.error(e)
-            }
-        })
-    }
-    
-    /// Same as above, but returns an Observable that emits a value of the
-    /// same type as that emitted by the source Observable.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func `if`(
-        _ condition: @escaping (E) throws -> Bool,
-        then firstSelector: @escaping (E) throws -> Observable<E>,
-        else secondSelector: @escaping (E) throws -> Observable<E>
-    ) -> Observable<Element> {
-        return flatMap({(element) -> Observable<E> in
-            do {
-                if try condition(element) {
-                    return try firstSelector(element)
-                } else {
-                    return try secondSelector(element)
-                }
-            } catch let e {
-                return Observable.error(e)
-            }
-        })
-    }
-    
-    /// Same as above, but uses a default secondSelector so that if the
-    /// condition fails, return an Observable that emits the value emitted
-    /// by the source Observable.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - selector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func `if`(
-        _ condition: @escaping (E) throws -> Bool,
-        then selector: @escaping (E) throws -> Observable<E>
-    ) -> Observable<Element> {
-        return `if`(condition, then: selector, else: Observable.just)
-    }
-}
-
-public extension ObservableType {
-    
-    /// Static if method that accepts a condition selector, and return the
-    /// appropriate value based on whether the condition is satisfied.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
-    /// - Returns: An Observable instance.
-    public static func `if`<T>(
-        _ condition: () throws -> Bool,
-        thenReturn firstSelector: () throws -> T,
-        elseReturn secondSelector: () throws -> T
-    ) -> Observable<T> {
-        do {
-            let value: T
+    public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
+        let type: DispatchQoS
+        
+        switch qos {
+        case .background:
+            type = .background
             
-            if try condition() {
-                value = try firstSelector()
-            } else {
-                value = try secondSelector()
-            }
+        case .default:
+            type = .default
             
-            return Observable.just(value)
-        } catch let e {
-            return Observable<T>.error(e)
+        case .userInitiated:
+            type = .userInitiated
+            
+        case .utility:
+            type = .utility
+            
+        case .userInteractive:
+            fallthrough
+            
+        default:
+            type = .userInteractive
         }
-    }
-    
-    /// map into a value of a different type if the emitted element passes a
-    /// condition.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func mapIf<T>(
-        _ condition: @escaping (E) throws -> Bool,
-        thenReturn firstSelector: @escaping (E) throws -> T,
-        elseReturn secondSelector: @escaping (E) throws -> T
-    ) -> Observable<T> {
-        return map({
-            do {
-                if try condition($0) {
-                    return try firstSelector($0)
-                } else {
-                    return try secondSelector($0)
-                }
-            } catch let e {
-                throw e
-            }
-        })
-    }
-    
-    /// Same as above, but map into the same type.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - firstSelector: Closure selector.
-    ///   - secondSelector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func `if`(
-        _ condition: @escaping (E) throws -> Bool,
-        thenReturn firstSelector: @escaping (E) throws -> E,
-        elseReturn secondSelector: @escaping (E) throws -> E
-    ) -> Observable<E> {
-        return mapIf(condition,
-                     thenReturn: firstSelector,
-                     elseReturn: secondSelector)
-    }
-    
-    /// Same as above, but uses a default second selector so that when the
-    /// condition fails, the returned Observable emits the same value as that
-    /// emitted by the source Observable.
-    ///
-    /// - Parameters:
-    ///   - condition: Conditional closure check.
-    ///   - selector: Closure selector.
-    /// - Returns: An Observable instance.
-    public func `if`(
-        _ condition: @escaping (E) throws -> Bool,
-        thenReturn selector: @escaping (E) throws -> E
-    ) -> Observable<E> {
-        return `if`(condition, thenReturn: selector, elseReturn: {$0})
+        
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: type)
+        return subscribeOn(scheduler)
     }
 }
 

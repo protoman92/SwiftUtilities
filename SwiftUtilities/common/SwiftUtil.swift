@@ -64,3 +64,10 @@ public func debugPrint(_ item: Any) {
 public func eq<T>(_ object: T) -> T {
     return object
 }
+
+/// Return a Void regardless of what the object passed in is.
+///
+/// - Parameter object: Any object.
+public func toVoid(_ object: Any) {
+    return ()
+}
