@@ -125,14 +125,6 @@
 			name = boolean;
 			sourceTree = "<group>";
 		};
-		D31ED74E1EACE72400632FF4 /* rx */ = {
-			isa = PBXGroup;
-			children = (
-				D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */,
-			);
-			name = rx;
-			sourceTree = "<group>";
-		};
 		D334C9411E9E8CEC00B88826 /* mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,7 +277,7 @@
 		D393B1751E9E12A200DBC683 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				D31ED74E1EACE72400632FF4 /* rx */,
+				D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */,
 			);
 			name = util;
 			sourceTree = "<group>";

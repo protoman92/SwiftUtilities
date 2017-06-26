@@ -69,34 +69,35 @@ final class RxTest: XCTestCase {
         // Then
     }
     
+    func test_catchReturnWithSelector_shouldSucceed() {
+        // Setup
+        let message = "Empty error"
+        let observer = scheduler.createObserver(String.self)
+        
+        // When
+        Observable.empty()
+            .errorIfEmpty("Empty error")
+            .catchErrorJustReturn({$0.localizedDescription})
+            .subscribe(observer)
+            .addDisposableTo(disposeBag)
+        
+        // Then
+        let nextElement = observer.nextElements().first!
+        XCTAssertEqual(nextElement, message)
+    }
+    
     func test_throwIfEmpty_shouldSucceed() {
         // Setup
         let observer = scheduler.createObserver(Any.self)
         
         // When
         Observable.empty()
-            .throwIfEmpty("Empty error")
+            .errorIfEmpty("Empty error")
             .subscribe(observer)
             .addDisposableTo(disposeBag)
         
         // Then
         XCTAssertNotNil(observer.events[0].value.error)
-    }
-    
-    func test_catchSwitchToEmpty_shouldSucceed() {
-        // Setup
-        let observer = scheduler.createObserver(Any.self)
-        
-        // When
-        Observable.error("Error")
-            .catchSwitchToEmpty()
-            .subscribe(observer)
-            .addDisposableTo(disposeBag)
-        
-        // Then
-        let event = observer.events[0].value
-        XCTAssertNil(event.element)
-        XCTAssertNil(event.error)
     }
     
     func test_castToWrongType_shouldThrow() {

@@ -22,18 +22,29 @@ public extension Observable {
 
 public extension Observable {
     
-    /// Switch to an empty Observable if an Error is caught.
+    /// Similar to catchErrorJustReturn, but apply a transformer to the emitted
+    /// Error to convert it to Element.
     ///
+    /// - Parameter selector: Transformer function closure.
     /// - Returns: An Observable instance.
-    public func catchSwitchToEmpty() -> Observable<E> {
-        return catchError({_ in Observable.empty()})
+    public func catchErrorJustReturn(_ selector: @escaping (Error) throws -> Element)
+        -> Observable<Element>
+    {
+        return catchError({(error: Error) -> Observable<Element> in
+            do {
+                let element = try selector(error)
+                return Observable.just(element)
+            } catch let e {
+                return Observable.error(e)
+            }
+        })
     }
     
     /// If the Observable is empty, throw an Error.
     ///
     /// - Parameter error: A String value.
     /// - Returns: An Observable instance.
-    public func throwIfEmpty(_ error: Error) -> Observable<E> {
+    public func errorIfEmpty(_ error: Error) -> Observable<E> {
         return ifEmpty(switchTo: Observable.error(error))
     }
     
@@ -41,7 +52,7 @@ public extension Observable {
     ///
     /// - Parameter error: A String value.
     /// - Returns: An Observable instance.
-    public func throwIfEmpty(_ error: String) -> Observable<E> {
+    public func errorIfEmpty(_ error: String) -> Observable<E> {
         return ifEmpty(switchTo: Observable.error(error))
     }
 }
@@ -205,29 +216,7 @@ public extension Observable {
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
     public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
-        let type: DispatchQoS
-        
-        switch qos {
-        case .background:
-            type = .background
-            
-        case .default:
-            type = .default
-            
-        case .userInitiated:
-            type = .userInitiated
-            
-        case .utility:
-            type = .utility
-            
-        case .userInteractive:
-            fallthrough
-            
-        default:
-            type = .userInteractive
-        }
-        
-        let scheduler = ConcurrentDispatchQueueScheduler(qos: type)
+        let scheduler = ConcurrentDispatchQueueScheduler.from(qos: qos)
         return subscribeOn(scheduler)
     }
     
@@ -236,29 +225,7 @@ public extension Observable {
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
     public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
-        let type: DispatchQoS
-        
-        switch qos {
-        case .background:
-            type = .background
-            
-        case .default:
-            type = .default
-            
-        case .userInitiated:
-            type = .userInitiated
-            
-        case .utility:
-            type = .utility
-            
-        case .userInteractive:
-            fallthrough
-            
-        default:
-            type = .userInteractive
-        }
-        
-        let scheduler = ConcurrentDispatchQueueScheduler(qos: type)
+        let scheduler = ConcurrentDispatchQueueScheduler.from(qos: qos)
         return subscribeOn(scheduler)
     }
 }
@@ -284,5 +251,38 @@ public extension ObservableType {
     /// - Returns: An Observable instance.
     public static func range(start: Int, count: Int) -> Observable<Int> {
         return range(inclusive: start, exclusive: start + count)
+    }
+}
+
+public extension ConcurrentDispatchQueueScheduler {
+    
+    /// Get a SchedulerType from a QoS.
+    ///
+    /// - Parameter qos: A Quality of Service instance.
+    /// - Returns: A SchedulerType instance.
+    public static func from(qos: DispatchQoS.QoSClass) -> SchedulerType {
+        let type: DispatchQoS
+        
+        switch qos {
+        case .background:
+            type = .background
+            
+        case .default:
+            type = .default
+            
+        case .userInitiated:
+            type = .userInitiated
+            
+        case .utility:
+            type = .utility
+            
+        case .userInteractive:
+            fallthrough
+            
+        default:
+            type = .userInteractive
+        }
+        
+        return ConcurrentDispatchQueueScheduler(qos: type)
     }
 }
