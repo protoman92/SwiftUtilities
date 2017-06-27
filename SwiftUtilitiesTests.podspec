@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
     s.dependency 'RxCocoa', '~> 3.0'
     s.dependency 'RxTest', '~> 3.0'
     s.dependency 'RxBlocking', '~> 3.0'
+    s.dependency 'Result', '~> 3.0.0'
 
     s.subspec 'Main' do |main|
         main.source_files = "SwiftUtilitiesTests/{mock,util}/**/*.{swift}"

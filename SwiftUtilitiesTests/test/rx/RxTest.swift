@@ -19,6 +19,28 @@ final class RxTest: XCTestCase {
         scheduler = TestScheduler(initialClock: 0)
     }
     
+    func test_publisherOnError_shouldSucceed() {
+        // Setup
+        let publisher = PublishSubject<Int>()
+        let observer = scheduler.createObserver(Int.self)
+        
+        // When
+        publisher.asObservable()
+            .logNext()
+            .subscribe(observer)
+            .addDisposableTo(disposeBag)
+        
+        publisher.onNext(1)
+        publisher.onNext(2)
+        publisher.onNext(3)
+        publisher.onError(Exception("Error!"))
+        publisher.onNext(4)
+        
+        // Then
+        print(observer.events)
+        
+    }
+    
     func test_createWithForEach_shouldCreateMultipleStreams() {
         // Setup
         let array = [1, 2, 3, 4, 5]
