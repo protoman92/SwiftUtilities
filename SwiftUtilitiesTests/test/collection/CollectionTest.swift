@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SwiftUtilities
 
 final class CustomComparisonCollectionTest: XCTestCase {
     func test_arrayAddUniqueContents_shouldSucceed() {

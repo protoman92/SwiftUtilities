@@ -9,6 +9,7 @@
 import RxSwift
 import RxTest
 import XCTest
+@testable import SwiftUtilities
 
 final class ThreadTest: XCTestCase {
     func test_synchronized_shouldSucceed() {
@@ -26,8 +27,8 @@ final class ThreadTest: XCTestCase {
             // We execute in background thread to simulate concurrent
             // emission. Normally, a small number of concurrent emissions
             // should still work, but if we are calling onNext on a large
-            // number of elements, a bad access error will be thrown without
-            // synchronized.
+            // number of elements without synchronization, a bad access error 
+            // will be thrown.
             background {
                 synchronized(subject) {
                     subject.onNext(i)
@@ -41,6 +42,6 @@ final class ThreadTest: XCTestCase {
         
         // Then
         waitForExpectations(timeout: 10, handler: nil)
-        print(observer.events)
+        XCTAssertEqual(observer.nextElements().count, endValue)
     }
 }

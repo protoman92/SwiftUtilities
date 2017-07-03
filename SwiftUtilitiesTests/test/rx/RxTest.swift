@@ -9,6 +9,7 @@
 import RxSwift
 import RxTest
 import XCTest
+@testable import SwiftUtilities
 
 final class RxTest: XCTestCase {
     fileprivate var disposeBag: DisposeBag!
@@ -87,8 +88,6 @@ final class RxTest: XCTestCase {
             .doOnDispose {print("OnDisposed")}
             .subscribe(observer)
             .addDisposableTo(disposeBag)
-        
-        // Then
     }
     
     func test_catchReturnWithSelector_shouldSucceed() {

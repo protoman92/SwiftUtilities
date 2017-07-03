@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import SwiftUtilities
 
 class Object1: NSObject {}
 class Object2: IsInstanceType {}
