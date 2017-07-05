@@ -27,7 +27,7 @@ public extension Either {
     
     /// Create an Exception left Either based on an Error. This is to circumvent
     /// Result constraint on Error.
-    public static func exception<V>(from error: Error) -> Either<Exception,V> {
+    public static func exception<V>(from error: Swift.Error) -> Either<Exception,V> {
         if let exception = error as? Exception {
             return Either<Exception,V>.left(exception)
         } else {
