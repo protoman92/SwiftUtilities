@@ -94,6 +94,10 @@ public struct Exception: Error {
         self.message = message ?? ""
     }
     
+    public init(_ error: Error) {
+        self.init(error.localizedDescription)
+    }
+    
     public init() {
         self.init(nil)
     }

@@ -16,7 +16,7 @@ public typealias Either<E: Error,T> = Result<T,E>
 public extension Either {
     
     /// Get an Error Result.
-    public static func left(_ error: Error) -> Either<Result.Error,T> {
+    public static func left(_ error: Result.Error) -> Either<Result.Error,T> {
         return Result(error: error)
     }
     
@@ -25,6 +25,19 @@ public extension Either {
         return Result(value)
     }
     
+    /// Create an Exception left Either based on an Error. This is to circumvent
+    /// Result constraint on Error.
+    public static func exception<V>(from error: Error) -> Either<Exception,V> {
+        if let exception = error as? Exception {
+            return Either<Exception,V>.left(exception)
+        } else {
+            return Either<Exception,V>.left(Exception(error))
+        }
+    }
+}
+
+public extension Either {
+
     /// Check if this Either is left.
     public var isLeft: Bool {
         return error != nil
