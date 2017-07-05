@@ -37,15 +37,22 @@ public extension Either {
 }
 
 public extension Either {
+    public var left: Result.Error? {
+        return error
+    }
+    
+    public var right: Result.Value? {
+        return value
+    }
 
     /// Check if this Either is left.
     public var isLeft: Bool {
-        return error != nil
+        return left != nil
     }
     
     /// Check if this Either is right.
     public var isRight: Bool {
-        return value != nil
+        return right != nil
     }
     
     /// Same as ResultProtocol.flatMapError(_:).
@@ -78,6 +85,17 @@ public extension Either {
         if let value = self.value {
             return value
         } else {
+            throw error
+        }
+    }
+    
+    /// Get right, or throw left.
+    public func rightOrThrow() throws -> Result.Value {
+        switch self {
+        case .success(let value):
+            return value
+            
+        case .failure(let error):
             throw error
         }
     }
