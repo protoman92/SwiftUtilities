@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2AD5B2F4B8E112C82590DB2E /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */; };
+		D30CA8FB1F0D4F6E00C329B8 /* ExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CA8FA1F0D4F6E00C329B8 /* ExceptionTest.swift */; };
 		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
@@ -55,6 +56,7 @@
 		9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6387B60973500599312E56 /* Pods-SwiftUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.release.xcconfig"; sourceTree = "<group>"; };
 		D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
+		D30CA8FA1F0D4F6E00C329B8 /* ExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExceptionTest.swift; path = test/exception/ExceptionTest.swift; sourceTree = "<group>"; };
 		D313E5C71EA08AD00063F91F /* BooleanUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BooleanUtil.swift; path = boolean/BooleanUtil.swift; sourceTree = "<group>"; };
 		D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxTestUtil.swift; path = util/rx/RxTestUtil.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
@@ -115,6 +117,14 @@
 				76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D30CA8F91F0D4F5500C329B8 /* exception */ = {
+			isa = PBXGroup;
+			children = (
+				D30CA8FA1F0D4F6E00C329B8 /* ExceptionTest.swift */,
+			);
+			name = exception;
 			sourceTree = "<group>";
 		};
 		D313E5C61EA08AAF0063F91F /* boolean */ = {
@@ -298,6 +308,7 @@
 		D393B1761E9E12AF00DBC683 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D30CA8F91F0D4F5500C329B8 /* exception */,
 				D3EBC9931EA67753008C90FB /* thread */,
 				D38316931EA3DA95009706FF /* type */,
 				D3FE35F31EA3702A00C44052 /* collection */,
@@ -597,6 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D33987921F0A94D8009225B2 /* RxTestUtil.swift in Sources */,
+				D30CA8FB1F0D4F6E00C329B8 /* ExceptionTest.swift in Sources */,
 				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
 				D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,

@@ -89,6 +89,7 @@ public func debugException(_ message: String? = nil,
 
 public struct Exception: Error {
     fileprivate let message: String
+    fileprivate var error: Error?
     
     public init(_ message: String?) {
         self.message = message ?? ""
@@ -96,6 +97,11 @@ public struct Exception: Error {
     
     public init(_ error: Error) {
         self.init(error.localizedDescription)
+        self.error = error
+    }
+    
+    public init(_ exception: Exception) {
+        self.init(exception.cause)
     }
     
     public init() {
@@ -104,6 +110,13 @@ public struct Exception: Error {
 }
 
 extension Exception: LocalizedError {
+    
+    /// Sometimes the actual cause is not the current Exception itself, but
+    /// another Error with more information.
+    public var cause: Error {
+        return error ?? self
+    }
+    
     public var localizedDescription: String {
         return errorDescription ?? ""
     }
