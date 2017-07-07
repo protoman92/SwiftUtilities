@@ -33,7 +33,9 @@
 		D393B17C1E9E15F000DBC683 /* DateUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393B17B1E9E15F000DBC683 /* DateUtilTest.swift */; };
 		D393B1901E9E315A00DBC683 /* SwiftUtilitiesTests.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */; };
 		D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C87B971E9FC8DE000BAB62 /* MockTest.swift */; };
-		D3DCC4F71F0A55600084B3FC /* EitherUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DCC4F61F0A55600084B3FC /* EitherUtil.swift */; };
+		D3CD10CB1F100E4C00DD2FD4 /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CD10CA1F100E4C00DD2FD4 /* Reader.swift */; };
+		D3CD10CE1F1015FB00DD2FD4 /* ReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CD10CD1F1015FB00DD2FD4 /* ReaderTest.swift */; };
+		D3DCC4F71F0A55600084B3FC /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DCC4F61F0A55600084B3FC /* Either.swift */; };
 		D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBC9941EA67769008C90FB /* ThreadTest.swift */; };
 		D3FE35F51EA3704400C44052 /* CollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE35F41EA3704400C44052 /* CollectionTest.swift */; };
 		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
@@ -85,7 +87,9 @@
 		D393B17B1E9E15F000DBC683 /* DateUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateUtilTest.swift; path = test/date/DateUtilTest.swift; sourceTree = "<group>"; };
 		D393B18F1E9E315A00DBC683 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D3C87B971E9FC8DE000BAB62 /* MockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockTest.swift; path = test/mock/MockTest.swift; sourceTree = "<group>"; };
-		D3DCC4F61F0A55600084B3FC /* EitherUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EitherUtil.swift; path = either/EitherUtil.swift; sourceTree = "<group>"; };
+		D3CD10CA1F100E4C00DD2FD4 /* Reader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reader.swift; path = monad/Reader.swift; sourceTree = "<group>"; };
+		D3CD10CD1F1015FB00DD2FD4 /* ReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReaderTest.swift; path = monad/ReaderTest.swift; sourceTree = "<group>"; };
+		D3DCC4F61F0A55600084B3FC /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Either.swift; path = monad/Either.swift; sourceTree = "<group>"; };
 		D3EBC9941EA67769008C90FB /* ThreadTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThreadTest.swift; path = test/thread/ThreadTest.swift; sourceTree = "<group>"; };
 		D3FE35F41EA3704400C44052 /* CollectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionTest.swift; path = test/collection/CollectionTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,7 +208,7 @@
 		D38CC49A1E9CA23600A09A5E /* SwiftUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				D3DCC4F51F0A55560084B3FC /* either */,
+				D3DCC4F51F0A55560084B3FC /* monad */,
 				D313E5C61EA08AAF0063F91F /* boolean */,
 				D38CC4CC1E9CA33400A09A5E /* collection */,
 				D38CC4CE1E9CA33400A09A5E /* common */,
@@ -225,6 +229,7 @@
 		D38CC4A51E9CA23600A09A5E /* SwiftUtilitiesTests */ = {
 			isa = PBXGroup;
 			children = (
+				D3CD10CC1F1015DF00DD2FD4 /* monad */,
 				D334C9411E9E8CEC00B88826 /* mock */,
 				D393B1761E9E12AF00DBC683 /* test */,
 				D393B1751E9E12A200DBC683 /* util */,
@@ -335,12 +340,21 @@
 			name = mock;
 			sourceTree = "<group>";
 		};
-		D3DCC4F51F0A55560084B3FC /* either */ = {
+		D3CD10CC1F1015DF00DD2FD4 /* monad */ = {
 			isa = PBXGroup;
 			children = (
-				D3DCC4F61F0A55600084B3FC /* EitherUtil.swift */,
+				D3CD10CD1F1015FB00DD2FD4 /* ReaderTest.swift */,
 			);
-			name = either;
+			name = monad;
+			sourceTree = "<group>";
+		};
+		D3DCC4F51F0A55560084B3FC /* monad */ = {
+			isa = PBXGroup;
+			children = (
+				D3DCC4F61F0A55600084B3FC /* Either.swift */,
+				D3CD10CA1F100E4C00DD2FD4 /* Reader.swift */,
+			);
+			name = monad;
 			sourceTree = "<group>";
 		};
 		D3EBC9931EA67753008C90FB /* thread */ = {
@@ -595,7 +609,8 @@
 				D38CC4E11E9CA33400A09A5E /* ExceptionUtil.swift in Sources */,
 				D38CC4E61E9CA33400A09A5E /* ThreadUtil.swift in Sources */,
 				D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */,
-				D3DCC4F71F0A55600084B3FC /* EitherUtil.swift in Sources */,
+				D3CD10CB1F100E4C00DD2FD4 /* Reader.swift in Sources */,
+				D3DCC4F71F0A55600084B3FC /* Either.swift in Sources */,
 				D38CC4E41E9CA33400A09A5E /* RxUtil.swift in Sources */,
 				D37183141F010E3500F9C0C0 /* GenericComparator.swift in Sources */,
 				D37183111F010DF400F9C0C0 /* SortMode.swift in Sources */,
@@ -610,6 +625,7 @@
 				D33987921F0A94D8009225B2 /* RxTestUtil.swift in Sources */,
 				D30CA8FB1F0D4F6E00C329B8 /* ExceptionTest.swift in Sources */,
 				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
+				D3CD10CE1F1015FB00DD2FD4 /* ReaderTest.swift in Sources */,
 				D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
 				D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */,
