@@ -13,6 +13,9 @@
 		D32495391F1082EE00D60545 /* EitherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32495381F1082EE00D60545 /* EitherTest.swift */; };
 		D324953B1F1087B700D60545 /* Eithers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324953A1F1087B700D60545 /* Eithers.swift */; };
 		D324953D1F10886B00D60545 /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324953C1F10886B00D60545 /* Readers.swift */; };
+		D32495491F10D14B00D60545 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32495481F10D14B00D60545 /* Try.swift */; };
+		D324954B1F10E2D300D60545 /* TryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324954A1F10E2D300D60545 /* TryTest.swift */; };
+		D324954D1F10E6A600D60545 /* Tries.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324954C1F10E6A600D60545 /* Tries.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
 		D33987921F0A94D8009225B2 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
@@ -67,6 +70,9 @@
 		D32495381F1082EE00D60545 /* EitherTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EitherTest.swift; path = test/monad/EitherTest.swift; sourceTree = "<group>"; };
 		D324953A1F1087B700D60545 /* Eithers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Eithers.swift; path = monad/Eithers.swift; sourceTree = "<group>"; };
 		D324953C1F10886B00D60545 /* Readers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Readers.swift; path = monad/Readers.swift; sourceTree = "<group>"; };
+		D32495481F10D14B00D60545 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Try.swift; path = monad/Try.swift; sourceTree = "<group>"; };
+		D324954A1F10E2D300D60545 /* TryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TryTest.swift; path = test/monad/TryTest.swift; sourceTree = "<group>"; };
+		D324954C1F10E6A600D60545 /* Tries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tries.swift; path = monad/Tries.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
 		D371830D1F010DF400F9C0C0 /* SortDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortDescriptor.swift; sourceTree = "<group>"; };
@@ -351,6 +357,7 @@
 			children = (
 				D3CD10CD1F1015FB00DD2FD4 /* ReaderTest.swift */,
 				D32495381F1082EE00D60545 /* EitherTest.swift */,
+				D324954A1F10E2D300D60545 /* TryTest.swift */,
 			);
 			name = monad;
 			sourceTree = "<group>";
@@ -362,6 +369,8 @@
 				D324953A1F1087B700D60545 /* Eithers.swift */,
 				D3CD10CA1F100E4C00DD2FD4 /* Reader.swift */,
 				D324953C1F10886B00D60545 /* Readers.swift */,
+				D32495481F10D14B00D60545 /* Try.swift */,
+				D324954C1F10E6A600D60545 /* Tries.swift */,
 			);
 			name = monad;
 			sourceTree = "<group>";
@@ -617,11 +626,13 @@
 				D38CC4E11E9CA33400A09A5E /* ExceptionUtil.swift in Sources */,
 				D38CC4E61E9CA33400A09A5E /* ThreadUtil.swift in Sources */,
 				D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */,
+				D32495491F10D14B00D60545 /* Try.swift in Sources */,
 				D3CD10CB1F100E4C00DD2FD4 /* Reader.swift in Sources */,
 				D3DCC4F71F0A55600084B3FC /* Either.swift in Sources */,
 				D324953B1F1087B700D60545 /* Eithers.swift in Sources */,
 				D38CC4E41E9CA33400A09A5E /* RxUtil.swift in Sources */,
 				D37183141F010E3500F9C0C0 /* GenericComparator.swift in Sources */,
+				D324954D1F10E6A600D60545 /* Tries.swift in Sources */,
 				D37183111F010DF400F9C0C0 /* SortMode.swift in Sources */,
 				D38CC4E51E9CA33400A09A5E /* StringUtil.swift in Sources */,
 			);
@@ -635,6 +646,7 @@
 				D30CA8FB1F0D4F6E00C329B8 /* ExceptionTest.swift in Sources */,
 				D37905911E9F61810028E2B2 /* RxTest.swift in Sources */,
 				D3CD10CE1F1015FB00DD2FD4 /* ReaderTest.swift in Sources */,
+				D324954B1F10E2D300D60545 /* TryTest.swift in Sources */,
 				D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
 				D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */,

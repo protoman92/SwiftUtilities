@@ -15,13 +15,13 @@ public extension EitherType where L == Error {
     ///
     /// - Returns: R instance.
     /// - Throws: L if R is not present.
-    public func rightOrThrow() throws -> R {
+    public func getOrThrow() throws -> R {
         if let right = self.right {
             return right
         } else if let left = self.left {
             throw left
         } else {
-            throw Exception("Invalid EitherType")
+            throw Exception("Invalid Either")
         }
     }
 }
@@ -32,8 +32,8 @@ public extension EitherType where L: Error {
     ///
     /// - Returns: R instance.
     /// - Throws: L if R is not present.
-    public func rightOrThrow() throws -> R {
-        return try projection.left.map({$0 as Error}).rightOrThrow()
+    public func getOrThrow() throws -> R {
+        return try projection.left.map({$0 as Error}).getOrThrow()
     }
 }
 

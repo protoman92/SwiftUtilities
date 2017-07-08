@@ -29,8 +29,8 @@ public final class EitherTest: XCTestCase {
         let e3 = ErrorEither<Int>.right(1)
         
         // When & Then
-        XCTAssertThrowsError(try e1.rightOrThrow())
-        XCTAssertThrowsError(try e2.rightOrThrow(), "Error 2")
-        XCTAssertEqual(try e3.rightOrThrow(), 1)
+        XCTAssertThrowsError(try e1.getOrThrow())
+        XCTAssertThrowsError(try e2.getOrThrow(), "Error 2")
+        XCTAssertEqual(try e3.getOrThrow(), 1)
     }
 }

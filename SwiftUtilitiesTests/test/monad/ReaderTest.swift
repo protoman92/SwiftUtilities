@@ -6,12 +6,14 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+import RxSwift
 import XCTest
 @testable import SwiftUtilities
 
 public final class ReaderTest: XCTestCase {
     public func test_readerMonad_shouldWorkWithDifferentInjection() {
         // Setup
+        Observable.just(1).map(eq)
         let r1 = IntReader({$0 * 2})
         let r2 = Reader<Int,String>({$0.description})
         
@@ -34,4 +36,8 @@ fileprivate final class IntReader {
     }
 }
 
-extension IntReader: ReaderType {}
+extension IntReader: ReaderType {
+    func asReader() -> Reader<Int,Int> {
+        return Reader(f)
+    }
+}
