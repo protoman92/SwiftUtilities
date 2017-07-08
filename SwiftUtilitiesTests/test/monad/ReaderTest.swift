@@ -13,7 +13,6 @@ import XCTest
 public final class ReaderTest: XCTestCase {
     public func test_readerMonad_shouldWorkWithDifferentInjection() {
         // Setup
-        Observable.just(1).map(eq)
         let r1 = IntReader({$0 * 2})
         let r2 = Reader<Int,String>({$0.description})
         
@@ -25,6 +24,18 @@ public final class ReaderTest: XCTestCase {
         XCTAssertEqual(try r2.map({Int($0)}).apply(2), 2)
         XCTAssertEqual(try r1.flatMap({i in IntReader({$0 * i})}).apply(2), 8)
         XCTAssertEqual(try r2.flatMap({i in IntReader(eq)}).apply(2), 2)
+    }
+    
+    public func test_readerZip_shouldWork() {
+        // Setup
+        let r1 = Reader<Int,Int>({$0 * 2})
+        let r2 = Reader<Int,Int>({$0 * 3})
+        let r3 = r1.zip(with: r2, {$0.0 * $0.1})
+        
+        // When & Then
+        for i in 0..<1000 {
+            XCTAssertEqual(try r3.apply(i), i * i * 2 * 3)
+        }
     }
 }
 

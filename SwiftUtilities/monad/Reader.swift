@@ -34,6 +34,12 @@ public extension ReaderType {
     {
         return Reader<A,B1>({try g(self.f($0)).asReader().apply($0)})
     }
+    
+    public func zip<R,B1,U>(with reader: R, _ g: @escaping (B, B1) throws -> U)
+        -> Reader<A,U> where R: ReaderConvertibleType, R.A == A, R.B == B1
+    {
+        return flatMap({b in reader.asReader().map({try g(b, $0)})})
+    }
 }
 
 public struct Reader<A,B> {
