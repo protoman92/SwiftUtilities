@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
     s.framework = "UIKit"
     s.dependency 'RxSwift', '~> 3.0'
     s.dependency 'RxCocoa', '~> 3.0'
-    s.dependency 'Result', '~> 3.0.0'
 
     s.subspec 'Main' do |main|
         main.source_files = "SwiftUtilities/**/*.{swift}"

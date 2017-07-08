@@ -8,7 +8,6 @@ target 'SwiftUtilities' do
   # Pods for SwiftUtilities
   pod 'RxSwift', '~> 3.0'
   pod 'RxCocoa', '~> 3.0'
-  pod 'Result', '~> 3.0.0'
 
   target 'SwiftUtilitiesTests' do
     inherit! :search_paths
