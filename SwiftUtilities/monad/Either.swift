@@ -6,8 +6,6 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import Result
-
 /// Use this monad to implement either-or behavior.
 public protocol EitherType {
     associatedtype L
