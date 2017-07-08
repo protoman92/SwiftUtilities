@@ -6,7 +6,7 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-/// Use this monad to implement either-or behavior.
+/// Use this to implement either-or behavior.
 public protocol EitherConvertibleType {
     associatedtype L
     associatedtype R
@@ -60,6 +60,16 @@ public extension EitherType {
         } else {
             throw error
         }
+    }
+    
+    /// Map on both sides.
+    ///
+    /// - Parameters:
+    ///   - f1: left-side map function.
+    ///   - f2: right-side map function.
+    /// - Returns: An Either instance.
+    public func bimap<L1,R1>(_ f1: (L) -> L1, _ f2: (R) -> R1) -> Either<L1,R1> {
+        return projection.left.map(f1).asEither().projection.right.map(f2).asEither()
     }
 }
 

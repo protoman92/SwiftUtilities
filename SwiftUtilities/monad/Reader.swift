@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Use this monad to implement Dependency Injection.
+/// Use this to implement Dependency Injection.
 public protocol ReaderConvertibleType {
     associatedtype A
     associatedtype B
@@ -25,14 +25,14 @@ public extension ReaderType {
         return try f(a)
     }
     
-    public func map<C>(_ g: @escaping (B) throws -> C) -> Reader<A,C> {
-        return Reader<A,C>({try g(self.f($0))})
+    public func map<B1>(_ g: @escaping (B) throws -> B1) -> Reader<A,B1> {
+        return Reader<A,B1>({try g(self.f($0))})
     }
     
-    public func flatMap<R,C>(_ g: @escaping (B) throws -> R) -> Reader<A,C>
-        where R: ReaderConvertibleType, R.A == A, R.B == C
+    public func flatMap<R,B1>(_ g: @escaping (B) throws -> R) -> Reader<A,B1>
+        where R: ReaderConvertibleType, R.A == A, R.B == B1
     {
-        return Reader<A,C>({try g(self.f($0)).asReader().apply($0)})
+        return Reader<A,B1>({try g(self.f($0)).asReader().apply($0)})
     }
 }
 

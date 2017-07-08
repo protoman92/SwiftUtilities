@@ -6,7 +6,7 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-/// Use this monad to wrap operations that can throw Error.
+/// Use this to wrap operations that can throw Error.
 public protocol TryConvertibleType {
     associatedtype A
     
@@ -25,7 +25,7 @@ public protocol TryType: TryConvertibleType, EitherConvertibleType {
 public extension TryType {
     public func asEither() -> Either<Error,A> {
         do {
-            return Either.right(try valueOrThrow())
+            return Either.right(try getOrThrow())
         } catch let error {
             return Either.left(error)
         }
@@ -45,7 +45,7 @@ public extension TryType {
     ///
     /// - Returns: A instance.
     /// - Throws: Error if success value if absent.
-    public func valueOrThrow() throws -> A {
+    public func getOrThrow() throws -> A {
         if let value = self.value {
             return value
         } else if let error = self.error {
@@ -58,14 +58,14 @@ public extension TryType {
 
 public extension TryType {
     public func map<A2>(_ f: (A) throws -> A2) -> Try<A2> {
-        return Try({try f(self.valueOrThrow())})
+        return Try({try f(self.getOrThrow())})
     }
     
     public func flatMap<T,A2>(_ f: (A) throws -> T) -> Try<A2>
         where T: TryConvertibleType, T.A == A2
     {
         do {
-            return try f(try valueOrThrow()).asTry()
+            return try f(try getOrThrow()).asTry()
         } catch let error {
             return Try.failure(error)
         }
