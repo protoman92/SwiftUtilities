@@ -6,7 +6,9 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+import RxCocoa
 import RxSwift
+import RxTest
 import XCTest
 @testable import SwiftUtilities
 
@@ -17,13 +19,13 @@ public final class ReaderTest: XCTestCase {
         let r2 = Reader<Int,String>({$0.description})
         
         // When & Then
-        XCTAssertEqual(try r1.apply(1), 2)
-        XCTAssertEqual(try r1.apply(2), 4)
-        XCTAssertEqual(try r2.apply(1), "1")
-        XCTAssertEqual(try r2.apply(2), "2")
-        XCTAssertEqual(try r2.map({Int($0)}).apply(2), 2)
-        XCTAssertEqual(try r1.flatMap({i in IntReader({$0 * i})}).apply(2), 8)
-        XCTAssertEqual(try r2.flatMap({i in IntReader(eq)}).apply(2), 2)
+        XCTAssertEqual(try r1.applyOrThrow(1), 2)
+        XCTAssertEqual(try r1.applyOrThrow(2), 4)
+        XCTAssertEqual(try r2.applyOrThrow(1), "1")
+        XCTAssertEqual(try r2.applyOrThrow(2), "2")
+        XCTAssertEqual(try r2.map({Int($0)}).applyOrThrow(2), 2)
+        XCTAssertEqual(try r1.flatMap({i in IntReader({$0 * i})}).applyOrThrow(2), 8)
+        XCTAssertEqual(try r2.flatMap({i in IntReader(eq)}).applyOrThrow(2), 2)
     }
     
     public func test_readerZip_shouldWork() {
@@ -34,8 +36,37 @@ public final class ReaderTest: XCTestCase {
         
         // When & Then
         for i in 0..<1000 {
-            XCTAssertEqual(try r3.apply(i), i * i * 2 * 3)
+            XCTAssertEqual(try r3.applyOrThrow(i), i * i * 2 * 3)
         }
+    }
+    
+    public func test_readerRxApply_shouldWork() {
+        // Setup
+        let disposeBag = DisposeBag()
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Try<Int>.self)
+        let r1 = Reader<Int,Observable<Int>>(Observable.just)
+        let r2 = Reader<Void,Observable<Int>>({Observable.error("Error!")})
+        let expect = expectation(description: "Should have completed")
+        
+        // When
+        Observable.merge(r1.rx.apply(1000), r2.rx.apply())
+            .doOnCompleted(expect.fulfill)
+            .subscribe(observer)
+            .addDisposableTo(disposeBag)
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        // Then
+        let elements = observer.nextElements()
+        XCTAssertEqual(elements.count, 2)
+        
+        let first = elements.first!
+        let second = elements[1]
+        XCTAssertTrue(first.isSuccess)
+        XCTAssertEqual(first.value, 1000)
+        XCTAssertTrue(second.isFailure)
+        XCTAssertEqual(second.error!.localizedDescription, "Error!")
     }
 }
 

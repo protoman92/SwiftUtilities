@@ -21,8 +21,12 @@ public protocol ReaderType: ReaderConvertibleType {
 }
 
 public extension ReaderType {
-    public func apply(_ a: A) throws -> B {
+    public func applyOrThrow(_ a: A) throws -> B {
         return try f(a)
+    }
+    
+    public func apply(_ a: A) -> Try<B> {
+        return Try({try self.applyOrThrow(a)})
     }
     
     public func map<B1>(_ g: @escaping (B) throws -> B1) -> Reader<A,B1> {
@@ -32,7 +36,7 @@ public extension ReaderType {
     public func flatMap<R,B1>(_ g: @escaping (B) throws -> R) -> Reader<A,B1>
         where R: ReaderConvertibleType, R.A == A, R.B == B1
     {
-        return Reader<A,B1>({try g(self.f($0)).asReader().apply($0)})
+        return Reader<A,B1>({try g(self.f($0)).asReader().applyOrThrow($0)})
     }
     
     public func zip<R,B1,U>(with reader: R, _ g: @escaping (B, B1) throws -> U)
