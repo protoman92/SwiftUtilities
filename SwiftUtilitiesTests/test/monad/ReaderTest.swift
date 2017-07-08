@@ -14,11 +14,11 @@ import XCTest
 
 public final class ReaderTest: XCTestCase {
     public func test_readerMonad_shouldWorkWithDifferentInjection() {
-        // Setup
+        /// Setup
         let r1 = IntReader({$0 * 2})
         let r2 = Reader<Int,String>({$0.description})
         
-        // When & Then
+        /// When & Then
         XCTAssertEqual(try r1.applyOrThrow(1), 2)
         XCTAssertEqual(try r1.applyOrThrow(2), 4)
         XCTAssertEqual(try r2.applyOrThrow(1), "1")
@@ -29,12 +29,12 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerZip_shouldWork() {
-        // Setup
+        /// Setup
         let r1 = Reader<Int,Int>({$0 * 2})
         let r2 = Reader<Int,Int>({$0 * 3})
         let r3 = r1.zip(with: r2, {$0.0 * $0.1})
         
-        // When & Then
+        /// When & Then
         for i in 0..<1000 {
             XCTAssertEqual(try r3.applyOrThrow(i), i * i * 2 * 3)
         }
@@ -46,20 +46,25 @@ public final class ReaderTest: XCTestCase {
         let disposeBag = DisposeBag()
         let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Try<Int>.self)
-        let r1 = Reader<Int,Observable<Int>>(Observable.just)
-        let r2 = Reader<Void,Observable<Int>>({Observable.error(error)})
-        let r3 = Reader<Void,Observable<Try<Int>>>({Observable.error(error)})
         let expect = expectation(description: "Should have completed")
         
-        // When
+        let r1 = Reader<Int,Observable<Int>>(Observable.just)
+        let r2 = Reader<Void,Observable<Int>>({Observable.error(error)})
+        
+        // Even if we throw Error here, the overloaded apply() method that
+        // is only available when the resulting Observable emits 
+        // TryConvertibleType ensures that said Error is wrapped in Try as well.
+        let r3 = Reader<Void,Observable<Try<Int>>>({ throw Exception(error) })
+        
+        /// When
         Observable.merge(r1.rx.tryApply(1000), r2.rx.tryApply(), r3.rx.apply())
-            .doOnCompleted(expect.fulfill)
+            .doOnDispose(expect.fulfill)
             .subscribe(observer)
             .addDisposableTo(disposeBag)
         
         waitForExpectations(timeout: 5, handler: nil)
         
-        // Then
+        /// Then
         let elements = observer.nextElements()
         XCTAssertEqual(elements.count, 3)
         
