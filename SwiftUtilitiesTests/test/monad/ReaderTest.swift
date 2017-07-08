@@ -42,15 +42,17 @@ public final class ReaderTest: XCTestCase {
     
     public func test_readerRxApply_shouldWork() {
         // Setup
+        let error = "Error!"
         let disposeBag = DisposeBag()
         let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Try<Int>.self)
         let r1 = Reader<Int,Observable<Int>>(Observable.just)
-        let r2 = Reader<Void,Observable<Int>>({Observable.error("Error!")})
+        let r2 = Reader<Void,Observable<Int>>({Observable.error(error)})
+        let r3 = Reader<Void,Observable<Try<Int>>>({Observable.error(error)})
         let expect = expectation(description: "Should have completed")
         
         // When
-        Observable.merge(r1.rx.apply(1000), r2.rx.apply())
+        Observable.merge(r1.rx.tryApply(1000), r2.rx.tryApply(), r3.rx.apply())
             .doOnCompleted(expect.fulfill)
             .subscribe(observer)
             .addDisposableTo(disposeBag)
@@ -59,14 +61,17 @@ public final class ReaderTest: XCTestCase {
         
         // Then
         let elements = observer.nextElements()
-        XCTAssertEqual(elements.count, 2)
+        XCTAssertEqual(elements.count, 3)
         
         let first = elements.first!
         let second = elements[1]
+        let third = elements[2]
         XCTAssertTrue(first.isSuccess)
         XCTAssertEqual(first.value, 1000)
         XCTAssertTrue(second.isFailure)
-        XCTAssertEqual(second.error!.localizedDescription, "Error!")
+        XCTAssertEqual(second.error!.localizedDescription, error)
+        XCTAssertTrue(third.isFailure)
+        XCTAssertEqual(third.error!.localizedDescription, error)
     }
 }
 

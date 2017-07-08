@@ -18,7 +18,7 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
-    public func apply(_ a: Base.A) -> Observable<Try<Base.B.E>> {
+    public func tryApply(_ a: Base.A) -> Observable<Try<Base.B.E>> {
         let base = self.base
         
         do {
@@ -29,6 +29,29 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
                 .catchErrorJustReturn(Try<Base.B.E>.failure)
         } catch let error {
             return Observable.just(Try<Base.B.E>.failure(error))
+        }
+    }
+}
+
+public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleType, Base.B.E: TryConvertibleType {
+    
+    /// If the current Reader's f function returns an Observable that emits a
+    /// TryConvertibleType, flatten and wrap the Observable emission in a Try 
+    /// instance.
+    ///
+    /// - Parameter a: A instance.
+    /// - Returns: An Observable instance.
+    public func apply(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
+        let base = self.base
+        
+        do {
+            let inner = try base.applyOrThrow(a)
+            
+            return inner.asObservable()
+                .map({$0.asTry()})
+                .catchErrorJustReturn(Try<Base.B.E.A>.failure)
+        } catch let error {
+            return Observable.just(Try<Base.B.E.A>.failure(error))
         }
     }
 }
