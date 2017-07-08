@@ -24,9 +24,9 @@ public final class EitherTest: XCTestCase {
     
     public func test_eitherMonadWithErrorLeft_shouldWork() {
         // Setup
-        let e1 = ErrorEither<Int>.left(Exception("Error 1"))
+        let e1 = Either<Error,Int>.left(Exception("Error 1"))
         let e2 = Either<Exception,Int>.left(Exception("Error 2"))
-        let e3 = ErrorEither<Int>.right(1)
+        let e3 = Either<Error,Int>.right(1)
         
         // When & Then
         XCTAssertThrowsError(try e1.getOrThrow())

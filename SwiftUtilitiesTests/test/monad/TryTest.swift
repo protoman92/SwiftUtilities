@@ -17,8 +17,8 @@ public final class TryTest: XCTestCase {
         
         // When & Then
         XCTAssertEqual(t1.map({Double($0 * 2)}).value, nil)
-        XCTAssertEqual(t2.flatMap({a in Try({a})}).value, nil)
-        XCTAssertEqual(t1.map({Double($0 * 3)}).value, 3)
+        XCTAssertEqual(t1.flatMap({a in Try({a})}).value, nil)
+        XCTAssertEqual(t2.map({Double($0 * 3)}).value, 3)
         XCTAssertEqual(t2.flatMap({a in Try({a})}).value, 1)
     }
     

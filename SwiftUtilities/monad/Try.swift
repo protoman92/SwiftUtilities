@@ -24,12 +24,10 @@ public protocol TryType: TryConvertibleType, EitherConvertibleType {
 
 public extension TryType {
     public func asEither() -> Either<Error,A> {
-        if let value = self.value {
-            return Either.right(value)
-        } else if let error = self.error {
+        do {
+            return Either.right(try valueOrThrow())
+        } catch let error {
             return Either.left(error)
-        } else {
-            fatalError("Invalid Try")
         }
     }
     
@@ -42,32 +40,34 @@ public extension TryType {
     var isFailure: Bool {
         return !isSuccess
     }
+    
+    /// Get success value or throw failure Error.
+    ///
+    /// - Returns: A instance.
+    /// - Throws: Error if success value if absent.
+    public func valueOrThrow() throws -> A {
+        if let value = self.value {
+            return value
+        } else if let error = self.error {
+            throw error
+        } else {
+            throw Exception("Invalid Try")
+        }
+    }
 }
 
 public extension TryType {
     public func map<A2>(_ f: (A) throws -> A2) -> Try<A2> {
-        if let value = self.value {
-            return Try({try f(value)})
-        } else if let error = self.error {
-            return Try({() throws -> A2 in throw error})
-        } else {
-            fatalError("Invalid Try")
-        }
+        return Try({try f(self.valueOrThrow())})
     }
     
     public func flatMap<T,A2>(_ f: (A) throws -> T) -> Try<A2>
         where T: TryConvertibleType, T.A == A2
     {
-        if let value = self.value {
-            do {
-                return try f(value).asTry()
-            } catch let error {
-                return Try({_ in throw error})
-            }
-        } else if let error = self.error {
-            return Try({_ in throw error})
-        } else {
-            fatalError("Invalid Try")
+        do {
+            return try f(try valueOrThrow()).asTry()
+        } catch let error {
+            return Try.failure(error)
         }
     }
 }

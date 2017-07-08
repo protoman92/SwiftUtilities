@@ -24,6 +24,10 @@ public extension EitherType where L == Error {
             throw Exception("Invalid Either")
         }
     }
+    
+    public func asTry() -> Try<R> {
+        return Try({try self.getOrThrow()})
+    }
 }
 
 public extension EitherType where L: Error {
@@ -35,6 +39,8 @@ public extension EitherType where L: Error {
     public func getOrThrow() throws -> R {
         return try projection.left.map({$0 as Error}).getOrThrow()
     }
+    
+    public func asTry() -> Try<R> {
+        return projection.left.map({$0 as Error}).asTry()
+    }
 }
-
-public typealias ErrorEither<R> = Either<Error,R>
