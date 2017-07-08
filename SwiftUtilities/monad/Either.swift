@@ -11,6 +11,8 @@ import Result
 /// This typealias helps hide the dependency on Result so that later if we
 /// want to use a dedicated Either dependency, we can simply switch without
 /// consequence.
+public typealias EitherType = ResultProtocol
+
 public typealias Either<E: Error,T> = Result<T,E>
 
 public extension Either {
