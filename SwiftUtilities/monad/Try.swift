@@ -6,6 +6,8 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+import RxSwift
+
 /// Use this to wrap operations that can throw Error.
 public protocol TryConvertibleType {
     associatedtype A

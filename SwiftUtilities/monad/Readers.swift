@@ -30,9 +30,29 @@ public extension Reader {
     public static func just<A,B>(_ value: B) -> Reader<A,B> {
         return Reader<A,B>({_ in value})
     }
+    
+    /// Convenient method to zip two ReaderConvertibleType.
+    ///
+    /// - Parameters:
+    ///   - r1: R1 instance.
+    ///   - r2: R2 instance.
+    ///   - g: Transform function.
+    /// - Returns: A Reader instance.
+    public static func zip<A,B,B1,R1,R2,U>(_ r1: R1, _ r2: R2,
+                           _ g: @escaping (B, B1) -> U)
+        -> Reader<A,U> where
+        R1: ReaderConvertibleType,
+        R2: ReaderConvertibleType,
+        R1.A == A, R1.B == B,
+        R2.A == A, R2.B == B1
+    {
+        return r1.asReader().zip(with: r2, g)
+    }
 }
 
-public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleType {
+public extension Reactive where
+    Base: ReaderConvertibleType,
+    Base.B: ObservableConvertibleType {
     
     /// If the current Reader's f function returns an Observable wrapped in a
     /// Try, unwrap it.
@@ -43,7 +63,7 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
         let base = self.base
         
         do {
-            let inner = try base.applyOrThrow(a)
+            let inner = try base.asReader().applyOrThrow(a)
             return inner.asObservable()
         } catch let error {
             return Observable.error(error)
@@ -51,7 +71,9 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
     }
 }
 
-public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleType {
+public extension Reactive where
+    Base: ReaderConvertibleType,
+    Base.B: ObservableConvertibleType {
     
     /// If the current Reader's f function returns an Observable, flatten and
     /// wrap the Observable emission in a Try instance.
@@ -65,7 +87,10 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
     }
 }
 
-public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleType, Base.B.E: TryConvertibleType {
+public extension Reactive where
+    Base: ReaderConvertibleType,
+    Base.B: ObservableConvertibleType,
+    Base.B.E: TryConvertibleType {
     
     /// If the current Reader's f function returns an Observable that emits a
     /// TryConvertibleType, flatten and wrap the Observable emission in a Try
@@ -78,17 +103,7 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
     public func apply(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
-        let base = self.base
-        
-        do {
-            let inner = try base.applyOrThrow(a)
-            
-            return inner.asObservable()
-                .map({$0.asTry()})
-                .catchErrorJustReturn(Try<Base.B.E.A>.failure)
-        } catch let error {
-            return Observable.just(Try<Base.B.E.A>.failure(error))
-        }
+        return tryApply(a).map({$0.flatMap(eq)})
     }
 }
 
