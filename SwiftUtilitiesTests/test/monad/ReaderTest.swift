@@ -19,13 +19,13 @@ public final class ReaderTest: XCTestCase {
         let r2 = Reader<Int,String>({$0.description})
         
         /// When & Then
-        XCTAssertEqual(try r1.applyOrThrow(1), 2)
-        XCTAssertEqual(try r1.applyOrThrow(2), 4)
-        XCTAssertEqual(try r2.applyOrThrow(1), "1")
-        XCTAssertEqual(try r2.applyOrThrow(2), "2")
-        XCTAssertEqual(try r2.map({Int($0)}).applyOrThrow(2), 2)
-        XCTAssertEqual(try r1.flatMap({i in IntReader({$0 * i})}).applyOrThrow(2), 8)
-        XCTAssertEqual(try r2.flatMap({i in IntReader(eq)}).applyOrThrow(2), 2)
+        XCTAssertEqual(try r1.run(1), 2)
+        XCTAssertEqual(try r1.run(2), 4)
+        XCTAssertEqual(try r2.run(1), "1")
+        XCTAssertEqual(try r2.run(2), "2")
+        XCTAssertEqual(try r2.map({Int($0)}).run(2), 2)
+        XCTAssertEqual(try r1.flatMap({i in IntReader({$0 * i})}).run(2), 8)
+        XCTAssertEqual(try r2.flatMap({i in IntReader(eq)}).run(2), 2)
     }
     
     public func test_readerZip_shouldWork() {
@@ -36,7 +36,22 @@ public final class ReaderTest: XCTestCase {
         
         /// When & Then
         for i in 0..<1000 {
-            XCTAssertEqual(try r3.applyOrThrow(i), i * i * 2 * 3)
+            XCTAssertEqual(try r3.run(i), i * i * 2 * 3)
+        }
+    }
+    
+    public func test_readerModify_shouldWork() {
+        // Setup
+        let r1 = Reader<Int,Double>(Double.init)
+        let r2 = Reader<String,Int?>({Int($0)}).map({$0 ?? 0})
+        let r12: Reader<Double,Double> = r1.modify(Int.init)
+        let r22: Reader<Int,Int> = r2.modify(String.init)
+        
+        // When & Then
+        for _ in 0..<1000 {
+            let random = Int.random(0, 10000)
+            XCTAssertEqual(try r12.run(Double(random)), Double(random))
+            XCTAssertEqual(try r22.run(random), random)
         }
     }
     
@@ -57,7 +72,7 @@ public final class ReaderTest: XCTestCase {
         let r3 = Reader<Void,Observable<Try<Int>>>({ throw Exception(error) })
         
         /// When
-        Observable.merge(r1.rx.tryApply(1000), r2.rx.tryApply(), r3.rx.apply())
+        Observable.merge(r1.rx.tryRun(1000), r2.rx.tryRun(), r3.rx.run())
             .doOnDispose(expect.fulfill)
             .subscribe(observer)
             .addDisposableTo(disposeBag)

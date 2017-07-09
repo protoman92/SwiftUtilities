@@ -59,11 +59,11 @@ public extension Reactive where
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
-    public func apply(_ a: Base.A) -> Observable<Base.B.E> {
+    public func run(_ a: Base.A) -> Observable<Base.B.E> {
         let base = self.base
         
         do {
-            let inner = try base.asReader().applyOrThrow(a)
+            let inner = try base.asReader().f(a)
             return inner.asObservable()
         } catch let error {
             return Observable.error(error)
@@ -80,8 +80,8 @@ public extension Reactive where
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
-    public func tryApply(_ a: Base.A) -> Observable<Try<Base.B.E>> {
-        return apply(a)
+    public func tryRun(_ a: Base.A) -> Observable<Try<Base.B.E>> {
+        return run(a)
             .map(Try<Base.B.E>.success)
             .catchErrorJustReturn(Try<Base.B.E>.failure)
     }
@@ -102,8 +102,8 @@ public extension Reactive where
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
-    public func apply(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
-        return tryApply(a).map({$0.flatMap(eq)})
+    public func run(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
+        return tryRun(a).map({$0.flatMap(eq)})
     }
 }
 

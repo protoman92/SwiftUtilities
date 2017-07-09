@@ -59,8 +59,14 @@ public extension TryType {
 }
 
 public extension TryType {
-    public func map<A2>(_ f: (A) throws -> A2) -> Try<A2> {
+    public func map<A1>(_ f: (A) throws -> A1) -> Try<A1> {
         return Try({try f(self.getOrThrow())})
+    }
+    
+    public func apply<T,A1>(_ t: T) -> Try<A1>
+        where T: TryConvertibleType, T.A == (A) throws -> A1
+    {
+        return flatMap({a in t.asTry().map({try $0(a)})})
     }
     
     public func flatMap<T,A2>(_ f: (A) throws -> T) -> Try<A2>
