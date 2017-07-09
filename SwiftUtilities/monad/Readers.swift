@@ -9,14 +9,17 @@
 import RxSwift
 import RxCocoa
 
-public typealias RxReader<L,R> = Reader<L,Observable<R>>
+public typealias RxReader<A,B> = Reader<A,Observable<B>>
+
+/// A Reader that has the same signature for A and B.
+public typealias EQReader<A> = Reader<A,A>
 
 public extension Reader {
     
     /// Get a Reader whose f simply returns whatever is passed in.
     ///
     /// - Returns: A Reader instance.
-    public static func eq<A>() -> Reader<A,A> {
+    public static func eq<A>() -> EQReader<A> {
         return Reader<A,A>({$0})
     }
     
@@ -68,7 +71,9 @@ public extension Reactive where Base: ReaderType, Base.B: ObservableConvertibleT
     /// TryConvertibleType, flatten and wrap the Observable emission in a Try
     /// instance.
     ///
-    /// This is a more specified version of apply() as defined above.
+    /// This is a more specified version of apply() as defined above. The
+    /// original version will throw an Error if the Reader is not available.
+    /// This version simply catches that Error and wrap it in another Try.
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
