@@ -29,6 +29,14 @@ public extension ReaderType {
         return Try({try self.applyOrThrow(a)})
     }
     
+    /// Modify the environment with which to execute the function (from A1 to A).
+    ///
+    /// - Parameter g: Tranform function.
+    /// - Returns: A Reader instance.
+    public func modify<A1>(_ g: @escaping (A1) -> A) -> Reader<A1,B> {
+        return Reader({try self.applyOrThrow(g($0))})
+    }
+    
     public func map<B1>(_ g: @escaping (B) throws -> B1) -> Reader<A,B1> {
         return Reader<A,B1>({try g(self.f($0))})
     }
