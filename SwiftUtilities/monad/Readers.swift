@@ -65,20 +65,13 @@ public extension Reactive where
     Base: ReaderConvertibleType,
     Base.B: ObservableConvertibleType {
     
-    /// If the current Reader's f function returns an Observable, flatten the 
-    /// Observable.
+    /// If the current Reader's f function returns an Observable, flatten it
+    /// to avoid nested Observable.
     ///
     /// - Parameter a: Base.A instance.
     /// - Returns: An Observable instance.
     public func flatRun(_ a: Base.A) -> Observable<Base.B.E> {
-        let base = self.base
-        
-        do {
-            let inner = try base.asReader().run(a)
-            return inner.asObservable()
-        } catch let error {
-            return Observable.error(error)
-        }
+        return run(a).flatMap(eq)
     }
     
     /// If the current Reader's f function returns an Observable, flatten and
@@ -103,10 +96,10 @@ public extension Reactive where
     /// instance.
     ///
     /// This is a more specified version of flatRun(_:) as defined above. The
-    /// original version will throw an Error if the Reader is not available.
+    /// original version will throw an Error if the Reader function throws.
     /// This version simply catches that Error and wrap it in another Try.
     ///
-    /// - Parameter a: A instance.
+    /// - Parameter a: Base.A instance.
     /// - Returns: An Observable instance.
     public func flatRun(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
         return tryFlatRun(a).map({$0.flatMap(eq)})
