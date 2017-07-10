@@ -72,7 +72,7 @@ public final class ReaderTest: XCTestCase {
         let r3 = Reader<Void,Observable<Try<Int>>>({ throw Exception(error) })
         
         /// When
-        Observable.merge(r1.rx.tryRun(1000), r2.rx.tryRun(), r3.rx.run())
+        Observable.merge(r1.rx.tryFlatRun(1000), r2.rx.tryFlatRun(), r3.rx.flatRun())
             .doOnDispose(expect.fulfill)
             .subscribe(observer)
             .addDisposableTo(disposeBag)
@@ -92,6 +92,22 @@ public final class ReaderTest: XCTestCase {
         XCTAssertEqual(second.error!.localizedDescription, error)
         XCTAssertTrue(third.isFailure)
         XCTAssertEqual(third.error!.localizedDescription, error)
+    }
+    
+    public func test_measureReaderTime() {
+        /// Setup
+        let r1: Reader<String,Int> = Reader<Int,Int>({$0 * $0})
+            .map(Double.init)
+            .map(String.init)
+            .flatMap({_ in Reader<Int,Int>(eq)})
+            .modify({Int($0) ?? 0})
+        
+        let range = (0..<10000).map(eq).map(String.init)
+        
+        /// When & Then
+        measure {
+            range.forEach({_ = try? r1.run($0)})
+        }
     }
 }
 

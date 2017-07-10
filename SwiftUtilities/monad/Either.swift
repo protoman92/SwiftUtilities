@@ -6,6 +6,8 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
+import RxSwift
+
 /// Use this to implement either-or behavior.
 public protocol EitherConvertibleType {
     associatedtype L
@@ -14,7 +16,7 @@ public protocol EitherConvertibleType {
     func asEither() -> Either<L,R>
 }
 
-public protocol EitherType: EitherConvertibleType {
+public protocol EitherType: EitherConvertibleType, ReactiveCompatible {
     
     /// Get L, if available.
     var left: L? { get }

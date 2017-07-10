@@ -15,7 +15,7 @@ public protocol TryConvertibleType {
     func asTry() -> Try<A>
 }
 
-public protocol TryType: TryConvertibleType, EitherConvertibleType {
+public protocol TryType: TryConvertibleType, EitherConvertibleType, ReactiveCompatible {
     
     /// Get the success value.
     var value: A? { get }
@@ -59,16 +59,29 @@ public extension TryType {
 }
 
 public extension TryType {
+    
+    /// Functor.
+    ///
+    /// - Parameter f: Transform function.
+    /// - Returns: A Try instance.
     public func map<A1>(_ f: (A) throws -> A1) -> Try<A1> {
         return Try({try f(self.getOrThrow())})
     }
     
+    /// Applicative.
+    ///
+    /// - Parameter t: A TryConvertibleType instance.
+    /// - Returns: A Try instance.
     public func apply<T,A1>(_ t: T) -> Try<A1>
         where T: TryConvertibleType, T.A == (A) throws -> A1
     {
         return flatMap({a in t.asTry().map({try $0(a)})})
     }
     
+    /// Monad.
+    ///
+    /// - Parameter f: Transform function.
+    /// - Returns: A Try instance.
     public func flatMap<T,A2>(_ f: (A) throws -> T) -> Try<A2>
         where T: TryConvertibleType, T.A == A2
     {

@@ -25,7 +25,7 @@ public extension Reader {
     
     /// Get a Reader whose f simply returns a value.
     ///
-    /// - Parameter value: B instance.
+    /// - Parameter value: Base.B instance.
     /// - Returns: A Reader instance.
     public static func just<A,B>(_ value: B) -> Reader<A,B> {
         return Reader<A,B>({_ in value})
@@ -50,24 +50,14 @@ public extension Reader {
     }
 }
 
-public extension Reactive where
-    Base: ReaderConvertibleType,
-    Base.B: ObservableConvertibleType {
+public extension Reactive where Base: ReaderConvertibleType {
     
-    /// If the current Reader's f function returns an Observable wrapped in a
-    /// Try, unwrap it.
+    /// Run the Reader and throw Error if encountered.
     ///
-    /// - Parameter a: A instance.
+    /// - Parameter a: Base.A instance.
     /// - Returns: An Observable instance.
-    public func run(_ a: Base.A) -> Observable<Base.B.E> {
-        let base = self.base
-        
-        do {
-            let inner = try base.asReader().f(a)
-            return inner.asObservable()
-        } catch let error {
-            return Observable.error(error)
-        }
+    public func run(_ a: Base.A) -> Observable<Base.B> {
+        return base.asReader().tryRun(a).rx.get()
     }
 }
 
@@ -75,13 +65,29 @@ public extension Reactive where
     Base: ReaderConvertibleType,
     Base.B: ObservableConvertibleType {
     
+    /// If the current Reader's f function returns an Observable, flatten the 
+    /// Observable.
+    ///
+    /// - Parameter a: Base.A instance.
+    /// - Returns: An Observable instance.
+    public func flatRun(_ a: Base.A) -> Observable<Base.B.E> {
+        let base = self.base
+        
+        do {
+            let inner = try base.asReader().run(a)
+            return inner.asObservable()
+        } catch let error {
+            return Observable.error(error)
+        }
+    }
+    
     /// If the current Reader's f function returns an Observable, flatten and
     /// wrap the Observable emission in a Try instance.
     ///
-    /// - Parameter a: A instance.
+    /// - Parameter a: Base.A instance.
     /// - Returns: An Observable instance.
-    public func tryRun(_ a: Base.A) -> Observable<Try<Base.B.E>> {
-        return run(a)
+    public func tryFlatRun(_ a: Base.A) -> Observable<Try<Base.B.E>> {
+        return flatRun(a)
             .map(Try<Base.B.E>.success)
             .catchErrorJustReturn(Try<Base.B.E>.failure)
     }
@@ -96,15 +102,13 @@ public extension Reactive where
     /// TryConvertibleType, flatten and wrap the Observable emission in a Try
     /// instance.
     ///
-    /// This is a more specified version of apply() as defined above. The
+    /// This is a more specified version of flatRun(_:) as defined above. The
     /// original version will throw an Error if the Reader is not available.
     /// This version simply catches that Error and wrap it in another Try.
     ///
     /// - Parameter a: A instance.
     /// - Returns: An Observable instance.
-    public func run(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
-        return tryRun(a).map({$0.flatMap(eq)})
+    public func flatRun(_ a: Base.A) -> Observable<Try<Base.B.E.A>> {
+        return tryFlatRun(a).map({$0.flatMap(eq)})
     }
 }
-
-extension Reader: ReactiveCompatible {}

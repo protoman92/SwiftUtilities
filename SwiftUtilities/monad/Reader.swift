@@ -6,7 +6,7 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import Foundation
+import RxSwift
 
 /// Use this to implement Dependency Injection.
 public protocol ReaderConvertibleType {
@@ -16,7 +16,7 @@ public protocol ReaderConvertibleType {
     func asReader() -> Reader<A,B>
 }
 
-public protocol ReaderType: ReaderConvertibleType {
+public protocol ReaderType: ReaderConvertibleType, ReactiveCompatible {
     var f: (A) throws -> B { get }
 }
 
@@ -42,16 +42,28 @@ public extension ReaderType {
         return Reader({try self.run(g($0))})
     }
     
+    /// Functor.
+    ///
+    /// - Parameter g: Transform function.
+    /// - Returns: A Reader instance.
     public func map<B1>(_ g: @escaping (B) throws -> B1) -> Reader<A,B1> {
         return Reader<A,B1>({try g(self.run($0))})
     }
     
+    /// Applicative.
+    ///
+    /// - Parameter r: ReaderConvertibleType instance.
+    /// - Returns: A Reader instance.
     public func apply<R,B1>(_ r: R) -> Reader<A,B1>
         where R: ReaderConvertibleType, R.A == A, R.B == (B) throws -> B1
     {
         return flatMap({b in r.asReader().map({try $0(b)})})
     }
     
+    /// Monad.
+    ///
+    /// - Parameter g: Transform function.
+    /// - Returns: A Reader instance.
     public func flatMap<R,B1>(_ g: @escaping (B) throws -> R) -> Reader<A,B1>
         where R: ReaderConvertibleType, R.A == A, R.B == B1
     {

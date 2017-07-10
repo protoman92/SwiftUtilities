@@ -16,6 +16,9 @@
 		D32495491F10D14B00D60545 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32495481F10D14B00D60545 /* Try.swift */; };
 		D324954B1F10E2D300D60545 /* TryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324954A1F10E2D300D60545 /* TryTest.swift */; };
 		D324954D1F10E6A600D60545 /* Tries.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324954C1F10E6A600D60545 /* Tries.swift */; };
+		D325D8281F130B7600575BD4 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D325D8271F130B7600575BD4 /* State.swift */; };
+		D325D82A1F131BFF00575BD4 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = D325D8291F131BFF00575BD4 /* States.swift */; };
+		D325D82C1F131DA300575BD4 /* StateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D325D82B1F131DA300575BD4 /* StateTest.swift */; };
 		D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9421E9E8D8A00B88826 /* FakeDetails.swift */; };
 		D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */; };
 		D33987921F0A94D8009225B2 /* RxTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31ED74F1EACE73C00632FF4 /* RxTestUtil.swift */; };
@@ -74,6 +77,9 @@
 		D32495481F10D14B00D60545 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Try.swift; path = monad/Try.swift; sourceTree = "<group>"; };
 		D324954A1F10E2D300D60545 /* TryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TryTest.swift; path = test/monad/TryTest.swift; sourceTree = "<group>"; };
 		D324954C1F10E6A600D60545 /* Tries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tries.swift; path = monad/Tries.swift; sourceTree = "<group>"; };
+		D325D8271F130B7600575BD4 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = monad/State.swift; sourceTree = "<group>"; };
+		D325D8291F131BFF00575BD4 /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = States.swift; path = monad/States.swift; sourceTree = "<group>"; };
+		D325D82B1F131DA300575BD4 /* StateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateTest.swift; path = test/monad/StateTest.swift; sourceTree = "<group>"; };
 		D334C9421E9E8D8A00B88826 /* FakeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeDetails.swift; path = mock/FakeDetails.swift; sourceTree = "<group>"; };
 		D334C9441E9E8DCA00B88826 /* FakeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FakeProtocol.swift; path = mock/FakeProtocol.swift; sourceTree = "<group>"; };
 		D3409ECC1F1288EF00CA0B1E /* CocoaUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaUtil.swift; sourceTree = "<group>"; };
@@ -361,6 +367,7 @@
 				D3CD10CD1F1015FB00DD2FD4 /* ReaderTest.swift */,
 				D32495381F1082EE00D60545 /* EitherTest.swift */,
 				D324954A1F10E2D300D60545 /* TryTest.swift */,
+				D325D82B1F131DA300575BD4 /* StateTest.swift */,
 			);
 			name = monad;
 			sourceTree = "<group>";
@@ -374,6 +381,8 @@
 				D324953C1F10886B00D60545 /* Readers.swift */,
 				D32495481F10D14B00D60545 /* Try.swift */,
 				D324954C1F10E6A600D60545 /* Tries.swift */,
+				D325D8271F130B7600575BD4 /* State.swift */,
+				D325D8291F131BFF00575BD4 /* States.swift */,
 			);
 			name = monad;
 			sourceTree = "<group>";
@@ -627,6 +636,7 @@
 				D38CC4DE1E9CA33400A09A5E /* CollectionUtil.swift in Sources */,
 				D38CC4DF1E9CA33400A09A5E /* SwiftUtil.swift in Sources */,
 				D38CC4E11E9CA33400A09A5E /* ExceptionUtil.swift in Sources */,
+				D325D8281F130B7600575BD4 /* State.swift in Sources */,
 				D38CC4E61E9CA33400A09A5E /* ThreadUtil.swift in Sources */,
 				D38316921EA3D97E009706FF /* TypeUtil.swift in Sources */,
 				D32495491F10D14B00D60545 /* Try.swift in Sources */,
@@ -637,6 +647,7 @@
 				D3409ECD1F1288EF00CA0B1E /* CocoaUtil.swift in Sources */,
 				D37183141F010E3500F9C0C0 /* GenericComparator.swift in Sources */,
 				D324954D1F10E6A600D60545 /* Tries.swift in Sources */,
+				D325D82A1F131BFF00575BD4 /* States.swift in Sources */,
 				D37183111F010DF400F9C0C0 /* SortMode.swift in Sources */,
 				D38CC4E51E9CA33400A09A5E /* StringUtil.swift in Sources */,
 			);
@@ -653,6 +664,7 @@
 				D324954B1F10E2D300D60545 /* TryTest.swift in Sources */,
 				D38316951EA3DAA6009706FF /* TypeTest.swift in Sources */,
 				D334C9451E9E8DCA00B88826 /* FakeProtocol.swift in Sources */,
+				D325D82C1F131DA300575BD4 /* StateTest.swift in Sources */,
 				D334C9431E9E8D8A00B88826 /* FakeDetails.swift in Sources */,
 				D3C87B981E9FC8DE000BAB62 /* MockTest.swift in Sources */,
 				D32495391F1082EE00D60545 /* EitherTest.swift in Sources */,
