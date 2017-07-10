@@ -15,7 +15,7 @@ public extension Reactive where Base: StateConvertibleType {
     ///
     /// - Parameter s: Base.S instance.
     /// - Returns: An Observable instance.
-    public func run(_ s: Base.S) -> Observable<(Base.S,Base.A)> {
+    public func run(_ s: Base.S) -> Observable<StatePair<Base.S,Base.A>> {
         return base.asState().tryRun(s).rx.get()
     }
 }
