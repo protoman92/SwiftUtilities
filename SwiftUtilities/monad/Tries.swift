@@ -9,14 +9,14 @@
 import RxCocoa
 import RxSwift
 
-public typealias RxTry<A> = Try<Observable<A>>
+public typealias RxTry<Val> = Try<Observable<Val>>
 
 public extension Reactive where Base: TryConvertibleType {
     
     /// Wrap the success/error in an Observable.
     ///
     /// - Returns: An Observable instance.
-    public func get() -> Observable<Base.A> {
+    public func get() -> Observable<Base.Val> {
         do {
             return Observable.just(try base.asTry().getOrThrow())
         } catch let error {

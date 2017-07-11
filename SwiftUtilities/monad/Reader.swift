@@ -10,35 +10,35 @@ import RxSwift
 
 /// Use this to implement Dependency Injection.
 public protocol ReaderConvertibleType {
-    associatedtype A
-    associatedtype B
+    associatedtype Env
+    associatedtype Val
     
-    func asReader() -> Reader<A,B>
+    func asReader() -> Reader<Env,Val>
 }
 
 public protocol ReaderType: ReaderConvertibleType, ReactiveCompatible {
-    var f: (A) throws -> B { get }
+    var f: (Env) throws -> Val { get }
 }
 
 public extension ReaderType {
     
-    public func run(_ a: A) throws -> B {
+    public func run(_ a: Env) throws -> Val {
         return try f(a)
     }
 
     /// Call f and wrap the result in a Try.
     ///
-    /// - Parameter a: A instance.
+    /// - Parameter a: Env instance.
     /// - Returns: A Try instance.
-    public func tryRun(_ a: A) -> Try<B> {
-        return Try({try self.run(a)})
+    public func tryRun(_ env: Env) -> Try<Val> {
+        return Try({try self.run(env)})
     }
     
-    /// Modify the environment with which to execute the function (from A1 to A).
+    /// Modify the environment with which to execute the function.
     ///
     /// - Parameter g: Tranform function.
     /// - Returns: A Reader instance.
-    public func modify<A1>(_ g: @escaping (A1) -> A) -> Reader<A1,B> {
+    public func modify<Env1>(_ g: @escaping (Env1) throws -> Env) -> Reader<Env1,Val> {
         return Reader({try self.run(g($0))})
     }
     
@@ -46,47 +46,65 @@ public extension ReaderType {
     ///
     /// - Parameter g: Transform function.
     /// - Returns: A Reader instance.
-    public func map<B1>(_ g: @escaping (B) throws -> B1) -> Reader<A,B1> {
-        return Reader<A,B1>({try g(self.run($0))})
+    public func map<Val1>(_ g: @escaping (Val) throws -> Val1) -> Reader<Env,Val1> {
+        return Reader<Env,Val1>({try g(self.run($0))})
     }
     
     /// Applicative.
     ///
     /// - Parameter r: ReaderConvertibleType instance.
     /// - Returns: A Reader instance.
-    public func apply<R,B1>(_ r: R) -> Reader<A,B1>
-        where R: ReaderConvertibleType, R.A == A, R.B == (B) throws -> B1
+    public func apply<R,Val1>(_ r: R) -> Reader<Env,Val1>
+        where R: ReaderConvertibleType, R.Env == Env, R.Val == (Val) throws -> Val1
     {
-        return flatMap({b in r.asReader().map({try $0(b)})})
+        return flatMap({val in r.asReader().map({try $0(val)})})
     }
     
     /// Monad.
     ///
     /// - Parameter g: Transform function.
     /// - Returns: A Reader instance.
-    public func flatMap<R,B1>(_ g: @escaping (B) throws -> R) -> Reader<A,B1>
-        where R: ReaderConvertibleType, R.A == A, R.B == B1
+    public func flatMap<R,Val1>(_ g: @escaping (Val) throws -> R) -> Reader<Env,Val1>
+        where R: ReaderConvertibleType, R.Env == Env, R.Val == Val1
     {
-        return Reader<A,B1>({try g(self.f($0)).asReader().run($0)})
+        return Reader<Env,Val1>({try g(self.f($0)).asReader().run($0)})
     }
     
-    public func zip<R,B1,U>(with reader: R, _ g: @escaping (B, B1) throws -> U)
-        -> Reader<A,U> where R: ReaderConvertibleType, R.A == A, R.B == B1
+    /// Zip with another ReaderConvertibleType.
+    ///
+    /// - Parameters:
+    ///   - reader: A ReaderConvertibleType instance.
+    ///   - g: Transform function.
+    /// - Returns: A Reader instance.
+    public func zip<R,Val1,U>(with reader: R, _ g: @escaping (Val, Val1) throws -> U)
+        -> Reader<Env,U> where R: ReaderConvertibleType, R.Env == Env, R.Val == Val1
     {
-        return flatMap({b in reader.asReader().map({try g(b, $0)})})
+        return flatMap({val in reader.asReader().map({try g(val, $0)})})
+    }
+    
+    /// Zip with another ReaderConvertibleType with a different A.
+    ///
+    /// - Parameters:
+    ///   - reader: A ReaderConvertibleType instance.
+    ///   - g: Transform function.
+    /// - Returns: A Reader instance.
+    public func zip<R,Env1,Val1,U>(with reader: R, _ g: @escaping (Val, Val1) throws -> U)
+        -> Reader<(Env,Env1),U> where R: ReaderConvertibleType, R.Env == Env1, R.Val == Val1
+    {
+        return Reader({try g(self.run($0.0), reader.asReader().run($0.1))})
     }
 }
 
-public struct Reader<A,B> {
-    public let f: (A) throws -> B
+public struct Reader<Env,Val> {
+    public let f: (Env) throws -> Val
     
-    public init(_ f: @escaping (A) throws -> B) {
+    public init(_ f: @escaping (Env) throws -> Val) {
         self.f = f
     }
 }
 
 extension Reader: ReaderType {
-    public func asReader() -> Reader<A,B> {
+    public func asReader() -> Reader<Env,Val> {
         return self
     }
 }

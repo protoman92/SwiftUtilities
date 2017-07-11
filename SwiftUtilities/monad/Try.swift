@@ -10,22 +10,22 @@ import RxSwift
 
 /// Use this to wrap operations that can throw Error.
 public protocol TryConvertibleType {
-    associatedtype A
+    associatedtype Val
     
-    func asTry() -> Try<A>
+    func asTry() -> Try<Val>
 }
 
 public protocol TryType: TryConvertibleType, EitherConvertibleType, ReactiveCompatible {
     
     /// Get the success value.
-    var value: A? { get }
+    var value: Val? { get }
     
     /// Get the failure error.
     var error: Error? { get }
 }
 
 public extension TryType {
-    public func asEither() -> Either<Error,A> {
+    public func asEither() -> Either<Error,Val> {
         do {
             return Either.right(try getOrThrow())
         } catch let error {
@@ -47,7 +47,7 @@ public extension TryType {
     ///
     /// - Returns: A instance.
     /// - Throws: Error if success value if absent.
-    public func getOrThrow() throws -> A {
+    public func getOrThrow() throws -> Val {
         if let value = self.value {
             return value
         } else if let error = self.error {
@@ -64,7 +64,7 @@ public extension TryType {
     ///
     /// - Parameter f: Transform function.
     /// - Returns: A Try instance.
-    public func map<A1>(_ f: (A) throws -> A1) -> Try<A1> {
+    public func map<A1>(_ f: (Val) throws -> A1) -> Try<A1> {
         return Try({try f(self.getOrThrow())})
     }
     
@@ -73,7 +73,7 @@ public extension TryType {
     /// - Parameter t: A TryConvertibleType instance.
     /// - Returns: A Try instance.
     public func apply<T,A1>(_ t: T) -> Try<A1>
-        where T: TryConvertibleType, T.A == (A) throws -> A1
+        where T: TryConvertibleType, T.Val == (Val) throws -> A1
     {
         return flatMap({a in t.asTry().map({try $0(a)})})
     }
@@ -82,9 +82,8 @@ public extension TryType {
     ///
     /// - Parameter f: Transform function.
     /// - Returns: A Try instance.
-    public func flatMap<T,A2>(_ f: (A) throws -> T) -> Try<A2>
-        where T: TryConvertibleType, T.A == A2
-    {
+    public func flatMap<T,Val2>(_ f: (Val) throws -> T) -> Try<Val2>
+        where T: TryConvertibleType, T.Val == Val2    {
         do {
             return try f(try getOrThrow()).asTry()
         } catch let error {
@@ -115,6 +114,10 @@ public enum Try<A> {
 }
 
 extension Try: TryType {
+    public func asTry() -> Try<A> {
+        return self
+    }
+    
     public var value: A? {
         switch self {
         case .success(let value):
@@ -133,9 +136,5 @@ extension Try: TryType {
         default:
             return nil
         }
-    }
-    
-    public func asTry() -> Try<A> {
-        return self
     }
 }

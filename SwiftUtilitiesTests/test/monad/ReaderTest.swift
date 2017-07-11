@@ -34,9 +34,13 @@ public final class ReaderTest: XCTestCase {
         let r2 = Reader<Int,Int>({$0 * 3})
         let r3 = r1.zip(with: r2, {$0.0 * $0.1})
         
+        let r4 = Reader<Double,Double>({$0 * 5})
+        let r5 = r1.zip(with: r4, {Double($0.0) + $0.1})
+        
         /// When & Then
         for i in 0..<1000 {
             XCTAssertEqual(try r3.run(i), i * i * 2 * 3)
+            XCTAssertEqual(try r5.run((i, Double(i * 2))), Double(i * 2 + i * 2 * 5))
         }
     }
     

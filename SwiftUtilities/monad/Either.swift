@@ -10,19 +10,19 @@ import RxSwift
 
 /// Use this to implement either-or behavior.
 public protocol EitherConvertibleType {
-    associatedtype L
-    associatedtype R
+    associatedtype Left
+    associatedtype Right
     
-    func asEither() -> Either<L,R>
+    func asEither() -> Either<Left,Right>
 }
 
 public protocol EitherType: EitherConvertibleType, ReactiveCompatible {
     
     /// Get L, if available.
-    var left: L? { get }
+    var left: Left? { get }
     
     /// Get R, if available.
-    var right: R? { get }
+    var right: Right? { get }
 }
 
 public extension EitherType {
@@ -39,15 +39,15 @@ public extension EitherType {
     
     /// Since Either is non-biased by default, we need to access projections 
     /// for left/right bias.
-    public var projection: Projection<L,R> {
-        return Projection(Either<L,R>.from(self))
+    public var projection: Projection<Left,Right> {
+        return Projection(Either<Left,Right>.from(self))
     }
     
     /// Get R with a fallback.
     ///
     /// - Parameter value: Fallback R value.
     /// - Returns: R instance.
-    public func getOrElse(_ value: R) -> R {
+    public func getOrElse(_ value: Right) -> Right {
         return right ?? value
     }
     
@@ -56,7 +56,7 @@ public extension EitherType {
     /// - Parameter error: An Error instance.
     /// - Returns: R instance.
     /// - Throws: Error if right is not available.
-    public func getOrThrow(_ error: Error) throws -> R {
+    public func getOrThrow(_ error: Error) throws -> Right {
         if let right = self.right {
             return right
         } else {
@@ -70,7 +70,7 @@ public extension EitherType {
     ///   - f1: left-side map function.
     ///   - f2: right-side map function.
     /// - Returns: An Either instance.
-    public func bimap<L1,R1>(_ f1: (L) -> L1, _ f2: (R) -> R1) -> Either<L1,R1> {
+    public func bimap<L1,R1>(_ f1: (Left) -> L1, _ f2: (Right) -> R1) -> Either<L1,R1> {
         return projection.left.map(f1).asEither().projection.right.map(f2).asEither()
     }
 }
@@ -155,7 +155,7 @@ public final class LeftProjection<L,R>: Projection<L,R> {
     }
     
     public func flatMap<L2,E>(_ f: (L) -> E) -> Either<L2,R>
-        where E: EitherConvertibleType, E.L == L2, E.R == R
+        where E: EitherConvertibleType, E.Left == L2, E.Right == R
     {
         switch either {
         case .left(let left):
@@ -188,7 +188,7 @@ public final class RightProjection<L,R>: Projection<L,R> {
     }
     
     public func flatMap<R2,E>(_ f: (R) -> E) -> Either<L,R2>
-        where E: EitherConvertibleType, E.L == L, E.R == R2
+        where E: EitherConvertibleType, E.Left == L, E.Right == R2
     {
         switch either {
         case .left(let left):
@@ -202,7 +202,7 @@ public final class RightProjection<L,R>: Projection<L,R> {
 
 public extension Either {
     fileprivate static func from<L,R,E>(_ either: E) -> Either<L,R>
-        where E: EitherType, E.L == L, E.R == R
+        where E: EitherType, E.Left == L, E.Right == R
     {
         if let left = either.left {
             return Either<L,R>.left(left)
