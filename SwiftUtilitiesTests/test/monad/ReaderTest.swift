@@ -36,22 +36,24 @@ public final class ReaderTest: XCTestCase {
         
         let r4 = Reader<Double,Double>({$0 * 5})
         let r5 = r1.zip(with: r4, {Double($0.0) + $0.1})
+        let r6 = Reader<Int,Int>.zip([r1, r2, r3], {$0.sum})
         
         /// When & Then
         for i in 0..<1000 {
             XCTAssertEqual(try r3.run(i), i * i * 2 * 3)
             XCTAssertEqual(try r5.run((i, Double(i * 2))), Double(i * 2 + i * 2 * 5))
+            XCTAssertEqual(try r6.run(i), i * 2 + i * 3 + i * i * 6)
         }
     }
     
     public func test_readerModify_shouldWork() {
-        // Setup
+        /// Setup
         let r1 = Reader<Int,Double>(Double.init)
         let r2 = Reader<String,Int?>({Int($0)}).map({$0 ?? 0})
         let r12: Reader<Double,Double> = r1.modify(Int.init)
         let r22: Reader<Int,Int> = r2.modify(String.init)
         
-        // When & Then
+        /// When & Then
         for _ in 0..<1000 {
             let random = Int.random(0, 10000)
             XCTAssertEqual(try r12.run(Double(random)), Double(random))
@@ -60,7 +62,7 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerRxApply_shouldWork() {
-        // Setup
+        /// Setup
         let error = "Error!"
         let disposeBag = DisposeBag()
         let scheduler = TestScheduler(initialClock: 0)
@@ -96,22 +98,6 @@ public final class ReaderTest: XCTestCase {
         XCTAssertEqual(second.error!.localizedDescription, error)
         XCTAssertTrue(third.isFailure)
         XCTAssertEqual(third.error!.localizedDescription, error)
-    }
-    
-    public func test_measureReaderTime() {
-        /// Setup
-        let r1: Reader<String,Int> = Reader<Int,Int>({$0 * $0})
-            .map(Double.init)
-            .map(String.init)
-            .flatMap({_ in Reader<Int,Int>(eq)})
-            .modify({Int($0) ?? 0})
-        
-        let range = (0..<10000).map(eq).map(String.init)
-        
-        /// When & Then
-        measure {
-            range.forEach({_ = try? r1.run($0)})
-        }
     }
 }
 

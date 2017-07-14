@@ -57,7 +57,7 @@ public extension Reader {
     ///   - g: Transform function.
     /// - Returns: A Reader instance.
     public static func zip<R1,R2,Env,Val,Env1,Val1,U>(_ r1: R1, _ r2: R2,
-                           _ g: @escaping (Val, Val1) -> U)
+                           _ g: @escaping (Val, Val1) throws -> U)
         -> Reader<(Env, Env1),U> where
         R1: ReaderConvertibleType,
         R2: ReaderConvertibleType,
@@ -65,6 +65,25 @@ public extension Reader {
         R2.Env == Env1, R2.Val == Val1
     {
         return r1.asReader().zip(with: r2, g)
+    }
+    
+    /// Zip a Sequence of ReaderConvertibleType using a function.
+    ///
+    /// - Parameters:
+    ///   - readers: A Sequence of ReaderConvertibleType.
+    ///   - g: Transform function.
+    /// - Returns: A Reader instance.
+    public static func zip<S,Env,Val,Val1>(_ readers: S,
+                           _ g: @escaping ([Val]) throws -> Val1)
+        -> Reader<Env,Val1> where
+        S: Sequence,
+        S.Iterator.Element: ReaderConvertibleType,
+        S.Iterator.Element.Env == Env,
+        S.Iterator.Element.Val == Val
+    {
+        return Reader<Env,Val1>({(env: Env) throws -> Val1 in
+            try g(readers.map({$0.asReader()}).map({try $0.run(env)}))
+        })
     }
 }
 
