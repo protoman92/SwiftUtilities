@@ -32,17 +32,33 @@ public final class ReaderTest: XCTestCase {
         /// Setup
         let r1 = Reader<Int,Int>({$0 * 2})
         let r2 = Reader<Int,Int>({$0 * 3})
-        let r3 = r1.zip(with: r2, {$0.0 * $0.1})
+        let z1 = r1.zip(with: r2, {$0.0 * $0.1})
         
-        let r4 = Reader<Double,Double>({$0 * 5})
-        let r5 = r1.zip(with: r4, {Double($0.0) + $0.1})
-        let r6 = Reader<Int,Int>.zip([r1, r2, r3], {$0.sum})
+        let r3 = Reader<Double,Double>({$0 * 5})
+        let z2 = r1.zip(with: r3, {Double($0.0) + $0.1})
+        let r4 = Reader<Int,Int>.zip({$0.sum}, r1, r2, z1)
         
         /// When & Then
         for i in 0..<1000 {
-            XCTAssertEqual(try r3.run(i), i * i * 2 * 3)
-            XCTAssertEqual(try r5.run((i, Double(i * 2))), Double(i * 2 + i * 2 * 5))
-            XCTAssertEqual(try r6.run(i), i * 2 + i * 3 + i * i * 6)
+            XCTAssertEqual(try z1.run(i), i * i * 2 * 3)
+            XCTAssertEqual(try z2.run((i, Double(i * 2))), Double(i * 2 + i * 2 * 5))
+            XCTAssertEqual(try r4.run(i), i * 2 + i * 3 + i * i * 6)
+        }
+    }
+    
+    public func test_readerZipIgnoringErrors_shouldWork() {
+        /// Setup
+        let r1 = Reader<Int,Int>({_ in throw Exception("Error1") })
+        let r2 = Reader<Int,Int>({_ in throw Exception("Error2") })
+        let r3 = Reader<Int,Int>(eq)
+        let r4 = Reader<Int,Int>({$0 * 2})
+        let z1 = Reader<Int,Int>.zip([r1, r2, r3, r4], {$0.sum})
+        let z2 = Reader<Int,Int>.zip({$0.sum}, ignoringErrors: r1, r2, r3, r4)
+        
+        /// When & Then
+        for i in 0..<1000 {
+            XCTAssertThrowsError(try z1.run(i))
+            XCTAssertEqual(try z2.run(i), i + i * 2)
         }
     }
     

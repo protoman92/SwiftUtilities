@@ -40,7 +40,7 @@ public extension EitherType {
     /// Since Either is non-biased by default, we need to access projections 
     /// for left/right bias.
     public var projection: Projection<Left,Right> {
-        return Projection(Either<Left,Right>.from(self))
+        return Projection(asEither())
     }
     
     /// Get R with a fallback.
@@ -78,6 +78,16 @@ public extension EitherType {
 public enum Either<L,R> {
     case left(L)
     case right(R)
+    
+    public init<E>(_ either: E) where E: EitherType, E.Left == L, E.Right == R {
+        if let left = either.left {
+            self = Either<L,R>.left(left)
+        } else if let right = either.right {
+            self = Either<L,R>.right(right)
+        } else {
+            fatalError("Invalid Either")
+        }
+    }
 }
 
 extension Either: EitherType {
@@ -159,7 +169,7 @@ public final class LeftProjection<L,R>: Projection<L,R> {
     {
         switch either {
         case .left(let left):
-            return Either<L2,R>.from(f(left).asEither())
+            return Either<L2,R>(f(left).asEither())
             
         case .right(let right):
             return Either.right(right)
@@ -195,21 +205,7 @@ public final class RightProjection<L,R>: Projection<L,R> {
             return Either.left(left)
             
         case .right(let right):
-            return Either<L,R2>.from(f(right).asEither())
-        }
-    }
-}
-
-public extension Either {
-    fileprivate static func from<L,R,E>(_ either: E) -> Either<L,R>
-        where E: EitherType, E.Left == L, E.Right == R
-    {
-        if let left = either.left {
-            return Either<L,R>.left(left)
-        } else if let right = either.right {
-            return Either<L,R>.right(right)
-        } else {
-            fatalError("Invalid Either")
+            return Either<L,R2>(f(right).asEither())
         }
     }
 }

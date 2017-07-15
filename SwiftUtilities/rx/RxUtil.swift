@@ -32,8 +32,7 @@ public extension Observable {
     {
         return catchError({(error: Error) -> Observable<Element> in
             do {
-                let element = try selector(error)
-                return Observable.just(element)
+                return Observable.just(try selector(error))
             } catch let e {
                 return Observable.error(e)
             }
@@ -76,9 +75,7 @@ public extension ObservableType {
     ///
     /// - Parameter callback: onError closure.
     /// - Returns: An Observable instance.
-    public func doOnError(_ callback: @escaping (Error) -> Void)
-        -> Observable<E>
-    {
+    public func doOnError(_ callback: @escaping (Error) -> Void) -> Observable<E> {
         return `do`(onNext: nil,
                     onError: callback,
                     onCompleted: nil,
@@ -91,9 +88,7 @@ public extension ObservableType {
     ///
     /// - Parameter callback: onCompleted closure.
     /// - Returns: An Observable instance.
-    public func doOnCompleted(_ callback: @escaping () -> Void)
-        -> Observable<E>
-    {
+    public func doOnCompleted(_ callback: @escaping () -> Void) -> Observable<E> {
         return `do`(onNext: nil,
                     onError: nil,
                     onCompleted: callback,
@@ -106,9 +101,7 @@ public extension ObservableType {
     ///
     /// - Parameter callback: onSubscribe closure.
     /// - Returns: An Observable instance.
-    public func doOnSubscribe(_ callback: @escaping () -> Void)
-        -> Observable<E>
-    {
+    public func doOnSubscribe(_ callback: @escaping () -> Void) -> Observable<E> {
         return `do`(onNext: nil,
                     onError: nil,
                     onCompleted: nil,
@@ -121,9 +114,7 @@ public extension ObservableType {
     ///
     /// - Parameter callback: onSubscribed closure.
     /// - Returns: An Observable instance.
-    public func doOnSubscribed(_ callback: @escaping () -> Void)
-        -> Observable<E>
-    {
+    public func doOnSubscribed(_ callback: @escaping () -> Void) -> Observable<E> {
         return `do`(onNext: nil,
                     onError: nil,
                     onCompleted: nil,

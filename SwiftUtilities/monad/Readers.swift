@@ -85,6 +85,60 @@ public extension Reader {
             try g(readers.map({$0.asReader()}).map({try $0.run(env)}))
         })
     }
+    
+    /// Same as above, but uses varargs of ReaderConvertibleType.
+    ///
+    /// - Parameters:
+    ///   - g: Transform function.
+    ///   - readers: Varargs of ReaderConvertibleType.
+    /// - Returns: A Reader instance.
+    public static func zip<R,Env,Val,Val1>(_ g: @escaping ([Val]) throws -> Val1,
+                           _ readers: R...)
+        -> Reader<Env,Val1> where
+        R: ReaderConvertibleType,
+        R.Env == Env, R.Val == Val
+    {
+        return Reader.zip(readers.map({$0}), g)
+    }
+    
+    /// Zip a Sequence of ReaderConvertibleType using a function that is applied
+    /// only on those that do not produce errors while running on some Env
+    /// instance.
+    ///
+    /// - Parameters:
+    ///   - readers: A Sequence of ReaderConvertibleType.
+    ///   - g: Transform function.
+    /// - Returns: A Reader instance.
+    public static func zip<S,Env,Val,Val1>(ignoringErrors readers: S,
+                           _ g: @escaping ([Val]) throws -> Val1)
+        -> Reader<Env,Val1> where
+        S: Sequence,
+        S.Iterator.Element: ReaderConvertibleType,
+        S.Iterator.Element.Env == Env,
+        S.Iterator.Element.Val == Val
+    {
+        return Reader<Env,Val1>({(env: Env) throws -> Val1 in
+            try g(readers
+                .map({$0.asReader()})
+                .map({$0.tryRun(env)})
+                .flatMap({$0.value}))
+        })
+    }
+    
+    /// Same as above, but uses varargs of ReaderConvertibleType.
+    ///
+    /// - Parameters:
+    ///   - g: Transform function.
+    ///   - readers: Varargs of ReaderConvertibleType.
+    /// - Returns: A Reader instance.
+    public static func zip<R,Env,Val,Val1>(_ g: @escaping ([Val]) throws -> Val1,
+                           ignoringErrors readers: R...)
+        -> Reader<Env,Val1> where
+        R: ReaderConvertibleType,
+        R.Env == Env, R.Val == Val
+    {
+        return Reader.zip(ignoringErrors: readers.map({$0}), g)
+    }
 }
 
 public extension Reactive where Base: ReaderConvertibleType {

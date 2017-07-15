@@ -92,7 +92,8 @@ public extension StateType {
     /// - Parameter g: Transform function.
     /// - Returns: A State instance.
     public func flatMap<ST,Val1>(_ g: @escaping (Val) throws -> ST) -> State<Stat,Val1>
-        where ST: StateConvertibleType, ST.Stat == Stat, ST.Val == Val1    {
+        where ST: StateConvertibleType, ST.Stat == Stat, ST.Val == Val1
+    {
         return State({
             let (s, v) = try self.run($0)
             return try g(v).asState().run(s)
