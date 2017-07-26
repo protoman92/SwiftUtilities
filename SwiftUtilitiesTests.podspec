@@ -5,12 +5,11 @@ Pod::Spec.new do |s|
     s.name = "SwiftUtilitiesTests"
     s.summary = "Common Swift test utilities."
     s.requires_arc = true
-    s.version = "1.4.1"
+    s.version = "1.4.2"
     s.license = { :type => "Apache-2.0", :file => "LICENSE" }
     s.author = { "Hai Pham" => "swiften.svc@gmail.com" }
     s.homepage = "https://github.com/protoman92/SwiftUtilities.git"
     s.source = { :git => "https://github.com/protoman92/SwiftUtilities.git", :tag => "#{s.version}"}
-    s.framework = "UIKit"
     s.dependency 'RxSwift', '~> 3.0'
     s.dependency 'RxCocoa', '~> 3.0'
     s.dependency 'RxTest', '~> 3.0'

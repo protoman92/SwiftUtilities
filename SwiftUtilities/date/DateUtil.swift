@@ -1,12 +1,10 @@
 //
 //  DateUtil.swift
-//  Heartland Chefs
+//  SwiftUtilities
 //
 //  Created by Hai Pham on 8/9/16.
 //  Copyright © 2016 Swiften. All rights reserved.
 //
-
-import UIKit
 
 extension Date: IsInstanceType {}
 extension Calendar: IsInstanceType {}

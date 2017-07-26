@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 extension String: CustomComparisonType {
     public func equals(object: String?) -> Bool {

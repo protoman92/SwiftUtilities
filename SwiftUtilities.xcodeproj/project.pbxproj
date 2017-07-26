@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2AD5B2F4B8E112C82590DB2E /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D766E409FE1D16A885627B5 /* Pods_SwiftUtilities.framework */; };
+		82133D758FBF94618C26895D /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
 		D30CA8FB1F0D4F6E00C329B8 /* ExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CA8FA1F0D4F6E00C329B8 /* ExceptionTest.swift */; };
 		D313E5C81EA08AD00063F91F /* BooleanUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D313E5C71EA08AD00063F91F /* BooleanUtil.swift */; };
 		D32495391F1082EE00D60545 /* EitherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32495381F1082EE00D60545 /* EitherTest.swift */; };
@@ -48,11 +49,10 @@
 		D3DCC4F71F0A55600084B3FC /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DCC4F61F0A55600084B3FC /* Either.swift */; };
 		D3EBC9951EA67769008C90FB /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBC9941EA67769008C90FB /* ThreadTest.swift */; };
 		D3FE35F51EA3704400C44052 /* CollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE35F41EA3704400C44052 /* CollectionTest.swift */; };
-		DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DCB6404D93BE237C6F505F /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D38CC4A31E9CA23600A09A5E /* PBXContainerItemProxy */ = {
+		D313C0D31F284F7F0029E4AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D38CC48F1E9CA23600A09A5E /* Project object */;
 			proxyType = 1;
@@ -127,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC1910819F25180C9088379 /* Pods_SwiftUtilitiesTests.framework in Frameworks */,
+				82133D758FBF94618C26895D /* Pods_SwiftUtilitiesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +462,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D38CC4A41E9CA23600A09A5E /* PBXTargetDependency */,
+				D313C0D41F284F7F0029E4AE /* PBXTargetDependency */,
 			);
 			name = SwiftUtilitiesTests;
 			productName = SwiftUtilitiesTests;
@@ -481,13 +481,13 @@
 				TargetAttributes = {
 					D38CC4971E9CA23600A09A5E = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = S3V9CCW695;
+						DevelopmentTeam = 5FF785XRZ6;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					D38CC4A01E9CA23600A09A5E = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = S3V9CCW695;
+						DevelopmentTeam = 5FF785XRZ6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -603,17 +603,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
 				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -677,10 +677,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D38CC4A41E9CA23600A09A5E /* PBXTargetDependency */ = {
+		D313C0D41F284F7F0029E4AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D38CC4971E9CA23600A09A5E /* SwiftUtilities */;
-			targetProxy = D38CC4A31E9CA23600A09A5E /* PBXContainerItemProxy */;
+			targetProxy = D313C0D31F284F7F0029E4AE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -794,7 +794,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = S3V9CCW695;
+				DEVELOPMENT_TEAM = 5FF785XRZ6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -817,7 +817,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = S3V9CCW695;
+				DEVELOPMENT_TEAM = 5FF785XRZ6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -836,7 +836,7 @@
 			baseConfigurationReference = 18D2A2680E02FF607FA7ED80 /* Pods-SwiftUtilitiesTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				DEVELOPMENT_TEAM = S3V9CCW695;
+				DEVELOPMENT_TEAM = 5FF785XRZ6;
 				INFOPLIST_FILE = SwiftUtilitiesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiften.SwiftUtilitiesTests;
@@ -850,7 +850,7 @@
 			baseConfigurationReference = D2AC4B7BD1371F81BB771CD9 /* Pods-SwiftUtilitiesTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				DEVELOPMENT_TEAM = S3V9CCW695;
+				DEVELOPMENT_TEAM = 5FF785XRZ6;
 				INFOPLIST_FILE = SwiftUtilitiesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiften.SwiftUtilitiesTests;

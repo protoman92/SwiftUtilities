@@ -1,6 +1,6 @@
 //
 //  RxUtil.swift
-//  Heartland Chefs
+//  SwiftUtilities
 //
 //  Created by Hai Pham on 7/28/16.
 //  Copyright © 2016 Swiften. All rights reserved.

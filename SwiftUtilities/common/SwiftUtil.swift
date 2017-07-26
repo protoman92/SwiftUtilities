@@ -1,12 +1,11 @@
 //
 //  SwiftUtil.swift
-//  Heartland Chefs
+//  SwiftUtilities
 //
 //  Created by Hai Pham on 1/6/16.
 //  Copyright © 2016 Swiften. All rights reserved.
 //
 
-import UIKit
 import Foundation
 
 /// Read an environment variable.

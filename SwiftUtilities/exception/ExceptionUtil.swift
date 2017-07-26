@@ -1,6 +1,6 @@
 //
 //  ExceptionUtil.swift
-//  Heartland Chefs
+//  SwiftUtilities
 //
 //  Created by Hai Pham on 1/18/17.
 //  Copyright © 2017 Swiften. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  DateUtilTest.swift
-//  Heartland Chefs
+//  SwiftUtilitiesTests
 //
 //  Created by Hai Pham on 2/11/16.
 //  Copyright © 2016 Swiften. All rights reserved.
