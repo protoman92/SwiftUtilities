@@ -103,6 +103,28 @@ public extension Sequence where Iterator.Element: Hashable {
     public func doesNotContain(_ item: Iterator.Element) -> Bool {
         return !contains(item)
     }
+    
+    /// Produce a randomly-ordered distinct Array of element.
+    ///
+    /// - Returns: An Array of Element.
+    public func distinct() -> [Iterator.Element] {
+        return Set<Iterator.Element>(self).map(eq)
+    }
+    
+    /// Produce a distinct Array of element that retains the original order.
+    ///
+    /// - Returns: An Array of Element.
+    public func orderedDistinct() -> [Iterator.Element] {
+        var distinct: [Iterator.Element] = []
+        
+        for element in self {
+            if distinct.doesNotContain(element) {
+                distinct.append(element)
+            }
+        }
+        
+        return distinct
+    }
 }
 
 public extension Array {

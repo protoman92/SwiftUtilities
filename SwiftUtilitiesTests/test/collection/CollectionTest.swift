@@ -11,127 +11,136 @@ import XCTest
 
 final class CustomComparisonCollectionTest: XCTestCase {
     func test_arrayAddUniqueContents_shouldSucceed() {
-        // Setup
+        /// Setup
         var array1 = [1, 2, 3]
         let array2 = [1, 3, 5]
         
-        // When
+        /// When
         array1.append(uniqueContentsOf: array2)
         
-        // Then
+        /// Then
         let set = Set(array1)
         XCTAssertEqual(array1.count, set.count)
     }
     
     func test_arrayContains_shouldSucceed() {
-        // Setup
+        /// Setup
         let array1 = [1, 2, 3]
         
-        // When
+        /// When
         let contains = array1.contains(element: 1)
         
-        // Then
+        /// Then
         XCTAssertTrue(contains)
     }
     
     func test_arrayRepeat_shouldSucceed() {
-        // Setup
+        /// Setup
         let times = 10
         let selector: (Int) -> String = {String(describing: $0)}
         
-        // When
+        /// When
         let array = Array(repeating: selector, for: times)
         let reconverted: [Int] = array.flatMap({Int($0)})
         
-        // Then
+        /// Then
         print(array, reconverted)
         XCTAssertEqual(array.count, times)
         XCTAssertEqual(reconverted, (0..<10).map(eq))
     }
     
     func test_arrayAllPredicate_shouldSucceed() {
-        // Setup
+        /// Setup
         let array = [1, 2, 3, 4, 5]
         
-        // When
+        /// When
         let allSatisfied = array.all(satisfying: Int.isEven)
         
-        // Then
+        /// Then
         XCTAssertFalse(allSatisfied)
     }
     
     func test_arrayAnyPredicate_shouldSucceed() {
-        // Setup
+        /// Setup
         let array = [1, 2, 3, 4, 5]
         
-        // When
+        /// When
         let anySatisfied = array.any(satisfying: Int.isEven)
         
-        // Then
+        /// Then
         XCTAssertTrue(anySatisfied)
     }
     
     func test_dictionaryAllPredicate_shouldSucceed() {
-        // Setup
+        /// Setup
         let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
         
-        // When
+        /// When
         let allSatisfied = dictionary.all(satisfying: {
             $0.key.isEven && $0.value.isEven
         })
         
-        // Then
+        /// Then
         XCTAssertFalse(allSatisfied)
     }
     
     func test_dictionaryAnyPredicate_shouldSucceed() {
-        // Setup
+        /// Setup
         let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
         
-        // When
+        /// When
         let anySatisfied = dictionary.any(satisfying: {
             $0.key.isEven && $0.value.isEven
         })
         
-        // Then
+        /// Then
         XCTAssertTrue(anySatisfied)
     }
     
     func test_dictionarySortedAscending_shouldWork() {
-        // Setup
+        /// Setup
         let array = ["c", "a", "z", "b"]
         var dict = [String: String]()
         for item in array { dict[item] = item }
         
-        // When
+        /// When
         let sortedArray = array.sortedAscending()
         let sortedDict = dict.sortedAscending()
         
-        // Then
+        /// Then
         XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
     }
     
     func test_dictionarySortedDescending_shouldWork() {
-        // Setup
+        /// Setup
         let array = ["c", "a", "z", "b"]
         var dict = [String: String]()
         for item in array { dict[item] = item }
         
-        // When
+        /// When
         let sortedArray = array.sortedDescending()
         let sortedDict = dict.sortedDescending()
         
-        // Then
+        /// Then
         XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
     }
     
     func test_logEach_shouldWork() {
-        // Setup
+        /// Setup
         let array1 = [1, 2, 3, 4]
         let array2 = [1, 2, 3, 4]
         
-        // When & Then
+        /// When & Then
         array1.logEach()
         array2.logEach({$0 * 2})
+    }
+    
+    func test_sequenceDistinct_shouldWork() {
+        /// Setup
+        let data = [1, 1, 1, 2, 3, 4, 5, 6, 9, 0]
+        
+        /// When & Then
+        XCTAssertEqual(data.distinct().count, Set(data).count)
+        XCTAssertEqual(data.distinct().count, data.orderedDistinct().count)
     }
 }
