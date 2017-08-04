@@ -45,7 +45,7 @@ public extension TryType {
     
     /// Get success value or throw failure Error.
     ///
-    /// - Returns: A instance.
+    /// - Returns: A Val instance.
     /// - Throws: Error if success value if absent.
     public func getOrThrow() throws -> Val {
         if let value = self.value {
@@ -54,6 +54,18 @@ public extension TryType {
             throw error
         } else {
             throw Exception("Invalid Try")
+        }
+    }
+    
+    /// Get success value if available, or return a backup success value.
+    ///
+    /// - Parameter backup: A Val instance.
+    /// - Returns: A Val instance.
+    public func getOrElse(_ backup: Val) -> Val {
+        if let value = self.value {
+            return value
+        } else {
+            return backup
         }
     }
 }
