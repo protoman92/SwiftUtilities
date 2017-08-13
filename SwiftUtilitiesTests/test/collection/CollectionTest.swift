@@ -54,7 +54,7 @@ final class CustomComparisonCollectionTest: XCTestCase {
         let array = [1, 2, 3, 4, 5]
         
         /// When
-        let allSatisfied = array.all(satisfying: Int.isEven)
+        let allSatisfied = array.all(Int.isEven)
         
         /// Then
         XCTAssertFalse(allSatisfied)
@@ -65,7 +65,7 @@ final class CustomComparisonCollectionTest: XCTestCase {
         let array = [1, 2, 3, 4, 5]
         
         /// When
-        let anySatisfied = array.any(satisfying: Int.isEven)
+        let anySatisfied = array.any(Int.isEven)
         
         /// Then
         XCTAssertTrue(anySatisfied)
@@ -76,7 +76,7 @@ final class CustomComparisonCollectionTest: XCTestCase {
         let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
         
         /// When
-        let allSatisfied = dictionary.all(satisfying: {
+        let allSatisfied = dictionary.all({
             $0.key.isEven && $0.value.isEven
         })
         
@@ -89,7 +89,7 @@ final class CustomComparisonCollectionTest: XCTestCase {
         let dictionary = [1: 1, 2: 2, 3: 3, 4: 4, 5: 5]
         
         /// When
-        let anySatisfied = dictionary.any(satisfying: {
+        let anySatisfied = dictionary.any({
             $0.key.isEven && $0.value.isEven
         })
         

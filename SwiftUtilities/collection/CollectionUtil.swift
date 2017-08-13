@@ -44,7 +44,7 @@ public extension Sequence {
     /// - Parameter condition: Closure condition.
     /// - Returns: A Bool value.
     /// - Throws: An Error rethrown by any condition closure call.
-    public func all(satisfying condition: (Iterator.Element) throws -> Bool)
+    public func all(_ condition: (Iterator.Element) throws -> Bool)
         rethrows -> Bool
     {
         for element in self {
@@ -61,7 +61,7 @@ public extension Sequence {
     /// - Parameter condition: Closure condition.
     /// - Returns: A Bool value.
     /// - Throws: An Error rethrown by any condition closure call.
-    public func any(satisfying condition: (Iterator.Element) throws -> Bool)
+    public func any(_ condition: (Iterator.Element) throws -> Bool)
         rethrows -> Bool
     {
         return try self.filter(condition).count >= 1
