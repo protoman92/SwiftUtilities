@@ -1,5 +1,5 @@
 //
-//  ThreadUtil.swift
+//  Threads.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 1/13/17.
@@ -18,7 +18,7 @@ public extension DispatchQueue {
     /// - Parameters:
     ///   - token: A unique reverse DNS style name or a GUID.
     ///   - block: Block to execute once.
-    public class func once(using token: String, then block: (Void) -> Void) {
+    public class func once(using token: String, then block: (()) -> Void) {
         synchronized(self) {
             guard !_onceTracker.contains(token) else {
                 return

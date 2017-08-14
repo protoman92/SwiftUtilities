@@ -1,5 +1,5 @@
 //
-//  RxUtil.swift
+//  Reactives.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 7/28/16.

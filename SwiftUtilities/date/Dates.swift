@@ -1,5 +1,5 @@
 //
-//  DateUtil.swift
+//  Dates.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 8/9/16.

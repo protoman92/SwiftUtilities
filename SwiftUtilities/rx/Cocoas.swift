@@ -1,5 +1,5 @@
 //
-//  CocoaUtil.swift
+//  Cocoas.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 7/9/17.

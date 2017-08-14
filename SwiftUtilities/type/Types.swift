@@ -1,5 +1,5 @@
 //
-//  TypeUtil.swift
+//  Types.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 4/17/17.

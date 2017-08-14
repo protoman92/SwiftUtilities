@@ -1,5 +1,5 @@
 //
-//  ExceptionUtil.swift
+//  Exceptions.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 1/18/17.

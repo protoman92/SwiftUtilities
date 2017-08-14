@@ -1,5 +1,5 @@
 //
-//  BooleanUtil.swift
+//  Booleans.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 4/14/17.

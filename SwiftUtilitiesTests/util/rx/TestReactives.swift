@@ -1,5 +1,5 @@
 //
-//  RxTestUtil.swift
+//  TestReactives.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 4/23/17.

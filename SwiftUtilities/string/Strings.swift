@@ -1,5 +1,5 @@
 //
-//  StringUtil.swift
+//  Strings.swift
 //  Sellfie
 //
 //  Created by Hai Pham on 3/12/16.

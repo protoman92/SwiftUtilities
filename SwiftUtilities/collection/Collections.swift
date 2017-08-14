@@ -1,5 +1,5 @@
 //
-//  CollectionUtil.swift
+//  Collections.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 1/13/17.
