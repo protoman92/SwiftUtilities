@@ -42,7 +42,7 @@ public extension BuildableType where Builder: BuilderType, Self == Builder.Build
     /// all properties.
     ///
     /// - Returns: A Self instance.
-    public func clone() -> Self {
+    public func cloned() -> Self {
         return cloneBuilder().build()
     }
 }
