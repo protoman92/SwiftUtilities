@@ -35,4 +35,23 @@ public final class TryTest: XCTestCase {
         XCTAssertTrue(e2.isRight)
         XCTAssertEqual(e2.right, 1)
     }
+    
+    public func test_tryZipWith_shouldWork() {
+        /// Setup
+        let try1 = Try.success(1)
+        let try2 = Try.success("1")
+        let try3 = Try<String>.failure(Exception())
+        let try4 = Try.success(2.5)
+        
+        /// When
+        let try12 = try1.zipWith(try2, {String(describing: $0.0) + $0.1})
+        let try23 = try2.zipWith(try3, {$0.0 + $0.1})
+        let try34 = try3.zipWith(try4, {$0.0 + String(describing: $0.1)})
+        
+        /// Then
+        XCTAssertTrue(try12.isSuccess)
+        XCTAssertEqual(try12.value, "11")
+        XCTAssertTrue(try23.isFailure)
+        XCTAssertTrue(try34.isFailure)
+    }
 }
