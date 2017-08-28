@@ -11,7 +11,7 @@ import XCTest
 
 public final class ExceptionTest: XCTestCase {
     public func test_exceptionCreation_shouldSucceed() {
-        // Setup & When
+        /// Setup & When
         let e1 = Exception("Exception!")
         let e2 = Exception(e1)
         let e3 = Exception(e2.cause)

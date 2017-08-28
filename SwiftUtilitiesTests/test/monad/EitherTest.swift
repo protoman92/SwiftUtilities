@@ -11,7 +11,7 @@ import XCTest
 
 public final class EitherTest: XCTestCase {
     public func test_eitherMonad_shouldWork() {
-        // Setup
+        /// Setup
         let e1 = Either<Int,Double>.left(1)
         let e2 = Either<Int,Double>.right(2)
         
@@ -23,7 +23,7 @@ public final class EitherTest: XCTestCase {
     }
     
     public func test_eitherMonadWithErrorLeft_shouldWork() {
-        // Setup
+        /// Setup
         let e1 = Either<Error,Int>.left(Exception("Error 1"))
         let e2 = Either<Exception,Int>.left(Exception("Error 2"))
         let e3 = Either<Error,Int>.right(1)
@@ -35,7 +35,7 @@ public final class EitherTest: XCTestCase {
     }
     
     public func test_eitherBimap_shouldWork() {
-        // Setup
+        /// Setup
         let e1 = Either<Int,Double>.left(1)
         let e2 = Either<Int,Double>.right(2)
         let f1: (Int) -> String = String.init

@@ -15,7 +15,7 @@ class Object2: IsInstanceType {}
 
 final class TypeTest: XCTestCase {
     func test_isInstance_shouldSucceed() {
-        // Setup
+        /// Setup
         let object1 = Object1()
         let object2 = Object2()
         let object3 = "Test"
@@ -32,7 +32,7 @@ final class TypeTest: XCTestCase {
     }
     
     func test_isOfType_shouldSucceed() {
-        // Setup
+        /// Setup
         let object1 = Object1()
         let object2 = Object2()
         let object3 = "Test"

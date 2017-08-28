@@ -12,7 +12,7 @@ final class DateUtilTest: XCTestCase {
     
     /// Test date comparison methods and ensure they work correctly.
     func test_dateComparison_shouldSucceed() {
-        // Setup
+        /// Setup
         let calendar = Calendar.current
         
         /// Test date comparison using parameters. This closure accepts three
@@ -21,7 +21,7 @@ final class DateUtilTest: XCTestCase {
         /// The third argument is a Calendar.Component instance that will
         /// be used for granularity comparison.
         let testDateComparison: (Date, Int, Calendar.Component) -> Void = {
-            // Setup
+            /// Setup
             let date = $0.0
             
             // When

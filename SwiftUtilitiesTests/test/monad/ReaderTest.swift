@@ -14,7 +14,7 @@ import XCTest
 
 public final class ReaderTest: XCTestCase {
     public func test_readerMonad_shouldWorkWithDifferentInjection() {
-        /// Setup
+        //// Setup
         let r1 = IntReader({$0 * 2})
         let r2 = Reader<Int,String>({$0.description})
         
@@ -29,7 +29,7 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerZip_shouldWork() {
-        /// Setup
+        //// Setup
         let r1 = Reader<Int,Int>({$0 * 2})
         let r2 = Reader<Int,Int>({$0 * 3})
         let z1 = r1.zip(with: r2, {$0.0 * $0.1})
@@ -47,7 +47,7 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerZipIgnoringErrors_shouldWork() {
-        /// Setup
+        //// Setup
         let r1 = Reader<Int,Int>({_ in throw Exception("Error1") })
         let r2 = Reader<Int,Int>({_ in throw Exception("Error2") })
         let r3 = Reader<Int,Int>(eq)
@@ -63,7 +63,7 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerModify_shouldWork() {
-        /// Setup
+        //// Setup
         let r1 = Reader<Int,Double>(Double.init)
         let r2 = Reader<String,Int?>({Int($0)}).map({$0 ?? 0})
         let r12: Reader<Double,Double> = r1.modify(Int.init)
@@ -78,7 +78,7 @@ public final class ReaderTest: XCTestCase {
     }
     
     public func test_readerRxApply_shouldWork() {
-        /// Setup
+        //// Setup
         let error = "Error!"
         let disposeBag = DisposeBag()
         let scheduler = TestScheduler(initialClock: 0)
@@ -97,7 +97,7 @@ public final class ReaderTest: XCTestCase {
         Observable.merge(r1.rx.tryFlatRun(1000), r2.rx.tryFlatRun(), r3.rx.flatRun())
             .doOnDispose(expect.fulfill)
             .subscribe(observer)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         waitForExpectations(timeout: 5, handler: nil)
         

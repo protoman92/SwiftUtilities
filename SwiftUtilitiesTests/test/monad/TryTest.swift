@@ -11,7 +11,7 @@ import XCTest
 
 public final class TryTest: XCTestCase {
     public func test_tryMonad_shouldWork() {
-        // Setup
+        /// Setup
         let t1 = Try<Int>({ throw Exception("Error1") })
         let t2 = Try<Int>({1})
         
@@ -23,7 +23,7 @@ public final class TryTest: XCTestCase {
     }
     
     public func test_tryToEither_shouldWork() {
-        // Setup
+        /// Setup
         let t1 = Try<Int>({ throw Exception("Error1") })
         let t2 = Try<Int>({1})
         let e1 = t1.asEither()

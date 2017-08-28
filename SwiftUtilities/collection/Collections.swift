@@ -25,6 +25,7 @@ public protocol ComparisonResultConvertibleType {
 }
 
 public extension Sequence {
+    
     /// Get the first item that is an instance of a specified Type.
     ///
     /// - Parameter type: The Type to check for matching elements.
@@ -170,6 +171,30 @@ public extension Array {
         let shuffled = rand.arrayByShufflingObjects(in: self)
         let prefixed = shuffled.prefix(Swift.max(0, elementCount))
         return prefixed.flatMap({$0 as? Element})
+    }
+    
+    /// Get a random Element from the current Array.
+    ///
+    /// - Returns: An Element instance.
+    public func randomElement() -> Element? {
+        return self.element(at: Int.random(0, count))
+    }
+    
+    /// Create an Array of elements repeated for a certain number of times.
+    /// However, instead of containing the same elements, this Array contains
+    /// elements as created by a selector.
+    ///
+    /// - Parameters:
+    ///   - selector: Closure selector to create an Element instance.
+    ///   - times: The number of times to repeat the element creation.
+    public init(repeating selector: (Int) throws -> Element, for times: Int) {
+        self.init()
+        let count = Swift.max(0, times)
+        
+        for i in 0..<count {
+            do {try append(selector(i))}
+            catch {}
+        }
     }
 }
 
@@ -378,34 +403,6 @@ public extension Collection {
     /// Check if the current Collection is not empty.
     public var isNotEmpty: Bool {
         return !isEmpty
-    }
-}
-
-public extension Array {
-    
-    /// Create an Array of elements repeated for a certain number of times.
-    /// However, instead of containing the same elements, this Array contains
-    /// elements as created by a selector.
-    ///
-    /// - Parameters:
-    ///   - selector: Closure selector to create an Element instance.
-    ///   - times: The number of times to repeat the element creation.
-    public init(repeating selector: (Int) throws -> Element, for times: Int) {
-        self.init()
-        let count = Swift.max(0, times)
-        
-        for i in 0..<count {
-            do {try append(selector(i))}
-            catch {}
-        }
-    }
-    
-    /// Get a random Element from the current Array.
-    ///
-    /// - Returns: An Element instance.
-    public func randomElement() -> Element? {
-        let index = Int.random(0, count)
-        return self[index]
     }
 }
 

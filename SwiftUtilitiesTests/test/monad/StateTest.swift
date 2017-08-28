@@ -12,7 +12,7 @@ import XCTest
 
 public final class StateTest: XCTestCase {
     public func test_stateMonad_shouldWork() {
-        /// Setup
+        //// Setup
         let s1 = State<Int,Int>({($0, $0)}).modify({$0 * 2}).map({$0 * 3})
         
         let s2 = s1.flatMap({(a) -> State<Int,Int> in

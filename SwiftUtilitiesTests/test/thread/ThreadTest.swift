@@ -13,7 +13,7 @@ import XCTest
 
 final class ThreadTest: XCTestCase {
     func test_synchronized_shouldSucceed() {
-        // Setup
+        /// Setup
         let scheduler = TestScheduler(initialClock: 0)
         let observer = scheduler.createObserver(Any.self)
         let subject = PublishSubject<Any>()

@@ -14,9 +14,48 @@ public extension Observable {
     ///
     /// - Parameter error: A String value.
     /// - Returns: An Observable instance.
-    public static func error(_ error: String) -> Observable<Element> {
+    public static func error(_ error: String) -> Observable<E> {
         let exc = Exception(error)
         return Observable.error(exc)
+    }
+}
+
+public extension Observable {
+    
+    /// Take a selector that produces a Sequence of some type using the emitted
+    /// Element, then apply Observable.from to flatten it.
+    ///
+    /// - Parameter selector: Selector function closure.
+    /// - Returns: An Observable instance.
+    public func flatMapSequence<I,S>(_ selector: @escaping (E) throws -> S)
+        -> Observable<I> where
+        S: Sequence, S.Iterator.Element == I
+    {
+        return flatMap({Observable<I>.from(try selector($0))})
+    }
+}
+
+public extension Observable {
+    
+    /// FlatMap to a Observable which, if nil, is replaced by an empty Observable.
+    ///
+    /// - Parameter selector: Selector closure function.
+    /// - Returns: An Observable instance.
+    public func flatMapNonNilOrEmpty<E2>(
+        _ selector: @escaping (E) throws -> Observable<E2>?)
+        -> Observable<E2>
+    {
+        return flatMap({try selector($0) ?? .empty()})
+    }
+}
+
+public extension Observable where E: Sequence {
+    
+    /// If the emitted Element is a Sequence, flatten it.
+    ///
+    /// - Returns: An Observable instance.
+    public func flattenSequence() -> Observable<E.Iterator.Element> {
+        return flatMapSequence({$0})
     }
 }
 
@@ -27,10 +66,10 @@ public extension Observable {
     ///
     /// - Parameter selector: Transformer function closure.
     /// - Returns: An Observable instance.
-    public func catchErrorJustReturn(_ selector: @escaping (Error) throws -> Element)
+    public func catchErrorJustReturn(_ selector: @escaping (Error) throws -> E)
         -> Observable<Element>
     {
-        return catchError({(error: Error) -> Observable<Element> in
+        return catchError({(error: Error) -> Observable<E> in
             do {
                 return Observable.just(try selector(error))
             } catch let e {
