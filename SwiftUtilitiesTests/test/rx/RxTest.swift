@@ -203,7 +203,7 @@ public final class RxTest: XCTestCase {
         XCTAssertEqual(nextElements.count, count * 2)
     }
     
-    public func test_flatMatIterable_shouldWork() {
+    public func test_flatMapSequence_shouldWork() {
         /// Setup
         let observer = scheduler.createObserver(Int.self)
         let expect = expectation(description: "Should have completed")

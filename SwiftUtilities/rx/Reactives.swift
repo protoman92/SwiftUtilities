@@ -47,6 +47,23 @@ public extension Observable {
     {
         return flatMap({try selector($0) ?? .empty()})
     }
+    
+    /// Map the inner element to an optional second element, and return an
+    /// empty Observable if the latter is not present.
+    ///
+    /// - Parameter selector: Selector closure function.
+    /// - Returns: An Observable instance.
+    public func mapNonNilOrEmpty<E2>(_ selector: @escaping (E) throws -> E2?)
+        -> Observable<E2>
+    {
+        return flatMap({e1 throws -> Observable<E2> in
+            if let e2 = try selector(e1) {
+                return Observable<E2>.just(e2)
+            } else {
+                return Observable<E2>.empty()
+            }
+        })
+    }
 }
 
 public extension Observable where E: Sequence {
