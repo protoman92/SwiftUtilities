@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxBlocking
+import RxSwift
 
 public extension DispatchQueue {
     private static var _onceTracker = [String]()
@@ -66,7 +68,7 @@ public func background(_ qos: DispatchQoS.QoSClass? = nil,
 /// - Parameters:
 ///   - token: A unique reverse DNS style name or a GUID.
 ///   - block: Block to execute once.
-public func once(using token: String, then block: (Void) -> Void) {
+public func once(using token: String, then block: () -> Void) {
     DispatchQueue.once(using: token, then: block)
 }
 
@@ -82,4 +84,11 @@ public func synchronized<T>(_ lock: AnyObject,
     objc_sync_enter(lock)
     defer { objc_sync_exit(lock) }
     return try body()
+}
+
+public func waitOnMainThread(_ interval: TimeInterval) {
+    _ = try? Observable<Int>
+        .timer(interval, scheduler: MainScheduler.instance)
+        .toBlocking()
+        .first()
 }

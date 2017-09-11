@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
     s.source = { :git => "https://github.com/protoman92/SwiftUtilities.git", :tag => "#{s.version}"}
     s.dependency 'RxSwift', '~> 3.0'
     s.dependency 'RxCocoa', '~> 3.0'
+    s.dependency 'RxBlocking', '~> 3.0'
 
     s.subspec 'Main' do |main|
         main.source_files = "SwiftUtilities/**/*.{swift}"
