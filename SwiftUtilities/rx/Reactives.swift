@@ -39,6 +39,9 @@ public extension Observable {
     
     /// FlatMap to a Observable which, if nil, is replaced by an empty Observable.
     ///
+    /// Beware that this operator is best used for single-element streams. It
+    /// will not work with continuous streams.
+    ///
     /// - Parameter selector: Selector closure function.
     /// - Returns: An Observable instance.
     public func flatMapNonNilOrEmpty<E2>(
@@ -51,6 +54,9 @@ public extension Observable {
     /// Map the inner element to an optional second element, and return an
     /// empty Observable if the latter is not present.
     ///
+    /// Beware that this operator is best used for single-element streams. It
+    /// will not work with continuous streams.
+    ///
     /// - Parameter selector: Selector closure function.
     /// - Returns: An Observable instance.
     public func mapNonNilOrEmpty<E2>(_ selector: @escaping (E) throws -> E2?)
@@ -61,6 +67,24 @@ public extension Observable {
                 return Observable<E2>.just(e2)
             } else {
                 return Observable<E2>.empty()
+            }
+        })
+    }
+    
+    /// Map the inner element to an optional second element, or return a default
+    /// value if the latter is nil.
+    ///
+    /// - Parameters:
+    ///   - selector: Selector closure function.
+    ///   - defaultValue: E2 instance.
+    /// - Returns: An Observable instance.
+    public func mapNonNilOrElse<E2>(_ selector: @escaping (E) throws -> E2?,
+                                    _ defaultValue: E2) -> Observable<E2> {
+        return map({e1 throws -> E2 in
+            if let e2 = try selector(e1) {
+                return e2
+            } else {
+                return defaultValue
             }
         })
     }
