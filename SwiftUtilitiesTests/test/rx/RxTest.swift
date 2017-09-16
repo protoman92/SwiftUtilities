@@ -225,7 +225,7 @@ public final class RxTest: XCTestCase {
         XCTAssertTrue(numbers.all({nextElements.contains($0)}))
     }
     
-    public func test_mapNonNilOrEmpty_shouldNotWorkForStream() {
+    public func test_mapNonNilOrEmptyWithIfEmpty_shouldNotWorkForStream() {
         /// Setup
         let observer = scheduler.createObserver(Int.self)
         let objectStream = PublishSubject<(Int?, Int?, Int?)?>()
