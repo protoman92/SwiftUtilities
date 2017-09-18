@@ -9,7 +9,7 @@
 import XCTest
 @testable import SwiftUtilities
 
-final class CustomComparisonCollectionTest: XCTestCase {
+final class CollectionsTest: XCTestCase {
     func test_arrayAddUniqueContents_shouldSucceed() {
         /// Setup
         var array1 = [1, 2, 3]

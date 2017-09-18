@@ -12,9 +12,9 @@
 		D38976081F285E9C00811532 /* SwiftUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D38975FA1F285E9C00811532 /* SwiftUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D389764E1F28705600811532 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976381F285F1500811532 /* FakeDetails.swift */; };
 		D389764F1F28705600811532 /* FakeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976391F285F1500811532 /* FakeProtocol.swift */; };
-		D38976501F28705600811532 /* CollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389763C1F285F1500811532 /* CollectionTest.swift */; };
-		D38976511F28705600811532 /* DateUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389763E1F285F1500811532 /* DateUtilTest.swift */; };
-		D38976521F28705600811532 /* ExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976401F285F1500811532 /* ExceptionTest.swift */; };
+		D38976501F28705600811532 /* CollectionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389763C1F285F1500811532 /* CollectionsTest.swift */; };
+		D38976511F28705600811532 /* DatesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389763E1F285F1500811532 /* DatesTest.swift */; };
+		D38976521F28705600811532 /* ExceptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976401F285F1500811532 /* ExceptionsTest.swift */; };
 		D38976531F28705600811532 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976421F285F1500811532 /* MockTest.swift */; };
 		D38976541F28705600811532 /* EitherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976441F285F1500811532 /* EitherTest.swift */; };
 		D38976551F28705600811532 /* ReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976451F285F1500811532 /* ReaderTest.swift */; };
@@ -100,9 +100,9 @@
 		D38976361F285F1500811532 /* TestReactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestReactives.swift; sourceTree = "<group>"; };
 		D38976381F285F1500811532 /* FakeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDetails.swift; sourceTree = "<group>"; };
 		D38976391F285F1500811532 /* FakeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProtocol.swift; sourceTree = "<group>"; };
-		D389763C1F285F1500811532 /* CollectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTest.swift; sourceTree = "<group>"; };
-		D389763E1F285F1500811532 /* DateUtilTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilTest.swift; sourceTree = "<group>"; };
-		D38976401F285F1500811532 /* ExceptionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExceptionTest.swift; sourceTree = "<group>"; };
+		D389763C1F285F1500811532 /* CollectionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsTest.swift; sourceTree = "<group>"; };
+		D389763E1F285F1500811532 /* DatesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesTest.swift; sourceTree = "<group>"; };
+		D38976401F285F1500811532 /* ExceptionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExceptionsTest.swift; sourceTree = "<group>"; };
 		D38976421F285F1500811532 /* MockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTest.swift; sourceTree = "<group>"; };
 		D38976441F285F1500811532 /* EitherTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTest.swift; sourceTree = "<group>"; };
 		D38976451F285F1500811532 /* ReaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTest.swift; sourceTree = "<group>"; };
@@ -361,7 +361,7 @@
 		D389763B1F285F1500811532 /* collection */ = {
 			isa = PBXGroup;
 			children = (
-				D389763C1F285F1500811532 /* CollectionTest.swift */,
+				D389763C1F285F1500811532 /* CollectionsTest.swift */,
 			);
 			path = collection;
 			sourceTree = "<group>";
@@ -369,7 +369,7 @@
 		D389763D1F285F1500811532 /* date */ = {
 			isa = PBXGroup;
 			children = (
-				D389763E1F285F1500811532 /* DateUtilTest.swift */,
+				D389763E1F285F1500811532 /* DatesTest.swift */,
 			);
 			path = date;
 			sourceTree = "<group>";
@@ -377,7 +377,7 @@
 		D389763F1F285F1500811532 /* exception */ = {
 			isa = PBXGroup;
 			children = (
-				D38976401F285F1500811532 /* ExceptionTest.swift */,
+				D38976401F285F1500811532 /* ExceptionsTest.swift */,
 			);
 			path = exception;
 			sourceTree = "<group>";
@@ -692,9 +692,9 @@
 			files = (
 				D389764E1F28705600811532 /* FakeDetails.swift in Sources */,
 				D389764F1F28705600811532 /* FakeProtocol.swift in Sources */,
-				D38976501F28705600811532 /* CollectionTest.swift in Sources */,
-				D38976511F28705600811532 /* DateUtilTest.swift in Sources */,
-				D38976521F28705600811532 /* ExceptionTest.swift in Sources */,
+				D38976501F28705600811532 /* CollectionsTest.swift in Sources */,
+				D38976511F28705600811532 /* DatesTest.swift in Sources */,
+				D38976521F28705600811532 /* ExceptionsTest.swift in Sources */,
 				D38976531F28705600811532 /* MockTest.swift in Sources */,
 				D38976541F28705600811532 /* EitherTest.swift in Sources */,
 				D38976551F28705600811532 /* ReaderTest.swift in Sources */,

@@ -203,4 +203,11 @@ public extension Date {
         let components = DateComponents.random()
         return Calendar(identifier: .gregorian).date(from: components)
     }
+    
+    public static func randomBetween(_ first: Date, _ second: Date) -> Date? {
+        let firstMillis = Int(first.timeIntervalSince1970)
+        let secondMillis = Int(second.timeIntervalSince1970)
+        let randomMillis = Double(Int.randomBetween(firstMillis, secondMillis))
+        return Date(timeIntervalSince1970: randomMillis)
+    }
 }

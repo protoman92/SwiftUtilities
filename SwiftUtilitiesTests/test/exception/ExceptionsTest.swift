@@ -9,7 +9,7 @@
 import XCTest
 @testable import SwiftUtilities
 
-public final class ExceptionTest: XCTestCase {
+public final class ExceptionsTest: XCTestCase {
     public func test_exceptionCreation_shouldSucceed() {
         /// Setup & When
         let e1 = Exception("Exception!")

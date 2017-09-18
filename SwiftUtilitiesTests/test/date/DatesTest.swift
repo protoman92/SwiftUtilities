@@ -7,8 +7,9 @@
 //
 
 import XCTest
+@testable import SwiftUtilities
 
-final class DateUtilTest: XCTestCase {
+final class DatesTest: XCTestCase {
     
     /// Test date comparison methods and ensure they work correctly.
     func test_dateComparison_shouldSucceed() {
@@ -55,6 +56,21 @@ final class DateUtilTest: XCTestCase {
             let offset = Int.randomBetween(1, i)
             let calendarComponent = Calendar.Component.random()
             testDateComparison(date, offset, calendarComponent)
+        }
+    }
+    
+    public func test_randomBetween_shouldWork() {
+        /// Setup
+        let startDate = Date.random()!
+        let endDate = startDate.addingTimeInterval(100000000)
+        
+        /// When
+        for _ in 0..<1000 {
+            let randomized = Date.randomBetween(startDate, endDate)!
+            
+            /// Then
+            XCTAssertTrue(randomized >= startDate)
+            XCTAssertTrue(randomized <= endDate)
         }
     }
 }
