@@ -23,7 +23,7 @@ public protocol BuilderType {
     ///
     /// - Parameter buildable: A Buildable instance.
     /// - Returns: The current Builder instance.
-    func with(buildable: Buildable) -> Self
+    func with(buildable: Buildable?) -> Self
     
     func build() -> Buildable
 }
