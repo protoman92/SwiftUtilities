@@ -283,4 +283,37 @@ public final class ReactiveTest: XCTestCase {
         XCTAssertEqual(currentTry, retries + 1)
         XCTAssertTrue(delays.all({$0 >= delay}))
     }
+    
+    public func test_delayRetryWithStopNotification_shouldWork() {
+        /// Setup
+        let observer = scheduler.createObserver(Int.self)
+        let expect = expectation(description: "Should have completed")
+        let retryScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+        let retries = Int.max
+        let delay: TimeInterval = 1000
+        let terminateDelay: TimeInterval = 2
+        let terminateObs = Observable<Int>.timer(terminateDelay, scheduler: retryScheduler).map(toVoid)
+        let currentTime = Date()
+        var waitInterval: TimeInterval = 0
+        
+        /// When
+        Observable<Int>.error("Error")
+            .delayRetry(retries: retries,
+                        delay: delay,
+                        scheduler: retryScheduler,
+                        terminateObs: terminateObs)
+            .doOnError({_ in waitInterval = Date().timeIntervalSince(currentTime)})
+            .logNext()
+            .logError()
+            .doOnDispose(expect.fulfill)
+            .subscribe(observer)
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 1000, handler: nil)
+        
+        /// Then
+        print(observer.events)
+        print(waitInterval)
+        XCTAssertTrue(waitInterval < delay)
+    }
 }

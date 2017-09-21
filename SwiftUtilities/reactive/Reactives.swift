@@ -333,15 +333,22 @@ public extension Observable {
     ///   - retries: An Int value.
     ///   - delay: A TimeInterval value.
     ///   - scheduler: A SchedulerType instance to schedule the timer.
+    ///   - terminateObs: Terminate the retry sequence when this Observable emits
+    ///                   an element. This is especially useful when we have
+    ///                   an infinite retry count that cannot be disposed of
+    ///                   otherwise.
     /// - Returns: An Observable instance.
     public func delayRetry(retries: Int = Int.max,
                            delay: TimeInterval,
-                           scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background))
+                           scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background),
+                           terminateObs: Observable<Void> = Observable<Void>.empty())
         -> Observable<E>
     {
         return self.retryWhen({Observable<Int>
             .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
-            .flatMap({_ in Observable<Int>.timer(delay, scheduler: scheduler)})})
+            .delay(delay, scheduler: scheduler)
+            .takeUntil(terminateObs)
+        })
     }
 }
 
