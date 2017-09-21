@@ -287,7 +287,7 @@ public extension Observable {
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
     public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
-        let scheduler = ConcurrentDispatchQueueScheduler.from(qos: qos)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
         return subscribeOn(scheduler)
     }
     
@@ -296,7 +296,7 @@ public extension Observable {
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
     public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
-        let scheduler = ConcurrentDispatchQueueScheduler.from(qos: qos)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
         return subscribeOn(scheduler)
     }
 }
@@ -325,13 +325,33 @@ public extension ObservableType {
     }
 }
 
+public extension Observable {
+    
+    /// Delay retry by some time.
+    ///
+    /// - Parameters:
+    ///   - retries: An Int value.
+    ///   - delay: A TimeInterval value.
+    ///   - scheduler: A SchedulerType instance to schedule the timer.
+    /// - Returns: An Observable instance.
+    public func delayRetry(retries: Int = Int.max,
+                           delay: TimeInterval,
+                           scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background))
+        -> Observable<E>
+    {
+        return self.retryWhen({Observable<Int>
+            .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
+            .flatMap({_ in Observable<Int>.timer(delay, scheduler: scheduler)})})
+    }
+}
+
 public extension ConcurrentDispatchQueueScheduler {
     
     /// Get a SchedulerType from a QoS.
     ///
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: A SchedulerType instance.
-    public static func from(qos: DispatchQoS.QoSClass) -> SchedulerType {
+    convenience public init(qos: DispatchQoS.QoSClass) {
         let type: DispatchQoS
         
         switch qos {
@@ -354,6 +374,6 @@ public extension ConcurrentDispatchQueueScheduler {
             type = .userInteractive
         }
         
-        return ConcurrentDispatchQueueScheduler(qos: type)
+        self.init(qos: type)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RxTest.swift
+//  ReactiveTest.swift
 //  SwiftUtilities
 //
 //  Created by Hai Pham on 4/13/17.
@@ -11,7 +11,7 @@ import RxTest
 import XCTest
 @testable import SwiftUtilities
 
-public final class RxTest: XCTestCase {
+public final class ReactiveTest: XCTestCase {
     fileprivate var timeout: TimeInterval = 1000
     fileprivate var disposeBag: DisposeBag!
     fileprivate var scheduler: TestScheduler!
@@ -245,5 +245,42 @@ public final class RxTest: XCTestCase {
         /// Then
         let nextElements = observer.nextElements()
         XCTAssertEqual(nextElements.count, 0)
+    }
+    
+    public func test_delayRetry_shouldWork() {
+        /// Setup
+        let observer = scheduler.createObserver(Int.self)
+        let expect = expectation(description: "Should have completed")
+        let retries = 5
+        let delay: TimeInterval = 0.3
+        let retryScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+        var previousTime = Date()
+        var currentTry = 0
+        var delays: [TimeInterval] = []
+        
+        /// When
+        Observable<Int>.error("Error!")
+            .doOnError({_ in
+                // Skip the first error in order to take into account only the
+                // retries.
+                if currentTry >= 1 {
+                    let currentTime = Date()
+                    let difference = currentTime.timeIntervalSince(previousTime)
+                    delays.append(difference)
+                    previousTime = currentTime
+                }
+                
+                currentTry += 1
+            })
+            .delayRetry(retries: retries, delay: delay, scheduler: retryScheduler)
+            .doOnDispose(expect.fulfill)
+            .subscribe(observer)
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 1000, handler: nil)
+        
+        /// Then 
+        XCTAssertEqual(currentTry, retries + 1)
+        XCTAssertTrue(delays.all({$0 >= delay}))
     }
 }

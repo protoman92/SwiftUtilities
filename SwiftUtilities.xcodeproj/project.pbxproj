@@ -20,7 +20,7 @@
 		D38976551F28705600811532 /* ReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976451F285F1500811532 /* ReaderTest.swift */; };
 		D38976561F28705600811532 /* StateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976461F285F1500811532 /* StateTest.swift */; };
 		D38976571F28705600811532 /* TryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976471F285F1500811532 /* TryTest.swift */; };
-		D38976581F28705600811532 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976491F285F1500811532 /* RxTest.swift */; };
+		D38976581F28705600811532 /* ReactiveTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976491F285F1500811532 /* ReactiveTest.swift */; };
 		D38976591F28705600811532 /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389764B1F285F1500811532 /* ThreadTest.swift */; };
 		D389765A1F28705600811532 /* TypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389764D1F285F1500811532 /* TypeTest.swift */; };
 		D389765B1F28705600811532 /* TestReactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976361F285F1500811532 /* TestReactives.swift */; };
@@ -108,7 +108,7 @@
 		D38976451F285F1500811532 /* ReaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTest.swift; sourceTree = "<group>"; };
 		D38976461F285F1500811532 /* StateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateTest.swift; sourceTree = "<group>"; };
 		D38976471F285F1500811532 /* TryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryTest.swift; sourceTree = "<group>"; };
-		D38976491F285F1500811532 /* RxTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
+		D38976491F285F1500811532 /* ReactiveTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveTest.swift; sourceTree = "<group>"; };
 		D389764B1F285F1500811532 /* ThreadTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTest.swift; sourceTree = "<group>"; };
 		D389764D1F285F1500811532 /* TypeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTest.swift; sourceTree = "<group>"; };
 		D38976731F28715600811532 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				D389762D1F285F0900811532 /* foundation */,
 				D38976291F285F0900811532 /* math */,
 				D38976181F285F0900811532 /* monad */,
-				D38976111F285F0900811532 /* rx */,
+				D38976111F285F0900811532 /* reactive */,
 				D38976231F285F0900811532 /* string */,
 				D38976141F285F0900811532 /* thread */,
 				D38976321F285F0900811532 /* type */,
@@ -208,13 +208,13 @@
 			path = SwiftUtilitiesTests;
 			sourceTree = "<group>";
 		};
-		D38976111F285F0900811532 /* rx */ = {
+		D38976111F285F0900811532 /* reactive */ = {
 			isa = PBXGroup;
 			children = (
 				D38976121F285F0900811532 /* Cocoas.swift */,
 				D38976131F285F0900811532 /* Reactives.swift */,
 			);
-			path = rx;
+			path = reactive;
 			sourceTree = "<group>";
 		};
 		D38976141F285F0900811532 /* thread */ = {
@@ -351,7 +351,7 @@
 				D389763F1F285F1500811532 /* exception */,
 				D38976411F285F1500811532 /* mock */,
 				D38976431F285F1500811532 /* monad */,
-				D38976481F285F1500811532 /* rx */,
+				D38976481F285F1500811532 /* reactive */,
 				D389764A1F285F1500811532 /* thread */,
 				D389764C1F285F1500811532 /* type */,
 			);
@@ -401,12 +401,12 @@
 			path = monad;
 			sourceTree = "<group>";
 		};
-		D38976481F285F1500811532 /* rx */ = {
+		D38976481F285F1500811532 /* reactive */ = {
 			isa = PBXGroup;
 			children = (
-				D38976491F285F1500811532 /* RxTest.swift */,
+				D38976491F285F1500811532 /* ReactiveTest.swift */,
 			);
-			path = rx;
+			path = reactive;
 			sourceTree = "<group>";
 		};
 		D389764A1F285F1500811532 /* thread */ = {
@@ -700,7 +700,7 @@
 				D38976551F28705600811532 /* ReaderTest.swift in Sources */,
 				D38976561F28705600811532 /* StateTest.swift in Sources */,
 				D38976571F28705600811532 /* TryTest.swift in Sources */,
-				D38976581F28705600811532 /* RxTest.swift in Sources */,
+				D38976581F28705600811532 /* ReactiveTest.swift in Sources */,
 				D38976591F28705600811532 /* ThreadTest.swift in Sources */,
 				D389765A1F28705600811532 /* TypeTest.swift in Sources */,
 				D389765B1F28705600811532 /* TestReactives.swift in Sources */,
