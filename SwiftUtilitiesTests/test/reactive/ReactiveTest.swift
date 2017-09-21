@@ -247,7 +247,7 @@ public final class ReactiveTest: XCTestCase {
         XCTAssertEqual(nextElements.count, 0)
     }
     
-    public func test_delayRetry_shouldWork() {
+    public func test_delayRetryWithFiniteRetry_shouldWork() {
         /// Setup
         let observer = scheduler.createObserver(Int.self)
         let expect = expectation(description: "Should have completed")
@@ -303,8 +303,6 @@ public final class ReactiveTest: XCTestCase {
                         scheduler: retryScheduler,
                         terminateObs: terminateObs)
             .doOnError({_ in waitInterval = Date().timeIntervalSince(currentTime)})
-            .logNext()
-            .logError()
             .doOnDispose(expect.fulfill)
             .subscribe(observer)
             .disposed(by: disposeBag)
@@ -312,8 +310,6 @@ public final class ReactiveTest: XCTestCase {
         waitForExpectations(timeout: 1000, handler: nil)
         
         /// Then
-        print(observer.events)
-        print(waitInterval)
         XCTAssertTrue(waitInterval < delay)
     }
 }

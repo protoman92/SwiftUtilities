@@ -338,7 +338,7 @@ public extension Observable {
     ///                   an infinite retry count that cannot be disposed of
     ///                   otherwise.
     /// - Returns: An Observable instance.
-    public func delayRetry(retries: Int = Int.max,
+    public func delayRetry(retries: Int,
                            delay: TimeInterval,
                            scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background),
                            terminateObs: Observable<Void> = Observable<Void>.empty())
@@ -349,6 +349,19 @@ public extension Observable {
             .delay(delay, scheduler: scheduler)
             .takeUntil(terminateObs)
         })
+    }
+    
+    /// Delay retry by some time interval. This method retries indefinitely.
+    ///
+    /// - Parameters:
+    ///   - delay: A TimeInterval value.
+    ///   - scheduler: A SchedulerType instance.
+    /// - Returns: An Observable instance.
+    public func delayRetry(delay: TimeInterval,
+                           scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background))
+        -> Observable<E>
+    {
+        return self.retryWhen({$0.delay(delay, scheduler: scheduler)})
     }
 }
 
