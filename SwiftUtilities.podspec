@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.name = "SwiftUtilities"
     s.summary = "Common Swift utilities."
     s.requires_arc = true
-    s.version = "1.4.4"
+    s.version = "1.4.5"
     s.license = { :type => "Apache-2.0", :file => "LICENSE" }
     s.author = { "Hai Pham" => "swiften.svc@gmail.com" }
     s.homepage = "https://github.com/protoman92/SwiftUtilities.git"
