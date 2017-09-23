@@ -344,11 +344,15 @@ public extension Observable {
                            terminateObs: Observable<Void> = Observable<Void>.empty())
         -> Observable<E>
     {
-        return self.retryWhen({Observable<Int>
-            .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
-            .delay(delay, scheduler: scheduler)
-            .takeUntil(terminateObs)
-        })
+        if delay == 0 {
+            return self.retry(retries)
+        } else {
+            return self.retryWhen({Observable<Int>
+                .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
+                .delay(delay, scheduler: scheduler)
+                .takeUntil(terminateObs)
+            })
+        }
     }
     
     /// Delay retry by some time interval. This method retries indefinitely.
@@ -361,7 +365,11 @@ public extension Observable {
                            scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background))
         -> Observable<E>
     {
-        return self.retryWhen({$0.delay(delay, scheduler: scheduler)})
+        if delay == 0 {
+            return self.retry()
+        } else {
+            return self.retryWhen({$0.delay(delay, scheduler: scheduler)})
+        }
     }
 }
 

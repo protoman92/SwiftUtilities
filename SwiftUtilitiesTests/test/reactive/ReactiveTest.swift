@@ -252,7 +252,7 @@ public final class ReactiveTest: XCTestCase {
         let observer = scheduler.createObserver(Int.self)
         let expect = expectation(description: "Should have completed")
         let retries = 5
-        let delay: TimeInterval = 0.3
+        let delay: TimeInterval = 0.5
         let retryScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
         var previousTime = Date()
         var currentTry = 0
@@ -281,7 +281,7 @@ public final class ReactiveTest: XCTestCase {
         
         /// Then 
         XCTAssertEqual(currentTry, retries + 1)
-        XCTAssertTrue(delays.all({$0 >= delay}))
+        XCTAssertTrue(delays.all({abs($0 - delay) < 0.1}))
     }
     
     public func test_delayRetryWithStopNotification_shouldWork() {
