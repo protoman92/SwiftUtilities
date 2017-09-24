@@ -47,6 +47,7 @@
 		D38976701F28706200811532 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976241F285F0900811532 /* Strings.swift */; };
 		D38976711F28706200811532 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976151F285F0900811532 /* Threads.swift */; };
 		D38976721F28706200811532 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976331F285F0900811532 /* Types.swift */; };
+		D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391DCDE1F7803A4003C2688 /* Optional.swift */; };
 		D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC289F1F41FDCB004C24B8 /* Enums.swift */; };
 		D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */; };
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
@@ -113,6 +114,7 @@
 		D389764D1F285F1500811532 /* TypeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTest.swift; sourceTree = "<group>"; };
 		D38976731F28715600811532 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D38976741F28715600811532 /* SwiftUtilities.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilities.podspec; sourceTree = "<group>"; };
+		D391DCDE1F7803A4003C2688 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		D3AC289F1F41FDCB004C24B8 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildableType.swift; sourceTree = "<group>"; };
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
@@ -186,7 +188,7 @@
 				D38976161F285F0900811532 /* exception */,
 				D389762D1F285F0900811532 /* foundation */,
 				D38976291F285F0900811532 /* math */,
-				D38976181F285F0900811532 /* monad */,
+				D38976181F285F0900811532 /* functional */,
 				D38976111F285F0900811532 /* reactive */,
 				D38976231F285F0900811532 /* string */,
 				D38976141F285F0900811532 /* thread */,
@@ -233,7 +235,7 @@
 			path = exception;
 			sourceTree = "<group>";
 		};
-		D38976181F285F0900811532 /* monad */ = {
+		D38976181F285F0900811532 /* functional */ = {
 			isa = PBXGroup;
 			children = (
 				D38976191F285F0900811532 /* Either.swift */,
@@ -245,8 +247,9 @@
 				D389761F1F285F0900811532 /* Tries.swift */,
 				D38976201F285F0900811532 /* Try.swift */,
 				D3FC6E751F2ED51F007471E2 /* Optionals.swift */,
+				D391DCDE1F7803A4003C2688 /* Optional.swift */,
 			);
-			path = monad;
+			path = functional;
 			sourceTree = "<group>";
 		};
 		D38976211F285F0900811532 /* date */ = {
@@ -350,7 +353,7 @@
 				D389763D1F285F1500811532 /* date */,
 				D389763F1F285F1500811532 /* exception */,
 				D38976411F285F1500811532 /* mock */,
-				D38976431F285F1500811532 /* monad */,
+				D38976431F285F1500811532 /* functional */,
 				D38976481F285F1500811532 /* reactive */,
 				D389764A1F285F1500811532 /* thread */,
 				D389764C1F285F1500811532 /* type */,
@@ -390,7 +393,7 @@
 			path = mock;
 			sourceTree = "<group>";
 		};
-		D38976431F285F1500811532 /* monad */ = {
+		D38976431F285F1500811532 /* functional */ = {
 			isa = PBXGroup;
 			children = (
 				D38976441F285F1500811532 /* EitherTest.swift */,
@@ -398,7 +401,7 @@
 				D38976461F285F1500811532 /* StateTest.swift */,
 				D38976471F285F1500811532 /* TryTest.swift */,
 			);
-			path = monad;
+			path = functional;
 			sourceTree = "<group>";
 		};
 		D38976481F285F1500811532 /* reactive */ = {
@@ -659,6 +662,7 @@
 				D389765C1F28706200811532 /* Booleans.swift in Sources */,
 				D389765D1F28706200811532 /* Collections.swift in Sources */,
 				D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */,
+				D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */,
 				D389765E1F28706200811532 /* Swifts.swift in Sources */,
 				D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */,
 				D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */,

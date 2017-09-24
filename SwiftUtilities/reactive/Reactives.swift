@@ -90,6 +90,16 @@ public extension Observable {
     }
 }
 
+public extension Observable where E: OptionalType {
+    public func mapNonNilOrEmpty() -> Observable<E.Value> {
+        return self.mapNonNilOrEmpty({$0.value})
+    }
+    
+    public func mapNonNilOrElse(_ defaultValue: E.Value) -> Observable<E.Value> {
+        return self.mapNonNilOrElse({$0.value}, defaultValue)
+    }
+}
+
 public extension Observable where E: Sequence {
     
     /// If the emitted Element is a Sequence, flatten it.
