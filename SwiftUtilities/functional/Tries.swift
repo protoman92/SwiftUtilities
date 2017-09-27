@@ -6,21 +6,14 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import RxCocoa
-import RxSwift
-
-public typealias RxTry<Val> = Try<Observable<Val>>
-
-public extension Reactive where Base: TryConvertibleType {
+extension Try: OptionalType {
+    public typealias Value = A
     
-    /// Wrap the success/error in an Observable.
-    ///
-    /// - Returns: An Observable instance.
-    public func get() -> Observable<Base.Val> {
-        do {
-            return Observable.just(try base.asTry().getOrThrow())
-        } catch let error {
-            return Observable.error(error)
-        }
+    public static func just(_ value: Value) -> Optional<Value> {
+        return Optional<Value>.some(value)
+    }
+    
+    public static func nothing() -> Optional<Value> {
+        return Optional<Value>.none
     }
 }

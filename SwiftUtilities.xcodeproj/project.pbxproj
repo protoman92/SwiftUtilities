@@ -39,7 +39,6 @@
 		D38976681F28706200811532 /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761B1F285F0900811532 /* Reader.swift */; };
 		D38976691F28706200811532 /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761C1F285F0900811532 /* Readers.swift */; };
 		D389766A1F28706200811532 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761D1F285F0900811532 /* State.swift */; };
-		D389766B1F28706200811532 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761E1F285F0900811532 /* States.swift */; };
 		D389766C1F28706200811532 /* Tries.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761F1F285F0900811532 /* Tries.swift */; };
 		D389766D1F28706200811532 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976201F285F0900811532 /* Try.swift */; };
 		D389766E1F28706200811532 /* Cocoas.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976121F285F0900811532 /* Cocoas.swift */; };
@@ -84,7 +83,6 @@
 		D389761B1F285F0900811532 /* Reader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reader.swift; sourceTree = "<group>"; };
 		D389761C1F285F0900811532 /* Readers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readers.swift; sourceTree = "<group>"; };
 		D389761D1F285F0900811532 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		D389761E1F285F0900811532 /* States.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
 		D389761F1F285F0900811532 /* Tries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tries.swift; sourceTree = "<group>"; };
 		D38976201F285F0900811532 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		D38976221F285F0900811532 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -243,7 +241,6 @@
 				D389761B1F285F0900811532 /* Reader.swift */,
 				D389761C1F285F0900811532 /* Readers.swift */,
 				D389761D1F285F0900811532 /* State.swift */,
-				D389761E1F285F0900811532 /* States.swift */,
 				D389761F1F285F0900811532 /* Tries.swift */,
 				D38976201F285F0900811532 /* Try.swift */,
 				D3FC6E751F2ED51F007471E2 /* Optionals.swift */,
@@ -679,7 +676,6 @@
 				D38976681F28706200811532 /* Reader.swift in Sources */,
 				D38976691F28706200811532 /* Readers.swift in Sources */,
 				D389766A1F28706200811532 /* State.swift in Sources */,
-				D389766B1F28706200811532 /* States.swift in Sources */,
 				D389766C1F28706200811532 /* Tries.swift in Sources */,
 				D389766D1F28706200811532 /* Try.swift in Sources */,
 				D389766E1F28706200811532 /* Cocoas.swift in Sources */,

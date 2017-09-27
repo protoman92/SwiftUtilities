@@ -10,9 +10,9 @@
 public protocol OptionalType {
     associatedtype Value
     
-    static func just(_ value: Value) -> Self
+    static func just(_ value: Value) -> Optional<Value>
     
-    static func nothing() -> Self
+    static func nothing() -> Optional<Value>
     
     var value: Value? { get }
 }

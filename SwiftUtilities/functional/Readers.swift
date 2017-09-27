@@ -141,58 +141,59 @@ public extension Reader {
     }
 }
 
-public extension Reactive where Base: ReaderConvertibleType {
-    
-    /// Run the Reader and throw Error if encountered.
-    ///
-    /// - Parameter env: Base.Env instance.
-    /// - Returns: An Observable instance.
-    public func run(_ env: Base.Env) -> Observable<Base.Val> {
-        return base.asReader().tryRun(env).rx.get()
-    }
-}
+//public extension Reactive where Base: ReaderConvertibleType {
+//
+//    /// Run the Reader and throw Error if encountered.
+//    ///
+//    /// - Parameter env: Base.Env instance.
+//    /// - Returns: An Observable instance.
+//    public func run(_ env: Base.Env) -> Observable<Base.Val> {
+//        return base.asReader().tryRun(env).rx.get()
+//    }
+//}
+//
+//public extension Reactive where
+//    Base: ReaderConvertibleType,
+//    Base.Val: ObservableConvertibleType {
+//
+//    /// If the current Reader's f function returns an Observable, flatten it
+//    /// to avoid nested Observable.
+//    ///
+//    /// - Parameter env: Base.Env instance.
+//    /// - Returns: An Observable instance.
+//    public func flatRun(_ env: Base.Env) -> Observable<Base.Val.E> {
+//        return run(env).flatMap(eq)
+//    }
+//
+//    /// If the current Reader's f function returns an Observable, flatten and
+//    /// wrap the Observable emission in a Try instance.
+//    ///
+//    /// - Parameter env: Base.Env instance.
+//    /// - Returns: An Observable instance.
+//    public func tryFlatRun(_ env: Base.Env) -> Observable<Try<Base.Val.E>> {
+//        return flatRun(env)
+//            .map(Try<Base.Val.E>.success)
+//            .catchErrorJustReturn(Try<Base.Val.E>.failure)
+//    }
+//}
+//
+//public extension Reactive where
+//    Base: ReaderConvertibleType,
+//    Base.Val: ObservableConvertibleType,
+//    Base.Val.E: TryConvertibleType {
+//
+//    /// If the current Reader's f function returns an Observable that emits a
+//    /// TryConvertibleType, flatten and wrap the Observable emission in a Try
+//    /// instance.
+//    ///
+//    /// This is a more specified version of flatRun(_:) as defined above. The
+//    /// original version will throw an Error if the Reader function throws.
+//    /// This version simply catches that Error and wrap it in another Try.
+//    ///
+//    /// - Parameter env: Base.Env instance.
+//    /// - Returns: An Observable instance.
+//    public func flatRun(_ env: Base.Env) -> Observable<Try<Base.Val.E.Val>> {
+//        return tryFlatRun(env).map({$0.flatMap(eq)})
+//    }
+//}
 
-public extension Reactive where
-    Base: ReaderConvertibleType,
-    Base.Val: ObservableConvertibleType {
-    
-    /// If the current Reader's f function returns an Observable, flatten it
-    /// to avoid nested Observable.
-    ///
-    /// - Parameter env: Base.Env instance.
-    /// - Returns: An Observable instance.
-    public func flatRun(_ env: Base.Env) -> Observable<Base.Val.E> {
-        return run(env).flatMap(eq)
-    }
-    
-    /// If the current Reader's f function returns an Observable, flatten and
-    /// wrap the Observable emission in a Try instance.
-    ///
-    /// - Parameter env: Base.Env instance.
-    /// - Returns: An Observable instance.
-    public func tryFlatRun(_ env: Base.Env) -> Observable<Try<Base.Val.E>> {
-        return flatRun(env)
-            .map(Try<Base.Val.E>.success)
-            .catchErrorJustReturn(Try<Base.Val.E>.failure)
-    }
-}
-
-public extension Reactive where
-    Base: ReaderConvertibleType,
-    Base.Val: ObservableConvertibleType,
-    Base.Val.E: TryConvertibleType {
-    
-    /// If the current Reader's f function returns an Observable that emits a
-    /// TryConvertibleType, flatten and wrap the Observable emission in a Try
-    /// instance.
-    ///
-    /// This is a more specified version of flatRun(_:) as defined above. The
-    /// original version will throw an Error if the Reader function throws.
-    /// This version simply catches that Error and wrap it in another Try.
-    ///
-    /// - Parameter env: Base.Env instance.
-    /// - Returns: An Observable instance.
-    public func flatRun(_ env: Base.Env) -> Observable<Try<Base.Val.E.Val>> {
-        return tryFlatRun(env).map({$0.flatMap(eq)})
-    }
-}

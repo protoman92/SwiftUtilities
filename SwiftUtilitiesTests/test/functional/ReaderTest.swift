@@ -77,44 +77,44 @@ public final class ReaderTest: XCTestCase {
         }
     }
     
-    public func test_readerRxApply_shouldWork() {
-        //// Setup
-        let error = "Error!"
-        let disposeBag = DisposeBag()
-        let scheduler = TestScheduler(initialClock: 0)
-        let observer = scheduler.createObserver(Try<Int>.self)
-        let expect = expectation(description: "Should have completed")
-        
-        let r1 = Reader<Int,Observable<Int>>(Observable.just)
-        let r2 = Reader<Void,Observable<Int>>({Observable.error(error)})
-        
-        // Even if we throw Error here, the overloaded apply() method that
-        // is only available when the resulting Observable emits 
-        // TryConvertibleType ensures that said Error is wrapped in Try as well.
-        let r3 = Reader<Void,Observable<Try<Int>>>({ throw Exception(error) })
-        
-        /// When
-        Observable.merge(r1.rx.tryFlatRun(1000), r2.rx.tryFlatRun(), r3.rx.flatRun())
-            .doOnDispose(expect.fulfill)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        
-        waitForExpectations(timeout: 5, handler: nil)
-        
-        /// Then
-        let elements = observer.nextElements()
-        XCTAssertEqual(elements.count, 3)
-        
-        let first = elements.first!
-        let second = elements[1]
-        let third = elements[2]
-        XCTAssertTrue(first.isSuccess)
-        XCTAssertEqual(first.value, 1000)
-        XCTAssertTrue(second.isFailure)
-        XCTAssertEqual(second.error!.localizedDescription, error)
-        XCTAssertTrue(third.isFailure)
-        XCTAssertEqual(third.error!.localizedDescription, error)
-    }
+//    public func test_readerRxApply_shouldWork() {
+//        //// Setup
+//        let error = "Error!"
+//        let disposeBag = DisposeBag()
+//        let scheduler = TestScheduler(initialClock: 0)
+//        let observer = scheduler.createObserver(Try<Int>.self)
+//        let expect = expectation(description: "Should have completed")
+//        
+//        let r1 = Reader<Int,Observable<Int>>(Observable.just)
+//        let r2 = Reader<Void,Observable<Int>>({Observable.error(error)})
+//        
+//        // Even if we throw Error here, the overloaded apply() method that
+//        // is only available when the resulting Observable emits 
+//        // TryConvertibleType ensures that said Error is wrapped in Try as well.
+//        let r3 = Reader<Void,Observable<Try<Int>>>({ throw Exception(error) })
+//        
+//        /// When
+//        Observable.merge(r1.rx.tryFlatRun(1000), r2.rx.tryFlatRun(), r3.rx.flatRun())
+//            .doOnDispose(expect.fulfill)
+//            .subscribe(observer)
+//            .disposed(by: disposeBag)
+//        
+//        waitForExpectations(timeout: 5, handler: nil)
+//        
+//        /// Then
+//        let elements = observer.nextElements()
+//        XCTAssertEqual(elements.count, 3)
+//        
+//        let first = elements.first!
+//        let second = elements[1]
+//        let third = elements[2]
+//        XCTAssertTrue(first.isSuccess)
+//        XCTAssertEqual(first.value, 1000)
+//        XCTAssertTrue(second.isFailure)
+//        XCTAssertEqual(second.error!.localizedDescription, error)
+//        XCTAssertTrue(third.isFailure)
+//        XCTAssertEqual(third.error!.localizedDescription, error)
+//    }
 }
 
 fileprivate final class IntReader {
