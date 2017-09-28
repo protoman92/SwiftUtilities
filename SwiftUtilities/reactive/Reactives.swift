@@ -262,6 +262,32 @@ public extension ObservableType {
     public func logCheckMainThread() -> Observable<E> {
         return logNext({_ in "Currently on main thread: \(Thread.isMainThread)"})
     }
+    
+    /// Log information regarding the current thread.
+    ///
+    /// - Returns: An Observable instance.
+    public func logCurrentThread() -> Observable<E> {
+        return logNext({_ in "Current thread: \(Thread.current)"})
+    }
+    
+    /// Log next with a prefix.
+    ///
+    /// - Parameters:
+    ///   - prefix: A String value.
+    ///   - selector: Selector function.
+    /// - Returns: An Observable instance.
+    public func logNextPrefix(_ prefix: String,
+                              _ selector: @escaping (E) -> Any) -> Observable<E> {
+        return logNext({"\(prefix)\(selector($0))"})
+    }
+    
+    /// Log next with a prefix.
+    ///
+    /// - Parameters prefix: A String value.
+    /// - Returns: An Observable instance.
+    public func logNextPrefix(_ prefix: String) -> Observable<E> {
+        return logNextPrefix(prefix, eq)
+    }
 }
 
 public extension Observable {
