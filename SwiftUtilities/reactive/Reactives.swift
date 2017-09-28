@@ -327,7 +327,7 @@ public extension Observable {
     /// Observe on main thread.
     ///
     /// - Returns: An Observable instance.
-    public func observerOnMain() -> Observable<E> {
+    public func observeOnMain() -> Observable<E> {
         return observeOn(MainScheduler.instance)
     }
 }
