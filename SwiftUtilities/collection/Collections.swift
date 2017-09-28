@@ -24,6 +24,30 @@ public protocol ComparisonResultConvertibleType {
     func compare(against element: Self) -> ComparisonResult
 }
 
+public extension ComparisonResultConvertibleType {
+    
+    /// Compare two instances of Self.
+    ///
+    /// - Parameters:
+    ///   - lhs: A Self instance.
+    ///   - rhs: A Self instance.
+    /// - Returns: A ComparisonResult instance.
+    public static func compare(lhs: Self, rhs: Self) -> ComparisonResult {
+        return lhs.compare(against: rhs)
+    }
+}
+
+public protocol ComparableType {
+    
+    /// Compare two instances of Self.
+    ///
+    /// - Parameters:
+    ///   - lhs: A Self instance.
+    ///   - rhs: A Self instance.
+    /// - Returns: A Bool value.
+    static func compare(lhs: Self, rhs: Self) -> Bool
+}
+
 public extension Sequence {
     
     /// Get the first item that is an instance of a specified Type.
@@ -428,6 +452,16 @@ public extension Sequence where Iterator.Element: ComparisonResultConvertibleTyp
     /// - Returns: An Array of a ComparisonResultConvertibleType subclass.
     public func sortedDescending() -> [Iterator.Element] {
         return sorted(by: .orderedDescending)
+    }
+}
+
+public extension Sequence where Iterator.Element: ComparableType {
+    
+    /// Sort the current Sequence with a comparator.
+    ///
+    /// - Returns: An Array of Element.
+    public func sorted() -> [Iterator.Element] {
+        return sorted(by: Iterator.Element.compare)
     }
 }
 

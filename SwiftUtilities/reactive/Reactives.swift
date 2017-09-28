@@ -255,6 +255,13 @@ public extension ObservableType {
     public func logError() -> Observable<E> {
         return logError(eq)
     }
+    
+    /// Check whether the stream is running on main thread or not.
+    ///
+    /// - Returns: An Observable instance.
+    public func logCheckMainThread() -> Observable<E> {
+        return logNext({_ in "Currently on main thread: \(Thread.isMainThread)"})
+    }
 }
 
 public extension Observable {
@@ -308,6 +315,20 @@ public extension Observable {
     public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
         return subscribeOn(scheduler)
+    }
+    
+    /// Subscribe on main thread.
+    ///
+    /// - Returns: An Observable instance.
+    public func subscribeOnMain() -> Observable<E> {
+        return subscribeOn(MainScheduler.instance)
+    }
+    
+    /// Observe on main thread.
+    ///
+    /// - Returns: An Observable instance.
+    public func observerOnMain() -> Observable<E> {
+        return observeOn(MainScheduler.instance)
     }
 }
 
