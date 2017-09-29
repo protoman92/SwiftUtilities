@@ -430,6 +430,32 @@ public extension Observable {
     }
 }
 
+public extension Observable {
+    
+    /// Emit the time at which an element is pushed.
+    ///
+    /// - Returns: An Observable instance.
+    public func timestamp() -> Observable<TimeInterval> {
+        return map({_ in Date().timeIntervalSince1970})
+    }
+    
+    /// Get the time difference between two consecutive elements.
+    ///
+    /// - Returns: An Observable instance.
+    public func timeDifference() -> Observable<TimeInterval> {
+        typealias TimeTuple = (previous: TimeInterval, diff: TimeInterval)
+        let initial = TimeTuple(previous: Date().timeIntervalSince1970, diff: 0)
+        
+        return timestamp()
+            .scan(initial, accumulator: {
+                let current = $0.1
+                let diff = current - $0.0.previous
+                return TimeTuple(previous: current, diff: diff)
+            })
+            .map({$0.diff})
+    }
+}
+
 public extension ConcurrentDispatchQueueScheduler {
     
     /// Get a SchedulerType from a QoS.

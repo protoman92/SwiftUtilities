@@ -312,4 +312,27 @@ public final class ReactiveTest: XCTestCase {
         /// Then
         XCTAssertTrue(waitInterval < delay)
     }
+    
+    public func test_timeDifference_shouldWork() {
+        /// Setup
+        let observer = scheduler.createObserver(TimeInterval.self)
+        let expect = expectation(description: "Should have completed")
+        let interval: TimeInterval = 0.1
+        let takeCount = 20
+        
+        /// When
+        Observable<Int>.interval(interval, scheduler: MainScheduler.instance)
+            .timeDifference()
+            .take(takeCount)
+            .doOnDispose(expect.fulfill)
+            .subscribe(observer)
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: timeout, handler: nil)
+        
+        /// Then
+        let nextElements = observer.nextElements()
+        XCTAssertEqual(nextElements.count, takeCount)
+        XCTAssertTrue(nextElements.all({(($0 - interval) / interval) < 0.1}))
+    }
 }
