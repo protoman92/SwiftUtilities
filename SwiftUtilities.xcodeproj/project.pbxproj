@@ -47,6 +47,7 @@
 		D38976711F28706200811532 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976151F285F0900811532 /* Threads.swift */; };
 		D38976721F28706200811532 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976331F285F0900811532 /* Types.swift */; };
 		D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391DCDE1F7803A4003C2688 /* Optional.swift */; };
+		D3A295471F82487A00F10756 /* Preconditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A295461F82487A00F10756 /* Preconditions.swift */; };
 		D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC289F1F41FDCB004C24B8 /* Enums.swift */; };
 		D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */; };
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
@@ -113,6 +114,7 @@
 		D38976731F28715600811532 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D38976741F28715600811532 /* SwiftUtilities.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilities.podspec; sourceTree = "<group>"; };
 		D391DCDE1F7803A4003C2688 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		D3A295461F82487A00F10756 /* Preconditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preconditions.swift; sourceTree = "<group>"; };
 		D3AC289F1F41FDCB004C24B8 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildableType.swift; sourceTree = "<group>"; };
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				D38976171F285F0900811532 /* Exceptions.swift */,
+				D3A295461F82487A00F10756 /* Preconditions.swift */,
 			);
 			path = exception;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				D38976641F28706200811532 /* SortOrder.swift in Sources */,
 				D38976651F28706200811532 /* Maths.swift in Sources */,
 				D38976661F28706200811532 /* Either.swift in Sources */,
+				D3A295471F82487A00F10756 /* Preconditions.swift in Sources */,
 				D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */,
 				D38976671F28706200811532 /* Eithers.swift in Sources */,
 				D38976681F28706200811532 /* Reader.swift in Sources */,
