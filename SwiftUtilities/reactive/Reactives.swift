@@ -329,7 +329,7 @@ public extension Observable {
     ///
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
-    public func subscribeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
+    public func subscribeOnConcurrent(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
         return subscribeOn(scheduler)
     }
@@ -338,8 +338,28 @@ public extension Observable {
     ///
     /// - Parameter qos: A Quality of Service instance.
     /// - Returns: An Observable instance.
-    public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
+    public func observeOnConcurrent(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
+        return observeOn(scheduler)
+    }
+    
+    /// Convenient for subscribeOn with a QoS.
+    ///
+    /// - Parameter qos: A Quality of Service instance.
+    /// - Returns: An Observable instance.
+    public func subscribeOnSerial(qos: DispatchQoS.QoSClass) -> Observable<E> {
+        let dQos = DispatchQoS(qosClass: qos, relativePriority: 0)
+        let scheduler = SerialDispatchQueueScheduler(qos: dQos)
+        return subscribeOn(scheduler)
+    }
+    
+    /// Convenient for observeOn with a QoS.
+    ///
+    /// - Parameter qos: A Quality of Service instance.
+    /// - Returns: An Observable instance.
+    public func observeOnSerial(qos: DispatchQoS.QoSClass) -> Observable<E> {
+        let dQos = DispatchQoS(qosClass: qos, relativePriority: 0)
+        let scheduler = SerialDispatchQueueScheduler(qos: dQos)
         return observeOn(scheduler)
     }
     
@@ -347,7 +367,7 @@ public extension Observable {
     ///
     /// - Returns: An Observable instance.
     public func subscribeOnMain() -> Observable<E> {
-        return subscribeOn(MainScheduler.instance)
+        return subscribeOn(ConcurrentMainScheduler.instance)
     }
     
     /// Observe on main thread.
