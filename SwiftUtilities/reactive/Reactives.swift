@@ -340,7 +340,7 @@ public extension Observable {
     /// - Returns: An Observable instance.
     public func observeOn(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
-        return subscribeOn(scheduler)
+        return observeOn(scheduler)
     }
     
     /// Subscribe on main thread.
