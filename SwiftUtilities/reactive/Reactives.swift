@@ -476,6 +476,37 @@ public extension Observable {
     }
 }
 
+public extension Observable {
+    
+    /// Convenience function to zip with another Observable.
+    ///
+    /// - Parameters:
+    ///   - obs: An ObservableConvertibleType instance.
+    ///   - selector: Selector function.
+    /// - Returns: An Observable instance.
+    public func zipWith<O,U>(_ obs: O, _ selector: @escaping (E, O.E) throws -> U)
+        -> Observable<U> where
+        O: ObservableConvertibleType
+    {
+        return Observable<U>.zip(self, obs.asObservable(),
+                                 resultSelector: selector)
+    }
+    
+    /// Convenience function to combine latest with another Observable.
+    ///
+    /// - Parameters:
+    ///   - obs: An ObservableConvertibleType instance.
+    ///   - selector: Selector function.
+    /// - Returns: An Observable instance.
+    public func combineLatestWith<O,U>(_ obs: O, _ selector: @escaping (E, O.E) throws -> U)
+        -> Observable<U> where
+        O: ObservableConvertibleType
+    {
+        return Observable<U>.combineLatest(self, obs.asObservable(),
+                                           resultSelector: selector)
+    }
+}
+
 public extension ConcurrentDispatchQueueScheduler {
     
     /// Get a SchedulerType from a QoS.
