@@ -335,4 +335,29 @@ public final class ReactiveTest: XCTestCase {
         XCTAssertEqual(nextElements.count, takeCount)
         XCTAssertTrue(nextElements.all({(($0 - interval) / interval) < 0.1}))
     }
+    
+    public func test_trackInitial_shouldWork() {
+        /// Setup
+        let observer = scheduler.createObserver(Int.self)
+        let times = 10000
+        let stream = PublishSubject<Int>()
+        let initial = 1
+        
+        stream.distinctInitialEmission()
+            .subscribe(observer)
+            .disposed(by: disposeBag)
+        
+        stream.onNext(initial)
+        
+        /// When
+        for _ in 0..<times {
+            stream.onNext(Int.random(2, 100000))
+        }
+        
+        /// Then
+        let nextElements = observer.nextElements()
+        XCTAssertTrue(nextElements.isNotEmpty)
+        XCTAssertEqual(nextElements.count, 1)
+        XCTAssertTrue(nextElements.all({$0 == initial}))
+    }
 }

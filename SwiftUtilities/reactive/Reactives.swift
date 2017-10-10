@@ -8,7 +8,7 @@
 
 import RxSwift
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Convenience method to throw an error.
     ///
@@ -20,7 +20,7 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Take a selector that produces a Sequence of some type using the emitted
     /// Element, then apply Observable.from to flatten it.
@@ -31,11 +31,11 @@ public extension Observable {
         -> Observable<I> where
         S: Sequence, S.Iterator.Element == I
     {
-        return flatMap({Observable<I>.from(try selector($0))})
+        return self.asObservable().flatMap({Observable<I>.from(try selector($0))})
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// FlatMap to a Observable which, if nil, is replaced by an empty Observable.
     ///
@@ -48,7 +48,7 @@ public extension Observable {
         _ selector: @escaping (E) throws -> Observable<E2>?)
         -> Observable<E2>
     {
-        return flatMap({try selector($0) ?? .empty()})
+        return self.asObservable().flatMap({try selector($0) ?? .empty()})
     }
     
     /// Map the inner element to an optional second element, and return an
@@ -62,7 +62,7 @@ public extension Observable {
     public func mapNonNilOrEmpty<E2>(_ selector: @escaping (E) throws -> E2?)
         -> Observable<E2>
     {
-        return flatMap({(e1) throws -> Observable<E2> in
+        return self.asObservable().flatMap({(e1) throws -> Observable<E2> in
             if let e2 = try selector(e1) {
                 return Observable<E2>.just(e2)
             } else {
@@ -80,7 +80,7 @@ public extension Observable {
     /// - Returns: An Observable instance.
     public func mapNonNilOrElse<E2>(_ selector: @escaping (E) throws -> E2?,
                                     _ defaultValue: E2) -> Observable<E2> {
-        return map({e1 throws -> E2 in
+        return self.asObservable().map({e1 throws -> E2 in
             if let e2 = try selector(e1) {
                 return e2
             } else {
@@ -90,7 +90,7 @@ public extension Observable {
     }
 }
 
-public extension Observable where E: OptionalType {
+public extension ObservableConvertibleType where E: OptionalType {
     public func mapNonNilOrEmpty() -> Observable<E.Value> {
         return self.mapNonNilOrEmpty({$0.value})
     }
@@ -100,7 +100,7 @@ public extension Observable where E: OptionalType {
     }
 }
 
-public extension Observable where E: Sequence {
+public extension ObservableConvertibleType where E: Sequence {
     
     /// If the emitted Element is a Sequence, flatten it.
     ///
@@ -110,7 +110,7 @@ public extension Observable where E: Sequence {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Similar to catchErrorJustReturn, but apply a transformer to the emitted
     /// Error to convert it to Element.
@@ -118,9 +118,9 @@ public extension Observable {
     /// - Parameter selector: Transformer function closure.
     /// - Returns: An Observable instance.
     public func catchErrorJustReturn(_ selector: @escaping (Error) throws -> E)
-        -> Observable<Element>
+        -> Observable<E>
     {
-        return catchError({(error: Error) -> Observable<E> in
+        return self.asObservable().catchError({(error: Error) -> Observable<E> in
             do {
                 return Observable.just(try selector(error))
             } catch let e {
@@ -134,7 +134,7 @@ public extension Observable {
     /// - Parameter error: A String value.
     /// - Returns: An Observable instance.
     public func errorIfEmpty(_ error: Error) -> Observable<E> {
-        return ifEmpty(switchTo: Observable.error(error))
+        return self.asObservable().ifEmpty(switchTo: Observable.error(error))
     }
     
     /// If the Observable is empty, throw an Error.
@@ -142,23 +142,23 @@ public extension Observable {
     /// - Parameter error: A String value.
     /// - Returns: An Observable instance.
     public func errorIfEmpty(_ error: String) -> Observable<E> {
-        return ifEmpty(switchTo: Observable.error(error))
+        return self.asObservable().ifEmpty(switchTo: Observable.error(error))
     }
 }
 
-public extension ObservableType {
+public extension ObservableConvertibleType {
 
     /// Convenience method for do(onNext).
     ///
     /// - Parameter callback: onNext closure.
     /// - Returns: An Observable instance.
     public func doOnNext(_ callback: @escaping (E) -> Void) -> Observable<E> {
-        return `do`(onNext: callback,
-                    onError: nil,
-                    onCompleted: nil,
-                    onSubscribe: nil,
-                    onSubscribed: nil,
-                    onDispose: nil)
+        return self.asObservable().`do`(onNext: callback,
+                                        onError: nil,
+                                        onCompleted: nil,
+                                        onSubscribe: nil,
+                                        onSubscribed: nil,
+                                        onDispose: nil)
     }
     
     /// Convenience method for do(onError).
@@ -166,12 +166,12 @@ public extension ObservableType {
     /// - Parameter callback: onError closure.
     /// - Returns: An Observable instance.
     public func doOnError(_ callback: @escaping (Error) -> Void) -> Observable<E> {
-        return `do`(onNext: nil,
-                    onError: callback,
-                    onCompleted: nil,
-                    onSubscribe: nil,
-                    onSubscribed: nil,
-                    onDispose: nil)
+        return self.asObservable().`do`(onNext: nil,
+                                        onError: callback,
+                                        onCompleted: nil,
+                                        onSubscribe: nil,
+                                        onSubscribed: nil,
+                                        onDispose: nil)
     }
     
     /// Convenience method for do(onCompleted).
@@ -179,12 +179,12 @@ public extension ObservableType {
     /// - Parameter callback: onCompleted closure.
     /// - Returns: An Observable instance.
     public func doOnCompleted(_ callback: @escaping () -> Void) -> Observable<E> {
-        return `do`(onNext: nil,
-                    onError: nil,
-                    onCompleted: callback,
-                    onSubscribe: nil,
-                    onSubscribed: nil,
-                    onDispose: nil)
+        return self.asObservable().`do`(onNext: nil,
+                                        onError: nil,
+                                        onCompleted: callback,
+                                        onSubscribe: nil,
+                                        onSubscribed: nil,
+                                        onDispose: nil)
     }
     
     /// Convenience method for do(onSubscribe).
@@ -192,12 +192,12 @@ public extension ObservableType {
     /// - Parameter callback: onSubscribe closure.
     /// - Returns: An Observable instance.
     public func doOnSubscribe(_ callback: @escaping () -> Void) -> Observable<E> {
-        return `do`(onNext: nil,
-                    onError: nil,
-                    onCompleted: nil,
-                    onSubscribe: callback,
-                    onSubscribed: nil,
-                    onDispose: nil)
+        return self.asObservable().`do`(onNext: nil,
+                                        onError: nil,
+                                        onCompleted: nil,
+                                        onSubscribe: callback,
+                                        onSubscribed: nil,
+                                        onDispose: nil)
     }
     
     /// Convenience method for do(onSubscribed).
@@ -205,12 +205,12 @@ public extension ObservableType {
     /// - Parameter callback: onSubscribed closure.
     /// - Returns: An Observable instance.
     public func doOnSubscribed(_ callback: @escaping () -> Void) -> Observable<E> {
-        return `do`(onNext: nil,
-                    onError: nil,
-                    onCompleted: nil,
-                    onSubscribe: nil,
-                    onSubscribed: callback,
-                    onDispose: nil)
+        return self.asObservable().`do`(onNext: nil,
+                                        onError: nil,
+                                        onCompleted: nil,
+                                        onSubscribe: nil,
+                                        onSubscribed: callback,
+                                        onDispose: nil)
     }
     
     /// Convenience method for do(onDispose).
@@ -218,12 +218,12 @@ public extension ObservableType {
     /// - Parameter callback: onDispose closure.
     /// - Returns: An Observable instance.
     public func doOnDispose(_ callback: @escaping () -> Void) -> Observable<E> {
-        return `do`(onNext: nil,
-                    onError: nil,
-                    onCompleted: nil,
-                    onSubscribe: nil,
-                    onSubscribed: nil,
-                    onDispose: callback)
+        return self.asObservable().`do`(onNext: nil,
+                                        onError: nil,
+                                        onCompleted: nil,
+                                        onSubscribe: nil,
+                                        onSubscribed: nil,
+                                        onDispose: callback)
     }
     
     /// Print onNext emission.
@@ -290,7 +290,7 @@ public extension ObservableType {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Cast the emission to another type, and throw an Error if the cast
     /// fails.
@@ -298,7 +298,7 @@ public extension Observable {
     /// - Parameter type: The type to be cast to.
     /// - Returns: An Observable instance.
     public func cast<T>(to type: T.Type) -> Observable<T> {
-        return map({(item) -> T in
+        return self.asObservable().map({(item) -> T in
             guard let cast = item as? T else {
                 throw Exception("Failed to cast \(item) to \(type)")
             }
@@ -313,7 +313,7 @@ public extension Observable {
     /// - Parameter type: The type to be cast to.
     /// - Returns: An Observable instance.
     public func ofType<T>(_ type: T.Type) -> Observable<T> {
-        return flatMap({(item) -> Observable<T> in
+        return self.asObservable().flatMap({(item) -> Observable<T> in
             guard let cast = item as? T else {
                 return Observable<T>.empty()
             }
@@ -323,7 +323,7 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Convenient for subscribeOn with a QoS.
     ///
@@ -331,7 +331,7 @@ public extension Observable {
     /// - Returns: An Observable instance.
     public func subscribeOnConcurrent(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
-        return subscribeOn(scheduler)
+        return self.asObservable().subscribeOn(scheduler)
     }
     
     /// Convenient for observeOn with a QoS.
@@ -340,7 +340,7 @@ public extension Observable {
     /// - Returns: An Observable instance.
     public func observeOnConcurrent(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: qos)
-        return observeOn(scheduler)
+        return self.asObservable().observeOn(scheduler)
     }
     
     /// Convenient for subscribeOn with a QoS.
@@ -350,7 +350,7 @@ public extension Observable {
     public func subscribeOnSerial(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let dQos = DispatchQoS(qosClass: qos, relativePriority: 0)
         let scheduler = SerialDispatchQueueScheduler(qos: dQos)
-        return subscribeOn(scheduler)
+        return self.asObservable().subscribeOn(scheduler)
     }
     
     /// Convenient for observeOn with a QoS.
@@ -360,25 +360,25 @@ public extension Observable {
     public func observeOnSerial(qos: DispatchQoS.QoSClass) -> Observable<E> {
         let dQos = DispatchQoS(qosClass: qos, relativePriority: 0)
         let scheduler = SerialDispatchQueueScheduler(qos: dQos)
-        return observeOn(scheduler)
+        return self.asObservable().observeOn(scheduler)
     }
     
     /// Subscribe on main thread.
     ///
     /// - Returns: An Observable instance.
     public func subscribeOnMain() -> Observable<E> {
-        return subscribeOn(ConcurrentMainScheduler.instance)
+        return self.asObservable().subscribeOn(ConcurrentMainScheduler.instance)
     }
     
     /// Observe on main thread.
     ///
     /// - Returns: An Observable instance.
     public func observeOnMain() -> Observable<E> {
-        return observeOn(MainScheduler.instance)
+        return self.asObservable().observeOn(MainScheduler.instance)
     }
 }
 
-public extension ObservableType {
+public extension ObservableConvertibleType {
     
     /// Get an Observable that emits incremental Int sequentially.
     ///
@@ -402,7 +402,7 @@ public extension ObservableType {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Delay retry by some time.
     ///
@@ -422,9 +422,10 @@ public extension Observable {
         -> Observable<E>
     {
         if delay == 0 {
-            return self.retry(retries)
+            return self.asObservable().retry(retries)
         } else {
-            return self.retryWhen({Observable<Int>
+            return self.asObservable()
+                .retryWhen({Observable<Int>
                 .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
                 .delay(delay, scheduler: scheduler)
                 .takeUntil(terminateObs)
@@ -443,20 +444,21 @@ public extension Observable {
         -> Observable<E>
     {
         if delay == 0 {
-            return self.retry()
+            return self.asObservable().retry()
         } else {
-            return self.retryWhen({$0.delay(delay, scheduler: scheduler)})
+            return self.asObservable()
+                .retryWhen({$0.delay(delay, scheduler: scheduler)})
         }
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Emit the time at which an element is pushed.
     ///
     /// - Returns: An Observable instance.
     public func timestamp() -> Observable<TimeInterval> {
-        return map({_ in Date().timeIntervalSince1970})
+        return self.asObservable().map({_ in Date().timeIntervalSince1970})
     }
     
     /// Get the time difference between two consecutive elements.
@@ -476,7 +478,7 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableConvertibleType {
     
     /// Convenience function to zip with another Observable.
     ///
@@ -488,7 +490,8 @@ public extension Observable {
         -> Observable<U> where
         O: ObservableConvertibleType
     {
-        return Observable<U>.zip(self, obs.asObservable(),
+        return Observable<U>.zip(self.asObservable(),
+                                 obs.asObservable(),
                                  resultSelector: selector)
     }
     
@@ -502,8 +505,45 @@ public extension Observable {
         -> Observable<U> where
         O: ObservableConvertibleType
     {
-        return Observable<U>.combineLatest(self, obs.asObservable(),
+        return Observable<U>.combineLatest(self.asObservable(),
+                                           obs.asObservable(),
                                            resultSelector: selector)
+    }
+}
+
+public extension ObservableConvertibleType {
+    
+    /// Track the initial emission of the current stream. The initial emission
+    /// here may not be the very first emission, but the one that is first
+    /// emitted when the current stream is subscribed to.
+    ///
+    /// - Returns: An Observable instance.
+    public func trackInitial() -> Observable<(original: E?, current: E?)> {
+        return self.asObservable()
+            .scan((original: nil, current: nil), accumulator: {
+                if let original = $0.0.original {
+                    return (original: original, current: $0.1)
+                } else {
+                    return (original: $0.1, current: $0.1)
+                }
+            })
+    }
+    
+    /// Only emit the initial emission, i.e. the first emission that appears
+    /// after the current stream is subscribed to.
+    ///
+    /// - Returns: An Observable instance.
+    public func initialEmission() -> Observable<E> {
+        return trackInitial().mapNonNilOrEmpty({$0.original})
+    }
+}
+
+public extension ObservableConvertibleType where E: Equatable {
+    /// Only emit distinct initial emissions.
+    ///
+    /// - Returns: An Observable instance.
+    public func distinctInitialEmission() -> Observable<E> {
+        return initialEmission().distinctUntilChanged()
     }
 }
 
