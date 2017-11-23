@@ -51,6 +51,7 @@
 		D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC289F1F41FDCB004C24B8 /* Enums.swift */; };
 		D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */; };
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
+		D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E39B1FC67121000F1680 /* OptionalTest.swift */; };
 		D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FC6E751F2ED51F007471E2 /* Optionals.swift */; };
 		EFB713417934087650DAF6E9 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942B1152A7939BD7EAEA13E7 /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -118,6 +119,7 @@
 		D3AC289F1F41FDCB004C24B8 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildableType.swift; sourceTree = "<group>"; };
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
+		D3F9E39B1FC67121000F1680 /* OptionalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalTest.swift; sourceTree = "<group>"; };
 		D3FC6E751F2ED51F007471E2 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		D487390D216B637791F2D086 /* Pods-SwiftUtilities.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.debug.xcconfig"; sourceTree = "<group>"; };
 		EA70204D36B8748E91D70CF0 /* Pods-SwiftUtilitiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -241,13 +243,13 @@
 			children = (
 				D38976191F285F0900811532 /* Either.swift */,
 				D389761A1F285F0900811532 /* Eithers.swift */,
+				D391DCDE1F7803A4003C2688 /* Optional.swift */,
+				D3FC6E751F2ED51F007471E2 /* Optionals.swift */,
 				D389761B1F285F0900811532 /* Reader.swift */,
 				D389761C1F285F0900811532 /* Readers.swift */,
 				D389761D1F285F0900811532 /* State.swift */,
 				D389761F1F285F0900811532 /* Tries.swift */,
 				D38976201F285F0900811532 /* Try.swift */,
-				D3FC6E751F2ED51F007471E2 /* Optionals.swift */,
-				D391DCDE1F7803A4003C2688 /* Optional.swift */,
 			);
 			path = functional;
 			sourceTree = "<group>";
@@ -352,8 +354,8 @@
 				D389763B1F285F1500811532 /* collection */,
 				D389763D1F285F1500811532 /* date */,
 				D389763F1F285F1500811532 /* exception */,
-				D38976411F285F1500811532 /* mock */,
 				D38976431F285F1500811532 /* functional */,
+				D38976411F285F1500811532 /* mock */,
 				D38976481F285F1500811532 /* reactive */,
 				D389764A1F285F1500811532 /* thread */,
 				D389764C1F285F1500811532 /* type */,
@@ -397,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				D38976441F285F1500811532 /* EitherTest.swift */,
+				D3F9E39B1FC67121000F1680 /* OptionalTest.swift */,
 				D38976451F285F1500811532 /* ReaderTest.swift */,
 				D38976461F285F1500811532 /* StateTest.swift */,
 				D38976471F285F1500811532 /* TryTest.swift */,
@@ -698,6 +701,7 @@
 				D389764F1F28705600811532 /* FakeProtocol.swift in Sources */,
 				D38976501F28705600811532 /* CollectionsTest.swift in Sources */,
 				D38976511F28705600811532 /* DatesTest.swift in Sources */,
+				D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */,
 				D38976521F28705600811532 /* ExceptionsTest.swift in Sources */,
 				D38976531F28705600811532 /* MockTest.swift in Sources */,
 				D38976541F28705600811532 /* EitherTest.swift in Sources */,
