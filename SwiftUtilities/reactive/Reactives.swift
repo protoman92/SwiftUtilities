@@ -446,8 +446,7 @@ public extension ObservableConvertibleType {
         if delay == 0 {
             return self.asObservable().retry()
         } else {
-            return self.asObservable()
-                .retryWhen({$0.delay(delay, scheduler: scheduler)})
+            return self.asObservable().retryWhen({$0.delay(delay, scheduler: scheduler)})
         }
     }
 }
@@ -457,24 +456,26 @@ public extension ObservableConvertibleType {
     /// Emit the time at which an element is pushed.
     ///
     /// - Returns: An Observable instance.
-    public func timestamp() -> Observable<TimeInterval> {
-        return self.asObservable().map({_ in Date().timeIntervalSince1970})
+    public func timestamp() -> Observable<(element: E, timestamp: TimeInterval)> {
+        return self.asObservable().map({($0, Date().timeIntervalSince1970)})
     }
     
     /// Get the time difference between two consecutive elements.
     ///
     /// - Returns: An Observable instance.
-    public func timeDifference() -> Observable<TimeInterval> {
+    public func timeDifference() -> Observable<(element: E?, difference: TimeInterval)> {
         typealias TimeTuple = (previous: TimeInterval, diff: TimeInterval)
-        let initial = TimeTuple(previous: Date().timeIntervalSince1970, diff: 0)
+        typealias Emission = (element: E?, difference: TimeInterval)
+        let initialTuple = TimeTuple(previous: Date().timeIntervalSince1970, diff: 0)
+        let initial: (E?, TimeTuple) = (nil, initialTuple)
         
         return timestamp()
             .scan(initial, accumulator: {
-                let current = $0.1
-                let diff = current - $0.0.previous
-                return TimeTuple(previous: current, diff: diff)
+                let current = $0.1.1
+                let diff = current - $0.0.1.previous
+                return ($0.1.0, TimeTuple(previous: current, diff: diff))
             })
-            .map({$0.diff})
+            .map({(element, tuple) -> Emission in Emission(element, tuple.diff)})
     }
 }
 

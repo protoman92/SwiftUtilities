@@ -323,6 +323,7 @@ public final class ReactiveTest: XCTestCase {
         /// When
         Observable<Int>.interval(interval, scheduler: MainScheduler.instance)
             .timeDifference()
+            .map({$0.difference})
             .take(takeCount)
             .doOnDispose(expect.fulfill)
             .subscribe(observer)
