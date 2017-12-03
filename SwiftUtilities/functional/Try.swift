@@ -41,6 +41,32 @@ public extension TryType {
         return !isSuccess
     }
     
+    /// Return the current Try if the inner element passes a check, otherwise
+    /// return a failure Try with the supplied error.
+    ///
+    /// - Parameters:
+    ///   - selector: Selector function.
+    ///   - error: An Error instance.
+    /// - Returns: A Try instance.
+    public func filter(_ selector: (Val) throws -> Bool, _ error: Error) -> Try<Val> {
+        do {
+            let value = try getOrThrow()
+            return try selector(value) ? Try.success(value) : Try.failure(error)
+        } catch let e {
+            return Try.failure(e)
+        }
+    }
+    
+    /// Convenience method to filter out an inner element.
+    ///
+    /// - Parameters:
+    ///   - selector: Selector function.
+    ///   - error: A String value.
+    /// - Returns: A Try instance.
+    public func filter(_ selector: (Val) throws -> Bool, _ error: String) -> Try<Val> {
+        return filter(selector, Exception(error))
+    }
+    
     /// Get success value or throw failure Error.
     ///
     /// - Returns: A Val instance.

@@ -54,4 +54,21 @@ public final class TryTest: XCTestCase {
         XCTAssertTrue(try23.isFailure)
         XCTAssertTrue(try34.isFailure)
     }
+    
+    public func test_tryFilter_shouldWork() {
+        /// Setup
+        let try1 = Try.success(1)
+        let try2 = Try.success(2)
+        let try3 = Try<Int>.failure(Exception("Error 3"))
+
+        /// Setup
+        let try1f = try1.filter(Int.isEven, "Not even!")
+        let try2f = try2.filter(Int.isEven, "Not even!")
+        let try3f = try3.filter(Int.isOdd, "This error should be be reached")
+        
+        /// Then
+        XCTAssertTrue(try1f.isFailure)
+        XCTAssertTrue(try2f.isSuccess)
+        XCTAssertEqual(try3f.error?.localizedDescription, "Error 3")
+    }
 }

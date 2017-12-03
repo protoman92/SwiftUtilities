@@ -47,4 +47,21 @@ public final class OptionalTest: XCTestCase {
         XCTAssertEqual(o13, 1)
         XCTAssertEqual(o21, 1)
     }
+    
+    public func test_optionalFilter_shouldWork() {
+        /// Setup
+        let o1 = Optional.some(1)
+        let o2 = Optional.some(2)
+        let o3 = Optional<Int>.nothing()
+        
+        /// When
+        let o1f = o1.filter(selector: Int.isEven)
+        let o2f = o2.filter(selector: Int.isEven)
+        let o3f = o3.filter(selector: Int.isOdd)
+        
+        /// Then
+        XCTAssertTrue(o1f.isNothing())
+        XCTAssertTrue(o2f.isSome())
+        XCTAssertTrue(o3f.isNothing())
+    }
 }

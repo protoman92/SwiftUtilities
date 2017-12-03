@@ -60,6 +60,6 @@ public extension Try {
     /// - Parameter optional: An Optional instance.
     /// - Returns: A Try instance.
     public static func from<Val>(optional: Optional<Val>) -> Try<Val> {
-        return Try.from(optional: optional, error: "Cannot be nil")
+        return Try.from(optional: optional, error: "\(Val.self) cannot be nil")
     }
 }
