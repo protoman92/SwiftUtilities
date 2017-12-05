@@ -460,22 +460,29 @@ public extension ObservableConvertibleType {
         return self.asObservable().map({($0, Date().timeIntervalSince1970)})
     }
     
-    /// Get the time difference between two consecutive elements.
+    /// Get the time difference between two consecutive elements. The stream
+    /// here emits a tuple of index, element and time difference so that the
+    /// end user gets access to the max amount of information. For e.g., the
+    /// initial time difference may be too small and the user wishes to filter
+    /// events based on a threshold time difference. They can then check whether
+    /// the index is 0 or the time difference is larger than the threshold.
     ///
     /// - Returns: An Observable instance.
-    public func timeDifference() -> Observable<(element: E?, difference: TimeInterval)> {
+    public func timeDifference() -> Observable<(index: Int, element: E?, difference: TimeInterval)> {
         typealias TimeTuple = (previous: TimeInterval, diff: TimeInterval)
-        typealias Emission = (element: E?, difference: TimeInterval)
+        typealias Emission = (index: Int, element: E?, difference: TimeInterval)
         let initialTuple = TimeTuple(previous: Date().timeIntervalSince1970, diff: 0)
-        let initial: (E?, TimeTuple) = (nil, initialTuple)
+        let initial: (Int, E?, TimeTuple) = (-1, nil, initialTuple)
         
         return timestamp()
             .scan(initial, accumulator: {
+                let index = $0.0.0 + 1
+                let element = $0.1.0
                 let current = $0.1.1
-                let diff = current - $0.0.1.previous
-                return ($0.1.0, TimeTuple(previous: current, diff: diff))
+                let diff = current - $0.0.2.previous
+                return (index, element, TimeTuple(current, diff))
             })
-            .map({(element, tuple) -> Emission in Emission(element, tuple.diff)})
+            .map({(i, e, t) -> Emission in Emission(i, e, t.diff)})
     }
 }
 
