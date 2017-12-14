@@ -18,8 +18,13 @@ public final class LocalizationTest: XCTestCase {
     public func test_localizeStrings_shouldWorkCorrectly() {
         /// Setup
         let bundle = Bundle(for: LocalizationTest.self)
-        
         let tables = ["Localizable1", "Localizable2"]
+        
+        let localizer = Localizer.builder()
+            .add(bundle: bundle)
+            .add(bundle: Bundle.main)
+            .add(tables: tables)
+            .build()
         
         let strings = [
             "string1_test1",
@@ -32,12 +37,15 @@ public final class LocalizationTest: XCTestCase {
         
         /// When
         for string in strings {
-            let localized = string.localize(bundle, tables)
+            let localized1 = localizer.localize(string)
+            let localized2 = string.localize(bundle, tables)
             
             /// Then
-            XCTAssertNotEqual(string, localized)
+            XCTAssertNotEqual(string, localized1)
+            XCTAssertEqual(localized1, localized2)
         }
         
         XCTAssertEqual(wrongString.localize(bundle, tables), wrongString)
+        XCTAssertEqual(localizer.localize(wrongString), wrongString)
     }
 }

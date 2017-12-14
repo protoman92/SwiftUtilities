@@ -51,6 +51,8 @@
 		D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC289F1F41FDCB004C24B8 /* Enums.swift */; };
 		D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */; };
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
+		D3F70B1A1FE2F5F400642935 /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F70B191FE2F5F400642935 /* Localizer.swift */; };
+		D3F70B1C1FE2F82300642935 /* LocalizerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F70B1B1FE2F82300642935 /* LocalizerType.swift */; };
 		D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E39B1FC67121000F1680 /* OptionalTest.swift */; };
 		D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FC6E751F2ED51F007471E2 /* Optionals.swift */; };
 		D3FDD47C1FE24EDF0024691A /* Localizable1.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3FDD47B1FE24EDF0024691A /* Localizable1.strings */; };
@@ -122,6 +124,8 @@
 		D3AC289F1F41FDCB004C24B8 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildableType.swift; sourceTree = "<group>"; };
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
+		D3F70B191FE2F5F400642935 /* Localizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizer.swift; sourceTree = "<group>"; };
+		D3F70B1B1FE2F82300642935 /* LocalizerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizerType.swift; sourceTree = "<group>"; };
 		D3F9E39B1FC67121000F1680 /* OptionalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalTest.swift; sourceTree = "<group>"; };
 		D3FC6E751F2ED51F007471E2 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		D3FDD47B1FE24EDF0024691A /* Localizable1.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable1.strings; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 		D38975F91F285E9C00811532 /* SwiftUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				D3F70B181FE29C9D00642935 /* localization */,
 				D3B06AEA1F454E5000DACB81 /* immutable */,
 				D38976251F285F0900811532 /* boolean */,
 				D38976271F285F0900811532 /* collection */,
@@ -454,6 +459,15 @@
 			path = immutable;
 			sourceTree = "<group>";
 		};
+		D3F70B181FE29C9D00642935 /* localization */ = {
+			isa = PBXGroup;
+			children = (
+				D3F70B191FE2F5F400642935 /* Localizer.swift */,
+				D3F70B1B1FE2F82300642935 /* LocalizerType.swift */,
+			);
+			path = localization;
+			sourceTree = "<group>";
+		};
 		D3FDD47A1FE23C3C0024691A /* localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -684,9 +698,11 @@
 				D389765C1F28706200811532 /* Booleans.swift in Sources */,
 				D389765D1F28706200811532 /* Collections.swift in Sources */,
 				D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */,
+				D3F70B1C1FE2F82300642935 /* LocalizerType.swift in Sources */,
 				D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */,
 				D389765E1F28706200811532 /* Swifts.swift in Sources */,
 				D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */,
+				D3F70B1A1FE2F5F400642935 /* Localizer.swift in Sources */,
 				D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */,
 				D389765F1F28706200811532 /* Dates.swift in Sources */,
 				D38976601F28706200811532 /* Exceptions.swift in Sources */,
