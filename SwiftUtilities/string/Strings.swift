@@ -61,15 +61,6 @@ public extension String {
         return !isEmpty
     }
     
-    /// Localize the current String.
-    public var localized: String {
-        let value = NSLocalizedString(self,
-                                      tableName: "CommonLocalizable",
-                                      comment: "")
-        
-        return NSLocalizedString(self, value: value, comment: "")
-    }
-    
     /// Underline the current String.
     public var underlined: NSAttributedString {
         let attributes = [
@@ -77,19 +68,6 @@ public extension String {
         ]
         
         return NSAttributedString(string: self, attributes: attributes)
-    }
-    
-    /// Localize the current String with a format.
-    ///
-    /// - Parameter args: Format parameters.
-    /// - Returns: A localized String.
-    public func localize(_ args: CVarArg...) -> String {
-        let localized = NSLocalizedString(self,
-                                          tableName: "CommonLocalizable",
-                                          comment: "")
-        
-        let format = NSLocalizedString(self, value: localized, comment: "")
-        return String(format: format, arguments: args)
     }
     
     /// Replace occurrences of a String with a set of character types.
@@ -104,6 +82,60 @@ public extension String {
     }
 }
 
+public extension String {
+    
+    /// Localize a String based a a bundle and some table names. We sequentially
+    /// check the localization from each table until a localized String that is
+    /// different from the current String is generated.
+    ///
+    /// - Parameters:
+    ///   - bundle: A Bundle instance.
+    ///   - tables: Sequence of String.
+    /// - Returns: A String value.
+    public func localize<S>(_ bundle: Bundle, _ tables: S) -> String where
+        S: Sequence, S.Element == String
+    {
+        for table in tables {
+            let localized = NSLocalizedString(self,
+                                              tableName: table,
+                                              bundle: bundle,
+                                              value: "",
+                                              comment: "")
+            
+            if localized != self {
+                return localized
+            }
+        }
+        
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    /// Localize with the default Bundle.
+    ///
+    /// - Parameter tables: Varargs of String.
+    /// - Returns: A String value.
+    public func localize<S>(_ tables: S) -> String where S: Sequence, S.Element == String {
+        return localize(Bundle.main, tables)
+    }
+    
+    /// Localize a String based a a bundle and some table names.
+    ///
+    /// - Parameters:
+    ///   - bundle: A Bundle instance.
+    ///   - tables: Sequence of String.
+    /// - Returns: A String value.
+    public func localize(_ bundle: Bundle, _ tables: String...) -> String {
+        return localize(bundle, tables)
+    }
+    
+    /// Localize with the default Bundle.
+    ///
+    /// - Parameter tables: Varargs of String.
+    /// - Returns: A String value.
+    public func localize(_ tables: String...) -> String {
+        return localize(tables)
+    }
+}
 
 public extension String {
     public struct Formatter {
@@ -147,8 +179,7 @@ public extension String {
 
 public extension NSMutableData {
     public convenience init?(hexadecimalString hex: String) {
-        let characters = hex.characters
-        let count = characters.count
+        let count = hex.count
         self.init(capacity: count / 2)
         
         do {

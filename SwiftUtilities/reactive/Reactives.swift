@@ -424,11 +424,11 @@ public extension ObservableConvertibleType {
         if delay == 0 {
             return self.asObservable().retry(retries)
         } else {
-            return self.asObservable()
-                .retryWhen({Observable<Int>
-                .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
-                .delay(delay, scheduler: scheduler)
-                .takeUntil(terminateObs)
+            return self.asObservable().retryWhen({
+                Observable<Int>
+                    .zip(Observable.range(start: 0, count: retries), $0, resultSelector: {$0.0})
+                    .delay(delay, scheduler: scheduler)
+                    .takeUntil(terminateObs)
             })
         }
     }
@@ -476,10 +476,10 @@ public extension ObservableConvertibleType {
         
         return timestamp()
             .scan(initial, accumulator: {
-                let index = $0.0.0 + 1
-                let element = $0.1.0
-                let current = $0.1.1
-                let diff = current - $0.0.2.previous
+                let index = $0.0 + 1
+                let element = $1.0
+                let current = $1.1
+                let diff = current - $0.2.previous
                 return (index, element, TimeTuple(current, diff))
             })
             .map({(i, e, t) -> Emission in Emission(i, e, t.diff)})

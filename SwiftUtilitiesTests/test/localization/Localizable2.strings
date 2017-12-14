@@ -1,0 +1,10 @@
+/* 
+  Localizable2.strings
+  SwiftUtilities
+
+  Created by Hai Pham on 14/12/17.
+  Copyright © 2017 Holmusk. All rights reserved.
+*/
+
+string2_test1 = "This is another test string.";
+string2_test2 = "This is yet another test string.";

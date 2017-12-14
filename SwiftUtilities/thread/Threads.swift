@@ -27,7 +27,7 @@ public extension DispatchQueue {
             }
             
             _onceTracker.append(token)
-            block()
+            block(())
         }
     }
 }

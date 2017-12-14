@@ -437,7 +437,7 @@ public extension Sequence where Iterator.Element: ComparisonResultConvertibleTyp
     /// - Parameter result: A ComparisonResult instance.
     /// - Returns: An Array of a ComparisonResultConvertibleType subclass.
     public func sorted(by result: ComparisonResult) -> [Iterator.Element] {
-        return sorted(by: {$0.0.compare(against: $0.1) == result})
+        return sorted(by: {$0.compare(against: $1) == result})
     }
     
     /// Sort in ascending order.
@@ -484,7 +484,7 @@ public extension Dictionary where Key: ComparisonResultConvertibleType {
     /// - Parameter result: A ComparisonResult instance.
     /// - Returns: A Dictionary instance.
     public func sorted(by result: ComparisonResult) -> [(Key, Value)] {
-        return self.sorted(by: {$0.0.key.compare(against: $0.1.key) == result})
+        return self.sorted(by: {$0.key.compare(against: $1.key) == result})
     }
     
     /// Sort in ascending order.

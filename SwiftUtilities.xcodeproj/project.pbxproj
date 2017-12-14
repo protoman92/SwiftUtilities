@@ -53,6 +53,9 @@
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
 		D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E39B1FC67121000F1680 /* OptionalTest.swift */; };
 		D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FC6E751F2ED51F007471E2 /* Optionals.swift */; };
+		D3FDD47C1FE24EDF0024691A /* Localizable1.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3FDD47B1FE24EDF0024691A /* Localizable1.strings */; };
+		D3FDD47E1FE24EEE0024691A /* Localizable2.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3FDD47D1FE24EEE0024691A /* Localizable2.strings */; };
+		D3FDD4801FE24EFA0024691A /* LocalizationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FDD47F1FE24EFA0024691A /* LocalizationTest.swift */; };
 		EFB713417934087650DAF6E9 /* Pods_SwiftUtilitiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942B1152A7939BD7EAEA13E7 /* Pods_SwiftUtilitiesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +124,9 @@
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
 		D3F9E39B1FC67121000F1680 /* OptionalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalTest.swift; sourceTree = "<group>"; };
 		D3FC6E751F2ED51F007471E2 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
+		D3FDD47B1FE24EDF0024691A /* Localizable1.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable1.strings; sourceTree = "<group>"; };
+		D3FDD47D1FE24EEE0024691A /* Localizable2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable2.strings; sourceTree = "<group>"; };
+		D3FDD47F1FE24EFA0024691A /* LocalizationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTest.swift; sourceTree = "<group>"; };
 		D487390D216B637791F2D086 /* Pods-SwiftUtilities.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilities.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities.debug.xcconfig"; sourceTree = "<group>"; };
 		EA70204D36B8748E91D70CF0 /* Pods-SwiftUtilitiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -351,6 +357,7 @@
 		D389763A1F285F1500811532 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D3FDD47A1FE23C3C0024691A /* localization */,
 				D389763B1F285F1500811532 /* collection */,
 				D389763D1F285F1500811532 /* date */,
 				D389763F1F285F1500811532 /* exception */,
@@ -445,6 +452,16 @@
 				D3B06AEF1F454EF400DACB81 /* CloneableType.swift */,
 			);
 			path = immutable;
+			sourceTree = "<group>";
+		};
+		D3FDD47A1FE23C3C0024691A /* localization */ = {
+			isa = PBXGroup;
+			children = (
+				D3FDD47B1FE24EDF0024691A /* Localizable1.strings */,
+				D3FDD47D1FE24EEE0024691A /* Localizable2.strings */,
+				D3FDD47F1FE24EFA0024691A /* LocalizationTest.swift */,
+			);
+			path = localization;
 			sourceTree = "<group>";
 		};
 		DE1ADBE60CEA44F39C1BDB2C /* Frameworks */ = {
@@ -559,6 +576,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3FDD47E1FE24EEE0024691A /* Localizable2.strings in Resources */,
+				D3FDD47C1FE24EDF0024691A /* Localizable1.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +726,7 @@
 				D38976541F28705600811532 /* EitherTest.swift in Sources */,
 				D38976551F28705600811532 /* ReaderTest.swift in Sources */,
 				D38976561F28705600811532 /* StateTest.swift in Sources */,
+				D3FDD4801FE24EFA0024691A /* LocalizationTest.swift in Sources */,
 				D38976571F28705600811532 /* TryTest.swift in Sources */,
 				D38976581F28705600811532 /* ReactiveTest.swift in Sources */,
 				D38976591F28705600811532 /* ThreadTest.swift in Sources */,
@@ -856,7 +876,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.2;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -878,7 +898,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.2;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
