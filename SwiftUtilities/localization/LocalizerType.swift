@@ -17,13 +17,12 @@ public extension LocalizerType {
     ///
     /// - Parameters:
     ///   - format: A String value.
-    ///   - args: Sequence of CVarArg.
+    ///   - args: Array of CVarArg.
     /// - Returns: A String value.
-    public func localize<S>(_ format: String, _ args: S) -> String where
-        S: Sequence, S.Element == CVarArg
-    {
+    public func localize(_ format: String, _ args: [CVarArg]) -> String {
+        let argStrings = args.map({String(describing: $0)})
         let localizedFormat = localize(format)
-        return String(format: localizedFormat, arguments: args.map({$0}))
+        return String(format: localizedFormat, arguments: argStrings)
     }
     
     /// Localize a String based on some format.
