@@ -475,6 +475,17 @@ public extension Dictionary {
             self.updateValue(value, forKey: key)
         }
     }
+    
+    /// Update the current Dictionary with another Dictionary and return the
+    /// result.
+    ///
+    /// - Parameter dict: A Dictionary instance.
+    /// - Returns: A Dictionary instance.
+    public func updatingValues(_ dict: [Key : Value]) -> [Key : Value] {
+        var result = self
+        result.updateValues(from: dict)
+        return result
+    }
 }
 
 public extension Dictionary where Key: ComparisonResultConvertibleType {
@@ -500,6 +511,26 @@ public extension Dictionary where Key: ComparisonResultConvertibleType {
     public func sortedDescending() -> [(Key, Value)] {
         return sorted(by: .orderedDescending)
     }
+}
+
+/// Add two Dictionaries.
+///
+/// - Parameters:
+///   - lhs: A Dictionary instance.
+///   - rhs: A Dictionary instance.
+/// - Returns: A Dictionary instance.
+public func +<K,V>(_ lhs: [K : V], _ rhs: [K : V]) -> [K : V] {
+    return lhs.updatingValues(rhs)
+}
+
+/// Add two Dictionaries.
+///
+/// - Parameters:
+///   - lhs: A Dictionary instance.
+///   - rhs: A Dictionary instance.
+/// - Returns: A Dictionary instance.
+public func +<K,V>(_ lhs: [K : Any], _ rhs: [K : V]) -> [K : Any] {
+    return lhs + rhs
 }
 
 extension Array: IsInstanceType {}
