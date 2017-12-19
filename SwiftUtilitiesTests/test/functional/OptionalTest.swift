@@ -55,9 +55,9 @@ public final class OptionalTest: XCTestCase {
         let o3 = Optional<Int>.nothing()
         
         /// When
-        let o1f = o1.filter(selector: Int.isEven)
-        let o2f = o2.filter(selector: Int.isEven)
-        let o3f = o3.filter(selector: Int.isOdd)
+        let o1f = o1.filter(Int.isEven)
+        let o2f = o2.filter(Int.isEven)
+        let o3f = o3.filter(Int.isOdd)
         
         /// Then
         XCTAssertTrue(o1f.isNothing())

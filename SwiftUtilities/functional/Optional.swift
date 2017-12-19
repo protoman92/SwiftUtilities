@@ -75,9 +75,10 @@ extension Optional: OptionalType {
     /// Filter the inner value using a selector and return nothing if it does
     /// not pass the predicate.
     ///
+    
     /// - Parameter selector: Selector function.
     /// - Returns: An Optional instance.
-    public func filter(selector: (Val) throws -> Bool) -> Optional<Val> {
+    public func filter(_ selector: (Val) throws -> Bool) -> Optional<Val> {
         return asTry().filter(selector, "").asOptional()
     }
 }

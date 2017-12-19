@@ -486,6 +486,18 @@ public extension Dictionary {
         result.updateValues(from: dict)
         return result
     }
+    
+    /// Update the current Dictionary with a key and value and return the result.
+    ///
+    /// - Parameters:
+    ///   - value: A Value instance.
+    ///   - key: A Key instance.
+    /// - Returns: A Dictionary instance.
+    public func updatingValue(_ value: Value, _ key: Key) -> [Key : Value] {
+        var result = self
+        result.updateValue(value, forKey: key)
+        return result
+    }
 }
 
 public extension Dictionary where Key: ComparisonResultConvertibleType {
