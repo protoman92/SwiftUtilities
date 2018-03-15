@@ -9,31 +9,7 @@
 import XCTest
 @testable import SwiftUtilities
 
-final class CollectionsTest: XCTestCase {
-    public func test_arrayAddUniqueContents_shouldSucceed() {
-        /// Setup
-        var array1 = [1, 2, 3]
-        let array2 = [1, 3, 5]
-        
-        /// When
-        array1.append(uniqueContentsOf: array2)
-        
-        /// Then
-        let set = Set(array1)
-        XCTAssertEqual(array1.count, set.count)
-    }
-    
-    public func test_arrayContains_shouldSucceed() {
-        /// Setup
-        let array1 = [1, 2, 3]
-        
-        /// When
-        let contains = array1.contains(element: 1)
-        
-        /// Then
-        XCTAssertTrue(contains)
-    }
-    
+public final class CollectionsTest: XCTestCase {
     public func test_arrayRepeat_shouldSucceed() {
         /// Setup
         let times = 10
@@ -95,34 +71,6 @@ final class CollectionsTest: XCTestCase {
         
         /// Then
         XCTAssertTrue(anySatisfied)
-    }
-    
-    public func test_dictionarySortedAscending_shouldWork() {
-        /// Setup
-        let array = ["c", "a", "z", "b"]
-        var dict = [String: String]()
-        for item in array { dict[item] = item }
-        
-        /// When
-        let sortedArray = array.sortedAscending()
-        let sortedDict = dict.sortedAscending()
-        
-        /// Then
-        XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
-    }
-    
-    public func test_dictionarySortedDescending_shouldWork() {
-        /// Setup
-        let array = ["c", "a", "z", "b"]
-        var dict = [String: String]()
-        for item in array { dict[item] = item }
-        
-        /// When
-        let sortedArray = array.sortedDescending()
-        let sortedDict = dict.sortedDescending()
-        
-        /// Then
-        XCTAssertEqual(sortedArray, sortedDict.map({$0.0}))
     }
     
     public func test_logEach_shouldWork() {

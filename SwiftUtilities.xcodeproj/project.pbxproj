@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		059D9859992F610384A063DE /* Pods_SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8763E9607B570D73F24656F /* Pods_SwiftUtilities.framework */; };
+		D3123DB7205AC062003FD261 /* Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3123DB6205AC062003FD261 /* Blocking.swift */; };
 		D38976011F285E9C00811532 /* SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38975F71F285E9C00811532 /* SwiftUtilities.framework */; };
 		D38976081F285E9C00811532 /* SwiftUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D38975FA1F285E9C00811532 /* SwiftUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D389764E1F28705600811532 /* FakeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976381F285F1500811532 /* FakeDetails.swift */; };
@@ -16,10 +17,6 @@
 		D38976511F28705600811532 /* DatesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389763E1F285F1500811532 /* DatesTest.swift */; };
 		D38976521F28705600811532 /* ExceptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976401F285F1500811532 /* ExceptionsTest.swift */; };
 		D38976531F28705600811532 /* MockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976421F285F1500811532 /* MockTest.swift */; };
-		D38976541F28705600811532 /* EitherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976441F285F1500811532 /* EitherTest.swift */; };
-		D38976551F28705600811532 /* ReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976451F285F1500811532 /* ReaderTest.swift */; };
-		D38976561F28705600811532 /* StateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976461F285F1500811532 /* StateTest.swift */; };
-		D38976571F28705600811532 /* TryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976471F285F1500811532 /* TryTest.swift */; };
 		D38976581F28705600811532 /* ReactiveTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976491F285F1500811532 /* ReactiveTest.swift */; };
 		D38976591F28705600811532 /* ThreadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389764B1F285F1500811532 /* ThreadTest.swift */; };
 		D389765A1F28705600811532 /* TypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389764D1F285F1500811532 /* TypeTest.swift */; };
@@ -34,27 +31,16 @@
 		D38976631F28706200811532 /* SortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976301F285F0900811532 /* SortMode.swift */; };
 		D38976641F28706200811532 /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976311F285F0900811532 /* SortOrder.swift */; };
 		D38976651F28706200811532 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389762A1F285F0900811532 /* Maths.swift */; };
-		D38976661F28706200811532 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976191F285F0900811532 /* Either.swift */; };
-		D38976671F28706200811532 /* Eithers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761A1F285F0900811532 /* Eithers.swift */; };
-		D38976681F28706200811532 /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761B1F285F0900811532 /* Reader.swift */; };
-		D38976691F28706200811532 /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761C1F285F0900811532 /* Readers.swift */; };
-		D389766A1F28706200811532 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761D1F285F0900811532 /* State.swift */; };
-		D389766C1F28706200811532 /* Tries.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389761F1F285F0900811532 /* Tries.swift */; };
-		D389766D1F28706200811532 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976201F285F0900811532 /* Try.swift */; };
-		D389766E1F28706200811532 /* Cocoas.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976121F285F0900811532 /* Cocoas.swift */; };
 		D389766F1F28706200811532 /* Reactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976131F285F0900811532 /* Reactives.swift */; };
 		D38976701F28706200811532 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976241F285F0900811532 /* Strings.swift */; };
 		D38976711F28706200811532 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976151F285F0900811532 /* Threads.swift */; };
 		D38976721F28706200811532 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38976331F285F0900811532 /* Types.swift */; };
-		D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391DCDE1F7803A4003C2688 /* Optional.swift */; };
 		D3A295471F82487A00F10756 /* Preconditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A295461F82487A00F10756 /* Preconditions.swift */; };
 		D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC289F1F41FDCB004C24B8 /* Enums.swift */; };
 		D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */; };
 		D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B06AEF1F454EF400DACB81 /* CloneableType.swift */; };
 		D3F70B1A1FE2F5F400642935 /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F70B191FE2F5F400642935 /* Localizer.swift */; };
 		D3F70B1C1FE2F82300642935 /* LocalizerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F70B1B1FE2F82300642935 /* LocalizerType.swift */; };
-		D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E39B1FC67121000F1680 /* OptionalTest.swift */; };
-		D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FC6E751F2ED51F007471E2 /* Optionals.swift */; };
 		D3FDD47C1FE24EDF0024691A /* Localizable1.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3FDD47B1FE24EDF0024691A /* Localizable1.strings */; };
 		D3FDD47E1FE24EEE0024691A /* Localizable2.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3FDD47D1FE24EEE0024691A /* Localizable2.strings */; };
 		D3FDD4801FE24EFA0024691A /* LocalizationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FDD47F1FE24EFA0024691A /* LocalizationTest.swift */; };
@@ -76,22 +62,15 @@
 		5988B559F8B0872406DD5F7A /* Pods-SwiftUtilitiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUtilitiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		942B1152A7939BD7EAEA13E7 /* Pods_SwiftUtilitiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUtilitiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8763E9607B570D73F24656F /* Pods_SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3123DB6205AC062003FD261 /* Blocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocking.swift; sourceTree = "<group>"; };
 		D38975F71F285E9C00811532 /* SwiftUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38975FA1F285E9C00811532 /* SwiftUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftUtilities.h; sourceTree = "<group>"; };
 		D38975FB1F285E9C00811532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D38976001F285E9C00811532 /* SwiftUtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38976071F285E9C00811532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D38976121F285F0900811532 /* Cocoas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cocoas.swift; sourceTree = "<group>"; };
 		D38976131F285F0900811532 /* Reactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactives.swift; sourceTree = "<group>"; };
 		D38976151F285F0900811532 /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
 		D38976171F285F0900811532 /* Exceptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exceptions.swift; sourceTree = "<group>"; };
-		D38976191F285F0900811532 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
-		D389761A1F285F0900811532 /* Eithers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eithers.swift; sourceTree = "<group>"; };
-		D389761B1F285F0900811532 /* Reader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reader.swift; sourceTree = "<group>"; };
-		D389761C1F285F0900811532 /* Readers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readers.swift; sourceTree = "<group>"; };
-		D389761D1F285F0900811532 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		D389761F1F285F0900811532 /* Tries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tries.swift; sourceTree = "<group>"; };
-		D38976201F285F0900811532 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		D38976221F285F0900811532 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		D38976241F285F0900811532 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		D38976261F285F0900811532 /* Booleans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Booleans.swift; sourceTree = "<group>"; };
@@ -110,24 +89,17 @@
 		D389763E1F285F1500811532 /* DatesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesTest.swift; sourceTree = "<group>"; };
 		D38976401F285F1500811532 /* ExceptionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExceptionsTest.swift; sourceTree = "<group>"; };
 		D38976421F285F1500811532 /* MockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTest.swift; sourceTree = "<group>"; };
-		D38976441F285F1500811532 /* EitherTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTest.swift; sourceTree = "<group>"; };
-		D38976451F285F1500811532 /* ReaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTest.swift; sourceTree = "<group>"; };
-		D38976461F285F1500811532 /* StateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateTest.swift; sourceTree = "<group>"; };
-		D38976471F285F1500811532 /* TryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryTest.swift; sourceTree = "<group>"; };
 		D38976491F285F1500811532 /* ReactiveTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveTest.swift; sourceTree = "<group>"; };
 		D389764B1F285F1500811532 /* ThreadTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTest.swift; sourceTree = "<group>"; };
 		D389764D1F285F1500811532 /* TypeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTest.swift; sourceTree = "<group>"; };
 		D38976731F28715600811532 /* SwiftUtilitiesTests.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilitiesTests.podspec; sourceTree = "<group>"; };
 		D38976741F28715600811532 /* SwiftUtilities.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftUtilities.podspec; sourceTree = "<group>"; };
-		D391DCDE1F7803A4003C2688 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		D3A295461F82487A00F10756 /* Preconditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preconditions.swift; sourceTree = "<group>"; };
 		D3AC289F1F41FDCB004C24B8 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D3B06AEB1F454EBE00DACB81 /* BuildableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildableType.swift; sourceTree = "<group>"; };
 		D3B06AEF1F454EF400DACB81 /* CloneableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableType.swift; sourceTree = "<group>"; };
 		D3F70B191FE2F5F400642935 /* Localizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizer.swift; sourceTree = "<group>"; };
 		D3F70B1B1FE2F82300642935 /* LocalizerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizerType.swift; sourceTree = "<group>"; };
-		D3F9E39B1FC67121000F1680 /* OptionalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalTest.swift; sourceTree = "<group>"; };
-		D3FC6E751F2ED51F007471E2 /* Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		D3FDD47B1FE24EDF0024691A /* Localizable1.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable1.strings; sourceTree = "<group>"; };
 		D3FDD47D1FE24EEE0024691A /* Localizable2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable2.strings; sourceTree = "<group>"; };
 		D3FDD47F1FE24EFA0024691A /* LocalizationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTest.swift; sourceTree = "<group>"; };
@@ -201,7 +173,6 @@
 				D38976161F285F0900811532 /* exception */,
 				D389762D1F285F0900811532 /* foundation */,
 				D38976291F285F0900811532 /* math */,
-				D38976181F285F0900811532 /* functional */,
 				D38976111F285F0900811532 /* reactive */,
 				D38976231F285F0900811532 /* string */,
 				D38976141F285F0900811532 /* thread */,
@@ -226,8 +197,8 @@
 		D38976111F285F0900811532 /* reactive */ = {
 			isa = PBXGroup;
 			children = (
-				D38976121F285F0900811532 /* Cocoas.swift */,
 				D38976131F285F0900811532 /* Reactives.swift */,
+				D3123DB6205AC062003FD261 /* Blocking.swift */,
 			);
 			path = reactive;
 			sourceTree = "<group>";
@@ -247,22 +218,6 @@
 				D3A295461F82487A00F10756 /* Preconditions.swift */,
 			);
 			path = exception;
-			sourceTree = "<group>";
-		};
-		D38976181F285F0900811532 /* functional */ = {
-			isa = PBXGroup;
-			children = (
-				D38976191F285F0900811532 /* Either.swift */,
-				D389761A1F285F0900811532 /* Eithers.swift */,
-				D391DCDE1F7803A4003C2688 /* Optional.swift */,
-				D3FC6E751F2ED51F007471E2 /* Optionals.swift */,
-				D389761B1F285F0900811532 /* Reader.swift */,
-				D389761C1F285F0900811532 /* Readers.swift */,
-				D389761D1F285F0900811532 /* State.swift */,
-				D389761F1F285F0900811532 /* Tries.swift */,
-				D38976201F285F0900811532 /* Try.swift */,
-			);
-			path = functional;
 			sourceTree = "<group>";
 		};
 		D38976211F285F0900811532 /* date */ = {
@@ -366,7 +321,6 @@
 				D389763B1F285F1500811532 /* collection */,
 				D389763D1F285F1500811532 /* date */,
 				D389763F1F285F1500811532 /* exception */,
-				D38976431F285F1500811532 /* functional */,
 				D38976411F285F1500811532 /* mock */,
 				D38976481F285F1500811532 /* reactive */,
 				D389764A1F285F1500811532 /* thread */,
@@ -405,18 +359,6 @@
 				D38976421F285F1500811532 /* MockTest.swift */,
 			);
 			path = mock;
-			sourceTree = "<group>";
-		};
-		D38976431F285F1500811532 /* functional */ = {
-			isa = PBXGroup;
-			children = (
-				D38976441F285F1500811532 /* EitherTest.swift */,
-				D3F9E39B1FC67121000F1680 /* OptionalTest.swift */,
-				D38976451F285F1500811532 /* ReaderTest.swift */,
-				D38976461F285F1500811532 /* StateTest.swift */,
-				D38976471F285F1500811532 /* TryTest.swift */,
-			);
-			path = functional;
 			sourceTree = "<group>";
 		};
 		D38976481F285F1500811532 /* reactive */ = {
@@ -626,6 +568,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftFP/SwiftFP.framework",
 				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -633,6 +576,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftFP.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -699,28 +643,19 @@
 				D389765D1F28706200811532 /* Collections.swift in Sources */,
 				D3AC28A01F41FDCB004C24B8 /* Enums.swift in Sources */,
 				D3F70B1C1FE2F82300642935 /* LocalizerType.swift in Sources */,
-				D391DCDF1F7803A4003C2688 /* Optional.swift in Sources */,
 				D389765E1F28706200811532 /* Swifts.swift in Sources */,
 				D3B06AF01F454EF400DACB81 /* CloneableType.swift in Sources */,
 				D3F70B1A1FE2F5F400642935 /* Localizer.swift in Sources */,
-				D3FC6E761F2ED51F007471E2 /* Optionals.swift in Sources */,
 				D389765F1F28706200811532 /* Dates.swift in Sources */,
 				D38976601F28706200811532 /* Exceptions.swift in Sources */,
 				D38976611F28706200811532 /* GenericComparator.swift in Sources */,
 				D38976621F28706200811532 /* SortDescriptor.swift in Sources */,
 				D38976631F28706200811532 /* SortMode.swift in Sources */,
 				D38976641F28706200811532 /* SortOrder.swift in Sources */,
+				D3123DB7205AC062003FD261 /* Blocking.swift in Sources */,
 				D38976651F28706200811532 /* Maths.swift in Sources */,
-				D38976661F28706200811532 /* Either.swift in Sources */,
 				D3A295471F82487A00F10756 /* Preconditions.swift in Sources */,
 				D3B06AED1F454EBE00DACB81 /* BuildableType.swift in Sources */,
-				D38976671F28706200811532 /* Eithers.swift in Sources */,
-				D38976681F28706200811532 /* Reader.swift in Sources */,
-				D38976691F28706200811532 /* Readers.swift in Sources */,
-				D389766A1F28706200811532 /* State.swift in Sources */,
-				D389766C1F28706200811532 /* Tries.swift in Sources */,
-				D389766D1F28706200811532 /* Try.swift in Sources */,
-				D389766E1F28706200811532 /* Cocoas.swift in Sources */,
 				D389766F1F28706200811532 /* Reactives.swift in Sources */,
 				D38976701F28706200811532 /* Strings.swift in Sources */,
 				D38976711F28706200811532 /* Threads.swift in Sources */,
@@ -736,14 +671,9 @@
 				D389764F1F28705600811532 /* FakeProtocol.swift in Sources */,
 				D38976501F28705600811532 /* CollectionsTest.swift in Sources */,
 				D38976511F28705600811532 /* DatesTest.swift in Sources */,
-				D3F9E39C1FC67121000F1680 /* OptionalTest.swift in Sources */,
 				D38976521F28705600811532 /* ExceptionsTest.swift in Sources */,
 				D38976531F28705600811532 /* MockTest.swift in Sources */,
-				D38976541F28705600811532 /* EitherTest.swift in Sources */,
-				D38976551F28705600811532 /* ReaderTest.swift in Sources */,
-				D38976561F28705600811532 /* StateTest.swift in Sources */,
 				D3FDD4801FE24EFA0024691A /* LocalizationTest.swift in Sources */,
-				D38976571F28705600811532 /* TryTest.swift in Sources */,
 				D38976581F28705600811532 /* ReactiveTest.swift in Sources */,
 				D38976591F28705600811532 /* ThreadTest.swift in Sources */,
 				D389765A1F28705600811532 /* TypeTest.swift in Sources */,

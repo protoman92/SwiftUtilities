@@ -10,12 +10,18 @@ Pod::Spec.new do |s|
     s.author = { "Hai Pham" => "swiften.svc@gmail.com" }
     s.homepage = "https://github.com/protoman92/SwiftUtilities.git"
     s.source = { :git => "https://github.com/protoman92/SwiftUtilities.git", :tag => "#{s.version}"}
-    s.dependency 'RxSwift', '~> 3.0'
-    s.dependency 'RxCocoa', '~> 3.0'
-    s.dependency 'RxBlocking', '~> 3.0'
+    s.source_files = "SwiftUtilities/**/*.{swift}"
+    s.dependency 'SwiftFP', '~> 1.0.0'
 
     s.subspec 'Main' do |main|
-        main.source_files = "SwiftUtilities/**/*.{swift}"
+        main.exclude_files = "SwiftUtilities/reactive/*.{swift}"
+    end
+
+    s.subspec 'Main+Rx' do |mrx|
+        mrx.source_files = "SwiftUtilities/**/*.{swift}"
+        mrx.dependency 'RxSwift', '~> 3.0'
+        mrx.dependency 'RxCocoa', '~> 3.0'
+        mrx.dependency 'RxBlocking', '~> 3.0'
     end
 
 end

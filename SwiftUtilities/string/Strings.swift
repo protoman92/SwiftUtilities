@@ -8,18 +8,6 @@
 
 import Foundation
 
-extension String: CustomComparisonType {
-    public func equals(object: String?) -> Bool {
-        return object == self
-    }
-}
-
-extension String: ComparisonResultConvertibleType {
-    public func compare(against element: String) -> ComparisonResult {
-        return compare(element)
-    }
-}
-
 extension String: IsInstanceType {}
 
 public extension Character {
@@ -46,29 +34,6 @@ public extension String {
 }
 
 public extension String {
-    
-    /// Check if the current String is an email.
-    public var isEmail: Bool {
-        return range(
-            of: "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]" +
-            "+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9" +
-            "-]*[a-z0-9])?",
-            options: .regularExpression) != nil
-    }
-    
-    /// Check if the current String is not empty.
-    public var isNotEmpty: Bool {
-        return !isEmpty
-    }
-    
-    /// Underline the current String.
-    public var underlined: NSAttributedString {
-        let attributes = [
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleDouble.rawValue
-        ]
-        
-        return NSAttributedString(string: self, attributes: attributes)
-    }
     
     /// Replace occurrences of a String with a set of character types.
     ///
@@ -134,32 +99,6 @@ public extension String {
     /// - Returns: A String value.
     public func localize(_ tables: String...) -> String {
         return localize(tables)
-    }
-}
-
-public extension String {
-    public struct Formatter {
-        static let instance = NumberFormatter()
-    }
-    
-    /// Convert the current String into a Double.
-    public var doubleValue: Double? {
-        return Formatter.instance.number(from: self)?.doubleValue
-    }
-    
-    /// Convert the current String into an Int.
-    public var integerValue: Int? {
-        return Formatter.instance.number(from: self)?.intValue
-    }
-    
-    /// Check if the current String is convertible to a Double.
-    public var isDouble: Bool {
-        return doubleValue != nil
-    }
-    
-    /// Check if the current String is convertible to an Int.
-    public var isInteger: Bool {
-        return integerValue != nil
     }
 }
 

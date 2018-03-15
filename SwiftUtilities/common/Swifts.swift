@@ -6,8 +6,6 @@
 //  Copyright © 2016 Swiften. All rights reserved.
 //
 
-import Foundation
-
 /// Read an environment variable.
 ///
 /// - Parameter key: The variable's key identifier.

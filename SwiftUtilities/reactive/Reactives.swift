@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import SwiftFP
 
 public extension ObservableConvertibleType {
     

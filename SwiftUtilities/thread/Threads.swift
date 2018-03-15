@@ -85,10 +85,3 @@ public func synchronized<T>(_ lock: AnyObject,
     defer { objc_sync_exit(lock) }
     return try body()
 }
-
-public func waitOnMainThread(_ interval: TimeInterval) {
-    _ = try? Observable<Int>
-        .timer(interval, scheduler: MainScheduler.instance)
-        .toBlocking()
-        .first()
-}

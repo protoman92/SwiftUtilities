@@ -8,12 +8,6 @@
 
 import Foundation
 
-extension Int: CustomComparisonType {
-    public func equals(object: Int?) -> Bool {
-        return self == object
-    }
-}
-
 extension Int: IsInstanceType {}
 extension Float: IsInstanceType {}
 extension Double: IsInstanceType {}
@@ -36,12 +30,6 @@ extension Int: Summable {
 
 extension Double: Summable {
     public static var Zero: Double { return 0.0 }
-}
-
-extension Double: CustomComparisonType {
-    public func equals(object: Double?) -> Bool {
-        return object == self
-    }
 }
 
 public extension Double {
