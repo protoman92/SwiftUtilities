@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D38CC4971E9CA23600A09A5E"
+               BlueprintIdentifier = "D38975F61F285E9C00811532"
                BuildableName = "SwiftUtilities.framework"
                BlueprintName = "SwiftUtilities"
                ReferencedContainer = "container:SwiftUtilities.xcodeproj">
@@ -27,13 +27,14 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D38CC4A01E9CA23600A09A5E"
+               BlueprintIdentifier = "D38975FF1F285E9C00811532"
                BuildableName = "SwiftUtilitiesTests.xctest"
                BlueprintName = "SwiftUtilitiesTests"
                ReferencedContainer = "container:SwiftUtilities.xcodeproj">
@@ -43,7 +44,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D38CC4971E9CA23600A09A5E"
+            BlueprintIdentifier = "D38975F61F285E9C00811532"
             BuildableName = "SwiftUtilities.framework"
             BlueprintName = "SwiftUtilities"
             ReferencedContainer = "container:SwiftUtilities.xcodeproj">
@@ -66,7 +67,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D38CC4971E9CA23600A09A5E"
+            BlueprintIdentifier = "D38975F61F285E9C00811532"
             BuildableName = "SwiftUtilities.framework"
             BlueprintName = "SwiftUtilities"
             ReferencedContainer = "container:SwiftUtilities.xcodeproj">
@@ -84,7 +85,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D38CC4971E9CA23600A09A5E"
+            BlueprintIdentifier = "D38975F61F285E9C00811532"
             BuildableName = "SwiftUtilities.framework"
             BlueprintName = "SwiftUtilities"
             ReferencedContainer = "container:SwiftUtilities.xcodeproj">
