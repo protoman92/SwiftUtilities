@@ -291,7 +291,6 @@
 		D38976341F285F1500811532 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				D3AC28A11F41FED4004C24B8 /* common */,
 				D38976351F285F1500811532 /* rx */,
 			);
 			path = util;
@@ -383,13 +382,6 @@
 				D389764D1F285F1500811532 /* TypeTest.swift */,
 			);
 			path = type;
-			sourceTree = "<group>";
-		};
-		D3AC28A11F41FED4004C24B8 /* common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = common;
 			sourceTree = "<group>";
 		};
 		D3B06AEA1F454E5000DACB81 /* immutable */ = {

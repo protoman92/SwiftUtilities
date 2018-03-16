@@ -2,9 +2,9 @@
 # platform :ios, '9.0'
 
 def allPods
-    pod 'RxSwift', '~> 3.0'
-    pod 'RxCocoa', '~> 3.0'
-    pod 'RxBlocking', '~> 3.0'
+    pod 'RxSwift', '~> 4.0'
+    pod 'RxCocoa', '~> 4.0'
+    pod 'RxBlocking', '~> 4.0'
     pod 'SwiftFP', :git => 'https://github.com/protoman92/SwiftFP.git'
 end
 
@@ -19,8 +19,7 @@ target 'SwiftUtilities' do
     inherit! :search_paths
     # Pods for testing
     allPods
-    pod 'RxBlocking', '~> 3.0'
-    pod 'RxTest', '~> 3.0'
+    pod 'RxTest', '~> 4.0'
   end
 
 end

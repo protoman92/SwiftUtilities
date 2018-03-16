@@ -14,14 +14,14 @@ Pod::Spec.new do |s|
     s.dependency 'SwiftFP', '~> 1.0.0'
 
     s.subspec 'Main' do |main|
-        main.exclude_files = "SwiftUtilities/reactive/*.{swift}"
+        main.exclude_files = "SwiftUtilities/reactive/**/*.{swift}"
     end
 
     s.subspec 'Main+Rx' do |mrx|
         mrx.source_files = "SwiftUtilities/**/*.{swift}"
-        mrx.dependency 'RxSwift', '~> 3.0'
-        mrx.dependency 'RxCocoa', '~> 3.0'
-        mrx.dependency 'RxBlocking', '~> 3.0'
+        mrx.dependency 'RxSwift', '~> 4.0'
+        mrx.dependency 'RxCocoa', '~> 4.0'
+        mrx.dependency 'RxBlocking', '~> 4.0'
     end
 
 end

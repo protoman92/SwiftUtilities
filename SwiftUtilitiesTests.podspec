@@ -13,12 +13,13 @@ Pod::Spec.new do |s|
     s.source_files = "SwiftUtilitiesTests/{mock,util}/**/*.{swift}"
 
     s.subspec 'Main' do |main|
+      s.exclude_files = "SwiftUtilitiesTests/mock/rx/**/*.{swift}"
     end
 
     s.subspec 'Main+Rx' do |mrx|
-        s.dependency 'RxSwift', '~> 3.0'
-        s.dependency 'RxCocoa', '~> 3.0'
-        s.dependency 'RxTest', '~> 3.0'
-        s.dependency 'RxBlocking', '~> 3.0'
+        s.dependency 'RxSwift', '~> 4.0'
+        s.dependency 'RxCocoa', '~> 4.0'
+        s.dependency 'RxTest', '~> 4.0'
+        s.dependency 'RxBlocking', '~> 4.0'
     end
 end

@@ -281,7 +281,7 @@ public final class ReactiveTest: XCTestCase {
         
         /// Then 
         XCTAssertEqual(currentTry, retries + 1)
-        XCTAssertTrue(delays.all({abs($0 - delay) < 0.1}))
+        delays.forEach({XCTAssertLessThan(abs($0 - delay), 0.1)})
     }
     
     public func test_delayRetryWithStopNotification_shouldWork() {
