@@ -23,11 +23,11 @@ final class DatesTest: XCTestCase {
         /// be used for granularity comparison.
         let testDateComparison: (Date, Int, Calendar.Component) -> Void = {
             /// Setup
-            let date = $0.0
+            let date = $0
             
             // When
-            let fDate = calendar.date(byAdding: $0.2, value: -$0.1, to: $0.0)!
-            let sDate = calendar.date(byAdding: $0.2, value: $0.1, to: $0.0)!
+            let fDate = calendar.date(byAdding: $2, value: -$1, to: $0)!
+            let sDate = calendar.date(byAdding: $2, value: $1, to: $0)!
             
             // Then
             
@@ -41,12 +41,12 @@ final class DatesTest: XCTestCase {
             XCTAssertTrue(date.notLaterThan(date: sDate))
             
             /// Comparing using a Calendar instance.
-            XCTAssertTrue(calendar.notLaterThan(compare: date, to: date, granularity: $0.2))
-            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: date, granularity: $0.2))
-            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: fDate, granularity: $0.2))
-            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $0.2))
-            XCTAssertTrue(calendar.laterThan(compare: date, to: fDate, granularity: $0.2))
-            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $0.2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: date, granularity: $2))
+            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: date, granularity: $2))
+            XCTAssertTrue(calendar.notEarlierThan(compare: date, to: fDate, granularity: $2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $2))
+            XCTAssertTrue(calendar.laterThan(compare: date, to: fDate, granularity: $2))
+            XCTAssertTrue(calendar.notLaterThan(compare: date, to: sDate, granularity: $2))
         }
         
         // When

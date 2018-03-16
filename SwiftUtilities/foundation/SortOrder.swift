@@ -11,6 +11,6 @@
 /// - ascending: Ascending sort order.
 /// - descending: Descending sort order.
 public enum SortOrder {
-    case ascending
-    case descending
+  case ascending
+  case descending
 }

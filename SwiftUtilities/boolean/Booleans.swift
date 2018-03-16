@@ -9,11 +9,11 @@
 extension Bool: IsInstanceType {}
 
 public extension Bool {
-    
-    /// Create a random Bool value.
-    ///
-    /// - Returns: A Bool value.
-    public static func random() -> Bool {
-        return arc4random_uniform(2) == 0
-    }
+
+  /// Create a random Bool value.
+  ///
+  /// - Returns: A Bool value.
+  public static func random() -> Bool {
+    return arc4random_uniform(2) == 0
+  }
 }

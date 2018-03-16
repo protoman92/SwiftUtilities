@@ -6,6 +6,4 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import Foundation
-
 public typealias GenericComparator<T> = (T, T) -> ComparisonResult

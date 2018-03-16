@@ -11,7 +11,7 @@
 /// - Parameter key: The variable's key identifier.
 /// - Returns: An optional String value.
 public func readEnvironmentVariable(forKey key: String) -> String? {
-    return ProcessInfo.processInfo.environment[key]
+  return ProcessInfo.processInfo.environment[key]
 }
 
 /// Read a property from an embedded property list. Defaults to 'Info.plist'.
@@ -22,34 +22,34 @@ public func readEnvironmentVariable(forKey key: String) -> String? {
 /// - Returns: An optional Any value.
 public func readPropertyList(from fileName: String? = nil,
                              key: String) -> Any? {
-    let fileName = fileName ?? "Info"
-    
-    guard
-        let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
-        let dict = NSDictionary(contentsOfFile: path)
+  let fileName = fileName ?? "Info"
+
+  guard
+    let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
+    let dict = NSDictionary(contentsOfFile: path)
     else {
-        return nil
-    }
-    
-    return dict.value(forKey: key)
+      return nil
+  }
+
+  return dict.value(forKey: key)
 }
 
 /// Print only in debug mode.
 ///
 /// - Parameter args: Items to be printed.
 public func debugPrint(_ args: Any...) {
-    if isInDebugMode() {
-        print(args)
-    }
+  if isInDebugMode() {
+    print(args)
+  }
 }
 
 /// Print one item only in debug mode.
 ///
 /// - Parameter item: The item to be printed.
 public func debugPrint(_ item: Any) {
-    if isInDebugMode() {
-        print(item)
-    }
+  if isInDebugMode() {
+    print(item)
+  }
 }
 
 /// Return the same value as passed in via arguments. This can be used for
@@ -59,12 +59,12 @@ public func debugPrint(_ item: Any) {
 /// - Parameter object: An object of any type.
 /// - Returns: The same object as the parameter object.
 public func eq<T>(_ object: T) -> T {
-    return object
+  return object
 }
 
 /// Return a Void regardless of what the object passed in is.
 ///
 /// - Parameter object: Any object.
 public func toVoid(_ object: Any) {
-    return ()
+  return ()
 }

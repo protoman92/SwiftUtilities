@@ -6,7 +6,6 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import Foundation
 import XCTest
 @testable import SwiftUtilities
 

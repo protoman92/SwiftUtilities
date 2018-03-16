@@ -8,7 +8,7 @@
 
 /// Implement this protocol to provide sort keys.
 public protocol SortModeType {
-    
-    /// Get the associated sort key.
-    var sortKey: String { get }
+
+  /// Get the associated sort key.
+  var sortKey: String { get }
 }
