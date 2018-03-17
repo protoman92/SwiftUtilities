@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
     s.platform = :ios
-    s.ios.deployment_target = '9.0'
+    s.ios.deployment_target = '8.0'
     s.name = "SwiftUtilities"
     s.summary = "Common Swift utilities."
     s.requires_arc = true
-    s.version = "1.4.5"
+    s.version = "1.4.6"
     s.license = { :type => "Apache-2.0", :file => "LICENSE" }
     s.author = { "Hai Pham" => "swiften.svc@gmail.com" }
     s.homepage = "https://github.com/protoman92/SwiftUtilities.git"
