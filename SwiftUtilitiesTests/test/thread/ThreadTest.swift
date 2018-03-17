@@ -12,36 +12,35 @@ import XCTest
 @testable import SwiftUtilities
 
 final class ThreadTest: XCTestCase {
-    func test_synchronized_shouldSucceed() {
-        /// Setup
-        let scheduler = TestScheduler(initialClock: 0)
-        let observer = scheduler.createObserver(Any.self)
-        let subject = PublishSubject<Any>()
-        let expect = expectation(description: "Should have received values")
-        let endValue = 1000
-        
-        // When
-        _ = subject.subscribe(observer)
-        
-        for i in 0..<endValue {
-            // We execute in background thread to simulate concurrent
-            // emission. Normally, a small number of concurrent emissions
-            // should still work, but if we are calling onNext on a large
-            // number of elements without synchronization, a bad access error 
-            // will be thrown.
-            background {
-                synchronized(subject) {
-                    subject.onNext(i)
-                    
-                    if i == endValue - 1 {
-                        expect.fulfill()
-                    }
-                }
-            }
+  func test_synchronized_shouldSucceed() {
+    /// Setup
+    let scheduler = TestScheduler(initialClock: 0)
+    let observer = scheduler.createObserver(Any.self)
+    let subject = PublishSubject<Any>()
+    let expect = expectation(description: "Should have received values")
+    let endValue = 1000
+
+    // When
+    _ = subject.subscribe(observer)
+
+    for i in 0..<endValue {
+      // We execute in background thread to simulate concurrent emission.
+      // Normally, a small number of concurrent emissions should still work,
+      // but if we are calling onNext on a large number of elements without
+      // synchronization, a bad access error will be thrown.
+      background {
+        synchronized(subject) {
+          subject.onNext(i)
+
+          if i == endValue - 1 {
+            expect.fulfill()
+          }
         }
-        
-        // Then
-        waitForExpectations(timeout: 10, handler: nil)
-        XCTAssertEqual(observer.nextElements().count, endValue)
+      }
     }
+
+    // Then
+    waitForExpectations(timeout: 10, handler: nil)
+    XCTAssertEqual(observer.nextElements().count, endValue)
+  }
 }

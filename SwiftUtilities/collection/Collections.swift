@@ -182,14 +182,6 @@ public extension Array {
   }
 }
 
-public extension Collection {
-
-  /// Check if the current Collection is not empty.
-  public var isNotEmpty: Bool {
-    return !isEmpty
-  }
-}
-
 public extension Dictionary {
 
   /// Update the current Dictionary with another Dictionary.

@@ -7,7 +7,7 @@
 //
 
 public protocol FakeProtocol {
-    
-    /// Reset all fake details (e.g. method counts)
-    func reset()
+
+  /// Reset all fake details (e.g. method counts)
+  func reset()
 }
