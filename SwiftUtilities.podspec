@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
     s.author = { "Hai Pham" => "swiften.svc@gmail.com" }
     s.homepage = "https://github.com/protoman92/SwiftUtilities.git"
     s.source = { :git => "https://github.com/protoman92/SwiftUtilities.git", :tag => "#{s.version}"}
-    s.source_files = "SwiftUtilities/**/*.{swift}"
-    s.dependency 'SwiftFP', '~> 1.0.0'
+    s.dependency 'SwiftFP', '~> 1.0.1'
 
     s.subspec 'Main' do |main|
+        main.source_files = "SwiftUtilities/**/*.{swift}"
         main.exclude_files = "SwiftUtilities/reactive/**/*.{swift}"
     end
 
