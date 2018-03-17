@@ -6,8 +6,6 @@
 //  Copyright © 2017 Swiften. All rights reserved.
 //
 
-import GameKit
-
 public extension Sequence {
 
   /// Get the first item that is an instance of a specified Type.
@@ -29,9 +27,7 @@ public extension Sequence {
   /// - Parameter condition: Closure condition.
   /// - Returns: A Bool value.
   /// - Throws: An Error rethrown by any condition closure call.
-  public func all(_ condition: (Iterator.Element) throws -> Bool)
-    rethrows -> Bool
-  {
+  public func all(_ condition: (Iterator.Element) throws -> Bool) rethrows -> Bool {
     for element in self {
       if try !condition(element) {
         return false
@@ -46,31 +42,15 @@ public extension Sequence {
   /// - Parameter condition: Closure condition.
   /// - Returns: A Bool value.
   /// - Throws: An Error rethrown by any condition closure call.
-  public func any(_ condition: (Iterator.Element) throws -> Bool)
-    rethrows -> Bool
-  {
+  public func any(_ condition: (Iterator.Element) throws -> Bool) rethrows -> Bool {
     return try self.filter(condition).count >= 1
-  }
-
-  /// Check if the current Sequence contains an element, according to a
-  /// predicate.
-  ///
-  /// - Parameter where: A Bool predicate.
-  /// - Returns: A Bool value.
-  /// - Throws: If any of the predicate checks throws an Error, rethrow it.
-  public func doesNotContain(where: (Iterator.Element) throws -> Bool)
-    rethrows -> Bool
-  {
-    return try !contains(where: `where`)
   }
 
   /// Print each element in the current Sequence.
   ///
   /// - Parameter convert: An optional conversion closure.
   /// - Throws: If any conversion throws an Error, rethrow it.
-  public func logEach(_ convert: ((Iterator.Element) throws -> Any)? = nil)
-    rethrows
-  {
+  public func logEach(_ convert: ((Iterator.Element) throws -> Any)? = nil) rethrows {
     if let convert = convert {
       do { try map(convert).logEach() } catch {}
     } else {
@@ -81,34 +61,11 @@ public extension Sequence {
 
 public extension Sequence where Iterator.Element: Hashable {
 
-  /// Check if the current Sequence contains an element.
-  ///
-  /// - Parameter item: The Element to be checked.
-  /// - Returns: A Bool value.
-  public func doesNotContain(_ item: Iterator.Element) -> Bool {
-    return !contains(item)
-  }
-
   /// Produce a randomly-ordered distinct Array of element.
   ///
   /// - Returns: An Array of Element.
   public func distinct() -> [Iterator.Element] {
     return Set<Iterator.Element>(self).map(eq)
-  }
-
-  /// Produce a distinct Array of element that retains the original order.
-  ///
-  /// - Returns: An Array of Element.
-  public func orderedDistinct() -> [Iterator.Element] {
-    var distinct: [Iterator.Element] = []
-
-    for element in self {
-      if distinct.doesNotContain(element) {
-        distinct.append(element)
-      }
-    }
-
-    return distinct
   }
 }
 
@@ -144,17 +101,6 @@ public extension Array {
     }
 
     return element(at: index)
-  }
-
-  /// Get a randomized Array of elements from the current Array.
-  ///
-  /// - Parameter elementCount: The number of random elements to get.
-  /// - Returns: An Array of elements.
-  public func randomize(_ elementCount: Int) -> [Element] {
-    let rand = GKRandomSource.sharedRandom()
-    let shuffled = rand.arrayByShufflingObjects(in: self)
-    let prefixed = shuffled.prefix(Swift.max(0, elementCount))
-    return prefixed.flatMap({$0 as? Element})
   }
 
   /// Get a random Element from the current Array.

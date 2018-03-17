@@ -89,7 +89,6 @@ public final class CollectionsTest: XCTestCase {
 
     /// When & Then
     XCTAssertEqual(data.distinct().count, Set(data).count)
-    XCTAssertEqual(data.distinct().count, data.orderedDistinct().count)
   }
 
   public func test_addDictionaries_shouldWork() {
