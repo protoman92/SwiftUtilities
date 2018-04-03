@@ -190,7 +190,8 @@ public extension Array {
     ///
     /// - Parameter elementCount: The number of random elements to get.
     /// - Returns: An Array of elements.
-    public func randomize(_ elementCount: Int) -> [Element] {
+  @available(iOS 9.0, *)
+  public func randomize(_ elementCount: Int) -> [Element] {
         let rand = GKRandomSource.sharedRandom()
         let shuffled = rand.arrayByShufflingObjects(in: self)
         let prefixed = shuffled.prefix(Swift.max(0, elementCount))

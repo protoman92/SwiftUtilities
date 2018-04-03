@@ -336,7 +336,6 @@
 		D38976341F285F1500811532 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				D3AC28A11F41FED4004C24B8 /* common */,
 				D38976351F285F1500811532 /* rx */,
 			);
 			path = util;
@@ -443,13 +442,6 @@
 			path = type;
 			sourceTree = "<group>";
 		};
-		D3AC28A11F41FED4004C24B8 /* common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = common;
-			sourceTree = "<group>";
-		};
 		D3B06AEA1F454E5000DACB81 /* immutable */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,7 +502,6 @@
 				D38975F31F285E9C00811532 /* Frameworks */,
 				D38975F41F285E9C00811532 /* Headers */,
 				D38975F51F285E9C00811532 /* Resources */,
-				4AE9810243CE4E01FBBBFD55 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,7 +521,6 @@
 				D38975FD1F285E9C00811532 /* Frameworks */,
 				D38975FE1F285E9C00811532 /* Resources */,
 				1ECEB1899551DBC8634115B9 /* [CP] Embed Pods Frameworks */,
-				F7C18C31AD35BC423E17DDA4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -640,21 +630,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4AE9810243CE4E01FBBBFD55 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftUtilities/Pods-SwiftUtilities-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		F3B2D4BB4C6B62A137458AC5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -671,21 +646,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F7C18C31AD35BC423E17DDA4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftUtilitiesTests/Pods-SwiftUtilitiesTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -889,7 +849,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftUtilities/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -911,7 +871,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftUtilities/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.swiften.SwiftUtilities;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
